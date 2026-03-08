@@ -7,7 +7,6 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/x-icon" href="/medalha.ico">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
@@ -162,12 +161,16 @@
   <!-- ═══ NAV ═══ -->
   <nav>
     <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Início</a></li>
       <li><a href="santos.html">Santos</a></li>
       <li><a href="conteudos.html">Conteúdos</a></li>
     </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- ═══ HERO ═══ -->
   <section id="hero">
@@ -257,30 +260,43 @@
           <div class="timeline-info">
             <h3>1º Encontro — Apresentação</h3>
             <p>Local: Sala 204 · Horário: 20h</p>
+            <span class="badge">04/03/2026</span>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">
-            <div class="day">11</div>
-            <div class="month">Mar</div>
+            <div class="day">--</div>
+            <div class="month">Mês</div>
           </div>
           <div class="timeline-info">
-            <h3>2º Encontro — O que significa "crer"?</h3>
-            <p>Local: Sala 204 · Horário: 20h</p>
+            <h3>2º Encontro — [Tema a definir]</h3>
+            <p>Local: [A definir] · Horário: [A definir]</p>
             <span class="badge">Em breve</span>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">
-            <div class="day">18</div>
-            <div class="month">Mar</div>
+            <div class="day">--</div>
+            <div class="month">Mês</div>
           </div>
           <div class="timeline-info">
             <h3>3º Encontro — [Tema a definir]</h3>
-            <p>Local: Sala 204 · Horário: 20h</p>
+            <p>Local: [A definir] · Horário: [A definir]</p>
             <span class="badge">Em breve</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <div class="day">✝</div>
+            <div class="month">Grande Dia</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Celebração dos Sacramentos</h3>
+            <p>Batismo, Crisma e Primeira Eucaristia — data a confirmar com o pároco</p>
+            <span class="badge destaque">✝ Grande Dia</span>
           </div>
         </div>
 
@@ -331,8 +347,15 @@
         <div class="aviso-card">
           <p class="aviso-tag">📅 Lembrete</p>
           <h3>Quartas-feiras · 20h às 22h</h3>
-          <p>O cronograma completo dos encontros será divulgado no decorrer da nossa catequese. Fique atento(a) às atualizações nesta página.</p>
+          <p>O cronograma completo dos encontros será divulgado em breve. Fique atento(a) às atualizações nesta página.</p>
           <p class="aviso-date">Em breve</p>
+        </div>
+
+        <div class="aviso-card">
+          <p class="aviso-tag">🕯️ Santo da Turma</p>
+          <h3>Escolha em andamento</h3>
+          <p>O(a) santo(a) de devoção será anunciado(a) em breve. Ele(a) será nossa referência e intercessor(a) ao longo de toda a jornada.</p>
+          <p class="aviso-date">Aguardem!</p>
         </div>
 
       </div>
@@ -350,7 +373,15 @@
 
         <!-- IMAGEM -->
         <div class="bento-image-col">
-            <img src="src/assets/img/sao-bento.png" alt="São Bento de Núrsia">
+          <!--
+            Para usar uma imagem real, substitua o placeholder pelo <img>:
+            <img src="src/assets/img/sao-bento.jpg" alt="São Bento de Núrsia">
+          -->
+          <div class="bento-image-placeholder">
+            <span class="bento-ph-icon">✝</span>
+            <span>São Bento de Núrsia</span>
+            <small>Coloque aqui a imagem:<br>src/assets/img/sao-bento.jpg</small>
+          </div>
           <div class="bento-feast-badge">🕯️ Festa: 11 de Julho</div>
         </div>
 
@@ -406,7 +437,7 @@
       <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
       <div class="footer-divider"></div>
       <p><em>"Veni, Creator Spiritus, mentes tuorum visita..."</em></p>
-      <p class="credits">Feito por Pedro Leite Campos</p>
+      <p class="credits">Santo de devoção: São Bento de Núrsia · Catequista responsável: [A definir]</p>
     </div>
   </footer>
 

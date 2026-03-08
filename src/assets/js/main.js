@@ -12,7 +12,47 @@
   });
 })();
 
-// Scroll suave para âncoras (caso necessário em páginas futuras)
+// ─── MENU HAMBURGUER ───
+(function () {
+  const toggle  = document.getElementById('nav-toggle');
+  const links   = document.getElementById('nav-links');
+  const overlay = document.getElementById('nav-overlay');
+
+  if (!toggle || !links || !overlay) return;
+
+  function abrirMenu() {
+    toggle.classList.add('open');
+    links.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fecharMenu() {
+    toggle.classList.remove('open');
+    links.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', () => {
+    toggle.classList.contains('open') ? fecharMenu() : abrirMenu();
+  });
+
+  // fecha ao clicar no overlay
+  overlay.addEventListener('click', fecharMenu);
+
+  // fecha ao clicar em um link
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', fecharMenu);
+  });
+
+  // fecha com Esc
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharMenu();
+  });
+})();
+
+// ─── SCROLL SUAVE para âncoras ───
 document.addEventListener('click', (e) => {
   const link = e.target.closest('a[href^="#"]');
   if (!link) return;
