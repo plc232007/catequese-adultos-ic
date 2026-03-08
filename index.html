@@ -3,27 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catequese — Adultos IC | Paróquia São José</title>
+  <title>Início — Catequese Adultos IC | Paróquia São José</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/x-icon" href="/medalha.ico">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
-  <script src="src/assets/js/main.js"></script>
+  <style>
+    /* ── SÃO BENTO ── */
+    #sao-bento {
+      background: var(--cream);
+      padding: 80px 24px;
+    }
+
+    .bento-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    /* coluna da imagem */
+    .bento-image-col {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .bento-image-col img {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 12px 36px rgba(0,0,0,.14);
+      border: 3px solid rgba(198,165,90,.35);
+    }
+
+    .bento-image-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 14px;
+      background: linear-gradient(160deg, var(--cream-soft) 0%, #ddd5c8 100%);
+      border: 2px dashed rgba(198,165,90,.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(94,85,76,.5);
+      text-align: center;
+      padding: 24px;
+    }
+
+    .bento-ph-icon {
+      font-size: 3rem;
+      opacity: .4;
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+
+    .bento-image-placeholder span {
+      font-family: 'Playfair Display', serif;
+      font-size: .95rem;
+      color: rgba(94,85,76,.6);
+    }
+
+    .bento-image-placeholder small {
+      font-size: .72rem;
+      color: rgba(94,85,76,.4);
+      line-height: 1.6;
+    }
+
+    .bento-feast-badge {
+      margin-top: 12px;
+      text-align: center;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    /* coluna do texto */
+    .bento-bio {
+      color: var(--text-light);
+      font-size: .93rem;
+      line-height: 1.82;
+    }
+
+    .bento-bio p + p { margin-top: 12px; }
+    .bento-bio strong { color: var(--text); }
+
+    .bento-quote {
+      margin-top: 22px;
+      padding: 14px 20px;
+      border-left: 3px solid var(--gold);
+      background: rgba(198,165,90,.08);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .bento-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 6px;
+    }
+
+    .bento-quote cite {
+      font-size: .75rem;
+      color: var(--text-soft);
+      letter-spacing: .3px;
+    }
+
+    .bento-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .bento-tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(198,165,90,.5);
+      color: var(--gold);
+      background: rgba(198,165,90,.07);
+    }
+
+    @media (max-width: 680px) {
+      .bento-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .bento-image-col {
+        max-width: 260px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- ═══ NAV ═══ -->
   <nav>
-    <div class="nav-brand">✝ Paróquia São José</div>
+    <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
     <ul class="nav-links">
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#cronograma">Cronograma</a></li>
-      <li><a href="#material">Material</a></li>
-      <li><a href="#avisos">Avisos</a></li>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="santos.html">Santos</a></li>
+      <li><a href="conteudos.html">Conteúdos</a></li>
     </ul>
   </nav>
 
+  <!-- ═══ HERO ═══ -->
   <section id="hero">
     <p class="hero-parish">Paróquia São José</p>
     <h1 class="hero-title">Catequese<br><span>Adultos IC</span></h1>
@@ -36,15 +182,18 @@
         imple superna gratia<br>
         quae tu creasti pectora.
       </p>
+      <small>Hino ao Espírito Santo</small>
     </div>
 
     <p class="scroll-hint">↓ &nbsp; role para baixo</p>
   </section>
 
+  <!-- ═══ SANTO DA TURMA ═══ -->
   <div id="santo">
-    <p>🕯️ Santo de devoção da turma: <strong>[A ser definido em breve]</strong> — padroeiro(a) que nos guia nesta caminhada</p>
+    <p>🕯️ Santo de devoção da turma: <strong>São Bento de Núrsia</strong> — pai do monaquismo ocidental e nosso intercessor</p>
   </div>
 
+  <!-- ═══ SOBRE ═══ -->
   <section id="sobre">
     <div class="section-inner">
       <p class="section-label">Bem-vindos</p>
@@ -52,41 +201,38 @@
       <div class="section-divider"></div>
 
       <p>
-  A <strong>catequese</strong> é a missão da Igreja de formar cristãos maduros na fé, 
-  transmitindo de modo fiel e orgânico a doutrina recebida dos Apóstolos, 
-  conduzindo cada pessoa ao encontro verdadeiro com <strong>Jesus Cristo</strong>.
-     </p>
+        A <strong>catequese</strong> é a missão da Igreja de formar cristãos maduros na fé,
+        transmitindo de modo fiel e orgânico a doutrina recebida dos Apóstolos,
+        conduzindo cada pessoa ao encontro verdadeiro com <strong>Jesus Cristo</strong>.
+      </p>
 
-<blockquote class="citacao">
-
-  “No início do ser cristão não há uma decisão ética ou uma grande ideia, 
-  mas o encontro com um acontecimento, com uma Pessoa.”
-
-  <br>
-  <span class="autor">— Papa Bento XVI</span>
-</blockquote>
+      <blockquote class="quote">
+        <p>"No início do ser cristão não há uma decisão ética ou uma grande ideia,
+        mas o encontro com um acontecimento, com uma Pessoa."</p>
+        <cite>— Papa Bento XVI, Deus Caritas Est</cite>
+      </blockquote>
 
       <div class="sobre-cards">
         <div class="sobre-card">
-          <div class="icon">📖</div>
+          <span class="icon">📖</span>
           <h3>Estudo</h3>
           <p>Aprofundamento na Palavra de Deus e na Doutrina da Santa Mãe Igreja.</p>
         </div>
 
         <div class="sobre-card">
-          <div class="icon">🙏</div>
+          <span class="icon">🙏</span>
           <h3>Oração</h3>
           <p>Momentos de oração comunitária, adoração e silêncio sagrado.</p>
         </div>
 
         <div class="sobre-card">
-          <div class="icon">🕊️</div>
+          <span class="icon">🕊️</span>
           <h3>Sacramentos</h3>
           <p>Preparação para o Batismo, Crisma e Primeira Eucaristia.</p>
         </div>
 
         <div class="sobre-card">
-          <div class="icon">🤝</div>
+          <span class="icon">🤝</span>
           <h3>Comunidade</h3>
           <p>Construção de laços fraternos no amor de Cristo.</p>
         </div>
@@ -94,6 +240,7 @@
     </div>
   </section>
 
+  <!-- ═══ CRONOGRAMA ═══ -->
   <section id="cronograma">
     <div class="section-inner">
       <p class="section-label">Agenda</p>
@@ -101,57 +248,47 @@
       <div class="section-divider"></div>
 
       <div class="timeline">
+
         <div class="timeline-item">
           <div class="timeline-date">
-            <div class="day">Mar</div>
-            <div class="month">Mês</div>
+            <div class="day">04</div>
+            <div class="month">Mar</div>
           </div>
           <div class="timeline-info">
             <h3>1º Encontro — Apresentação</h3>
             <p>Local: Sala 204 · Horário: 20h</p>
-            <span class="badge">04/03</span>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">
-            <div class="day">--</div>
-            <div class="month">Mês</div>
+            <div class="day">11</div>
+            <div class="month">Mar</div>
           </div>
           <div class="timeline-info">
-            <h3>2º Encontro — [Tema a definir]</h3>
-            <p>Local: [A definir] · Horário: [A definir]</p>
+            <h3>2º Encontro — O que significa "crer"?</h3>
+            <p>Local: Sala 204 · Horário: 20h</p>
             <span class="badge">Em breve</span>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">
-            <div class="day">--</div>
-            <div class="month">Mês</div>
+            <div class="day">18</div>
+            <div class="month">Mar</div>
           </div>
           <div class="timeline-info">
             <h3>3º Encontro — [Tema a definir]</h3>
-            <p>Local: [A definir] · Horário: [A definir]</p>
+            <p>Local: Sala 204 · Horário: 20h</p>
             <span class="badge">Em breve</span>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-date">
-            <div class="day">--</div>
-            <div class="month">Mês</div>
-          </div>
-          <div class="timeline-info">
-            <h3>Celebração dos Sacramentos</h3>
-            <p>Batismo, Crisma e Primeira Eucaristia — data a confirmar com o pároco</p>
-            <span class="badge">✝ Grande Dia</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
+  <!-- ═══ MATERIAL ═══ -->
   <section id="material">
     <div class="section-inner">
       <p class="section-label">Preparação</p>
@@ -159,13 +296,23 @@
       <div class="section-divider"></div>
 
       <div class="material-grid">
-        <div class="material-item"><span class="icon">📓</span><span>Caderno ou bloco de notas</span></div>
-        <div class="material-item"><span class="icon">✏️</span><span>Caneta ou lápis</span></div>
-        <div class="material-item"><span class="icon">📖</span><span>Bíblia Católica</span></div>
+        <div class="material-item">
+          <span class="icon">📓</span>
+          <span>Caderno ou bloco de notas</span>
+        </div>
+        <div class="material-item">
+          <span class="icon">✏️</span>
+          <span>Caneta ou lápis</span>
+        </div>
+        <div class="material-item">
+          <span class="icon">📖</span>
+          <span>Bíblia Católica</span>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ═══ AVISOS ═══ -->
   <section id="avisos">
     <div class="section-inner">
       <p class="section-label">Informações</p>
@@ -173,30 +320,85 @@
       <div class="section-divider"></div>
 
       <div class="avisos-grid">
+
         <div class="aviso-card info">
           <p class="aviso-tag">📌 Aviso</p>
           <h3>Boas-vindas à turma!</h3>
-          <p>Com grande alegria começamos a nossa catequese. Esse caminho tão bonito, na qual podemos conceber por meio de nosso intelecto e de nossa vontade à verdade revelada que é o próprio Senhor Jesus Cristo. Que alegria!</p>
-          <p class="aviso-date">Pedro </p>
+          <p>Com grande alegria começamos a nossa catequese — um caminho lindo pelo qual podemos, por meio do intelecto e da vontade, nos aproximar da verdade revelada que é o próprio Senhor Jesus Cristo. Que alegria!</p>
+          <p class="aviso-date">Pedro</p>
         </div>
 
         <div class="aviso-card">
           <p class="aviso-tag">📅 Lembrete</p>
-          <h3>Quartas - 20h às 22h</h3>
-          <p>O cronograma completo dos encontros será divulgado em breve. Fique atento(a) às atualizações nesta página.</p>
+          <h3>Quartas-feiras · 20h às 22h</h3>
+          <p>O cronograma completo dos encontros será divulgado no decorrer da nossa catequese. Fique atento(a) às atualizações nesta página.</p>
           <p class="aviso-date">Em breve</p>
         </div>
 
-        <div class="aviso-card">
-          <p class="aviso-tag">🕯️ Santo da Turma</p>
-          <h3>Escolha em andamento</h3>
-          <p>O(a) santo(a) de devoção será anunciado(a) em breve. Ele(a) será nossa referência e intercessor(a) ao longo de toda a jornada.</p>
-          <p class="aviso-date">Aguardem!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SÃO BENTO ═══ -->
+  <section id="sao-bento">
+    <div class="section-inner">
+      <p class="section-label">Santo da Turma</p>
+      <h2 class="section-title">São Bento de Núrsia</h2>
+      <div class="section-divider"></div>
+
+      <div class="bento-layout">
+
+        <!-- IMAGEM -->
+        <div class="bento-image-col">
+            <img src="src/assets/img/sao-bento.png" alt="São Bento de Núrsia">
+          <div class="bento-feast-badge">🕯️ Festa: 11 de Julho</div>
+        </div>
+
+        <!-- TEXTO -->
+        <div class="bento-text-col">
+
+          <div class="bento-bio">
+            <p>
+              Nascido por volta de <strong>480 d.C.</strong> em Núrsia, no centro da Itália,
+              Bento era filho de família nobre e foi enviado jovem a Roma para estudar.
+              Desolado com a corrupção moral da cidade, abandonou tudo e retirou-se para
+              o deserto de Subiaco, onde viveu como eremita durante três anos em busca de Deus.
+            </p>
+            <p>
+              Sua santidade atraiu discípulos, e Bento acabou fundando <strong>doze pequenas
+              comunidades monásticas</strong>, até se estabelecer definitivamente em
+              <strong>Monte Cassino</strong>, onde escreveu sua célebre <em>Regra</em> —
+              um guia de vida comunitária fundado na oração, no trabalho e na obediência,
+              resumido no lema <em>"Ora et Labora"</em> (Ora e Trabalha).
+            </p>
+            <p>
+              A <em>Regra de São Bento</em> tornou-se a espinha dorsal do monaquismo ocidental
+              e moldou profundamente a civilização europeia cristã. São Bento é chamado de
+              <strong>Pai do Monaquismo Ocidental</strong> e foi proclamado
+              <strong>Patrono da Europa</strong> pelo Papa Paulo VI em 1964.
+              Sua festa é celebrada em <strong>11 de julho</strong>.
+            </p>
+          </div>
+
+          <blockquote class="bento-quote">
+            <p>"Nada absolutamente anteponhas ao amor de Cristo."</p>
+            <cite>— São Bento, Regra, Cap. IV</cite>
+          </blockquote>
+
+          <div class="bento-tags">
+            <span class="bento-tag">Pai do Monaquismo</span>
+            <span class="bento-tag">Patrono da Europa</span>
+            <span class="bento-tag">Ora et Labora</span>
+            <span class="bento-tag">Séc. V–VI</span>
+            <span class="bento-tag">Doutor da Igreja</span>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="footer-inner">
       <div class="footer-icon">✝️</div>
@@ -204,8 +406,10 @@
       <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
       <div class="footer-divider"></div>
       <p><em>"Veni, Creator Spiritus, mentes tuorum visita..."</em></p>
-      <p class="credits">Santo de devoção: [A definir] · Catequista responsável: [A definir]</p>
+      <p class="credits">Feito por Pedro Leite Campos</p>
     </div>
   </footer>
+
+  <script src="src/assets/js/main.js"></script>
 </body>
 </html>

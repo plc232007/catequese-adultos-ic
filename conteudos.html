@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conteúdos — Catequese Adultos IC | Paróquia São José</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="src/assets/css/styles.css">
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 40vh;
+      background-image:
+        linear-gradient(180deg, rgba(20,15,10,.90) 0%, rgba(55,40,20,.80) 60%, rgba(20,15,10,.92) 100%),
+        url("src/assets/img/fundo.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 110px 24px 52px;
+      position: relative;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(198,165,90,.10) 0%, transparent 68%);
+    }
+    .page-hero .hero-parish   { position:relative; z-index:1; font-weight:300; color:rgba(255,255,255,.7); letter-spacing:4px; text-transform:uppercase; font-size:.82rem; margin-bottom:16px; }
+    .page-hero .hero-title    { position:relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size:clamp(2rem,5vw,3.4rem); line-height:1.12; margin-bottom:10px; }
+    .page-hero .hero-title span { color: var(--gold); }
+    .page-hero .hero-subtitle { position:relative; z-index:1; color:rgba(255,255,255,.5); font-size:.88rem; letter-spacing:3px; text-transform:uppercase; }
+
+    /* ── MAIN CONTENT AREA ── */
+    #conteudos-lista {
+      background: var(--white-soft);
+      padding: 72px 24px 88px;
+    }
+
+    .conteudos-header {
+      max-width: 900px;
+      margin: 0 auto 52px;
+    }
+
+    /* ── ENCOUNTER CARD ── */
+    .encontro-card {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(198,165,90,.18);
+      box-shadow: 0 6px 24px rgba(0,0,0,.07);
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .encontro-card:hover {
+      box-shadow: 0 14px 42px rgba(0,0,0,.11);
+      transform: translateY(-2px);
+    }
+
+    /* header colorido do card */
+    .encontro-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 32px;
+      background: var(--dark);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .encontro-num {
+      min-width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .encontro-header-info { flex: 1; }
+
+    .encontro-header-info h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+
+    .encontro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .encontro-meta span {
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .5px;
+    }
+
+    .encontro-meta span strong {
+      color: var(--gold-soft);
+      font-weight: 700;
+    }
+
+    /* body do card */
+    .encontro-body {
+      padding: 28px 32px;
+    }
+
+    /* resumo do encontro */
+    .encontro-resumo {
+      color: var(--text-light);
+      font-size: .93rem;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(198,165,90,.15);
+    }
+
+    /* grade de materiais */
+    .materiais-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    /* ── MATERIAL ITEMS ── */
+    .mat-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(198,165,90,.22);
+      background: var(--cream);
+      text-decoration: none;
+      color: var(--text);
+      transition: background .18s, border-color .18s, transform .18s, box-shadow .18s;
+      cursor: pointer;
+    }
+    .mat-item:hover {
+      background: rgba(198,165,90,.10);
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .mat-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      transition: transform .18s;
+    }
+    .mat-item:hover .mat-icon { transform: scale(1.1); }
+
+    .mat-info { flex: 1; min-width: 0; }
+
+    .mat-type {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    .mat-title {
+      font-size: .88rem;
+      color: var(--text);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mat-desc {
+      font-size: .75rem;
+      color: var(--text-soft);
+      margin-top: 1px;
+    }
+
+    /* ── YOUTUBE EMBED ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(198,165,90,.22);
+      margin-top: 0;
+      grid-column: 1 / -1; /* ocupa linha inteira na grade */
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── IMAGES ROW ── */
+    .fotos-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+    .foto-thumb {
+      width: calc(33.333% - 8px);
+      min-width: 100px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(198,165,90,.2);
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .foto-thumb:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: .7;
+      transition: opacity .15s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    /* ── ENCONTRO PENDENTE ── */
+    .encontro-card.pendente {
+      opacity: .55;
+      pointer-events: none;
+    }
+    .encontro-card.pendente .encontro-header {
+      background: #2a2520;
+      border-bottom-color: rgba(198,165,90,.3);
+    }
+    .pendente-msg {
+      padding: 28px 32px;
+      color: var(--text-soft);
+      font-style: italic;
+      font-size: .9rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .encontro-header { padding: 18px 20px; gap: 14px; }
+      .encontro-body   { padding: 20px; }
+      .materiais-grid  { grid-template-columns: 1fr; }
+      .foto-thumb { width: calc(50% - 5px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="santos.html">Santos</a></li>
+      <li><a href="conteudos.html">Conteúdos</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="page-hero">
+    <p class="hero-parish">Paróquia São José</p>
+    <h1 class="hero-title">Conteúdos dos <span>Encontros</span></h1>
+    <p class="hero-subtitle">Materiais, vídeos e recursos de cada aula</p>
+  </div>
+
+  <!-- ═══ CONTEÚDOS ═══ -->
+  <section id="conteudos-lista">
+
+    <div class="conteudos-header section-inner">
+      <p class="section-label">Material formativo</p>
+      <h2 class="section-title">Encontros · 2026</h2>
+      <div class="section-divider"></div>
+      <p style="color:var(--text-light); line-height:1.8; max-width:640px;">
+        Aqui você encontra tudo o que foi partilhado em cada encontro:
+        apostilas, vídeos, imagens e links de referência.
+        O conteúdo é publicado após cada aula.
+      </p>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         ENCONTRO 1 — PREENCHIDO
+         ════════════════════════════════════════════════════════════
+         Como editar:
+           · encontro-num    → número do encontro
+           · h3              → título do encontro
+           · encontro-meta   → data, horário, local
+           · encontro-resumo → parágrafo resumindo o que foi visto
+
+         Tipos de material disponíveis (use/remova conforme precisar):
+           · PDF via Google Drive  (mat-item com link)
+           · Vídeo do YouTube      (video-wrapper com iframe)
+           · Imagens/fotos         (fotos-row com foto-thumb)
+           · Link externo          (mat-item com link)
+    ═══════════════════════════════════════════════════════════════ -->
+
+    <div class="encontro-card" data-encontro="1">
+      <div class="encontro-header">
+        <div class="encontro-num">1</div>
+        <div class="encontro-header-info">
+          <h3>Apresentação — Prólogo</h3>
+          <div class="encontro-meta">
+            <span>📅 <strong>04 Mar 2026</strong></span>
+            <span>🕗 <strong>20h – 22h</strong></span>
+            <span>📍 <strong>Sala 204</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <!-- RESUMO DO ENCONTRO -->
+        <p class="encontro-resumo">
+          No primeiro encontro nos apresentamos como turma e conhecemos a proposta da Catequese.
+          Refletimos sobre a finalidade do Ser Humano e como isso nos leva ao Catecismo da Igreja Católica e sua Doutrina.
+          
+          <!-- Edite este texto com o resumo real do encontro -->
+        </p>
+
+        <!-- GRADE DE MATERIAIS -->
+        <div class="materiais-grid">
+
+          <!-- PDF VIA GOOGLE DRIVE
+               1. No Drive, clique com botão direito no arquivo → "Compartilhar" → "Qualquer pessoa com o link"
+               2. Copie o link e substitua o href abaixo
+               3. Para abrir em nova aba: target="_blank" rel="noopener"
+          -->
+          <a class="mat-item" href="https://drive.google.com/drive/folders/125dnaBWpiwQJn40-amw8jlDrbYbZNTMM" target="_blank" rel="noopener">
+            <span class="mat-icon">📄</span>
+            <div class="mat-info">
+              <p class="mat-type">PDF</p>
+              <p class="mat-title">Drive com arquivos para Leitura</p>
+              <p class="mat-desc">Abertura · Prólogo</p>
+            </div>
+          </a>
+
+          <!-- LINK EXTERNO -->
+          <a class="mat-item" href="https://opusdei.org/pt-br/article/o-ceu-a-morte-o-purgatorio-o-que-sao-os-novissimos/" target="_blank" rel="noopener">
+            <span class="mat-icon">🔗</span>
+            <div class="mat-info">
+              <p class="mat-type">Link</p>
+              <p class="mat-title">Texto de referência</p>
+              <p class="mat-desc">Leitura complementar</p>
+            </div>
+          </a>
+
+          <!-- VÍDEO DO YOUTUBE
+               Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
+               Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
+          -->
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube.com/embed/DJDmbqzZTBQ"
+              title="Vídeo do 1º Encontro"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- FOTOS DO ENCONTRO
+               Coloque as imagens em: src/assets/img/encontros/encontro-01/
+               Adicione ou remova <img> conforme o número de fotos
+          -->
+          <!--
+          <div class="fotos-row">
+            <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-01.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
+            <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-02.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
+            <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-03.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
+          </div>
+          -->
+
+        </div>
+      </div>
+    </div>
+    <!-- FIM ENCONTRO 1 -->
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         ENCONTRO 2 — PENDENTE (ainda não aconteceu)
+         Quando o encontro acontecer:
+           1. Remova a classe "pendente" do .encontro-card
+           2. Substitua <div class="pendente-msg"> pelo bloco
+              .encontro-body completo (copie do Encontro 1 acima)
+           3. Preencha os dados reais
+    ═══════════════════════════════════════════════════════════════ -->
+
+    <div class="encontro-card pendente" data-encontro="2">
+      <div class="encontro-header">
+        <div class="encontro-num">2</div>
+        <div class="encontro-header-info">
+          <h3>[Tema a definir]</h3>
+          <div class="encontro-meta">
+            <span>📅 <strong>A definir</strong></span>
+            <span>🕗 <strong>20h – 22h</strong></span>
+            <span>📍 <strong>A definir</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="pendente-msg">
+        O conteúdo deste encontro será publicado após a realização da aula.
+      </div>
+    </div>
+
+    <div class="encontro-card pendente" data-encontro="3">
+      <div class="encontro-header">
+        <div class="encontro-num">3</div>
+        <div class="encontro-header-info">
+          <h3>[Tema a definir]</h3>
+          <div class="encontro-meta">
+            <span>📅 <strong>A definir</strong></span>
+            <span>🕗 <strong>20h – 22h</strong></span>
+            <span>📍 <strong>A definir</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="pendente-msg">
+        O conteúdo deste encontro será publicado após a realização da aula.
+      </div>
+    </div>
+
+    <div class="encontro-card pendente" data-encontro="4">
+      <div class="encontro-header">
+        <div class="encontro-num">4</div>
+        <div class="encontro-header-info">
+          <h3>[Tema a definir]</h3>
+          <div class="encontro-meta">
+            <span>📅 <strong>A definir</strong></span>
+            <span>🕗 <strong>20h – 22h</strong></span>
+            <span>📍 <strong>A definir</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="pendente-msg">
+        O conteúdo deste encontro será publicado após a realização da aula.
+      </div>
+    </div>
+
+    <div class="encontro-card pendente" data-encontro="5">
+      <div class="encontro-header">
+        <div class="encontro-num">5</div>
+        <div class="encontro-header-info">
+          <h3>[Tema a definir]</h3>
+          <div class="encontro-meta">
+            <span>📅 <strong>A definir</strong></span>
+            <span>🕗 <strong>20h – 22h</strong></span>
+            <span>📍 <strong>A definir</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="pendente-msg">
+        O conteúdo deste encontro será publicado após a realização da aula.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ LIGHTBOX (abre fotos em tela cheia) ═══ -->
+  <div class="lightbox" id="lightbox" onclick="fecharLightbox()">
+    <span class="lightbox-close" onclick="fecharLightbox()">✕</span>
+    <img id="lightbox-img" src="" alt="Foto ampliada">
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-icon">✝️</div>
+      <h3>Catequese — Adultos IC</h3>
+      <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
+      <div class="footer-divider"></div>
+      <p><em>"Ignorar as Escrituras é ignorar a Cristo."</em></p>
+      <p class="credits">Feito por Pedro Leite Campos</p>
+    </div>
+  </footer>
+
+  <script src="src/assets/js/main.js"></script>
+  <script>
+    function abrirLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') fecharLightbox();
+    });
+  </script>
+</body>
+</html>

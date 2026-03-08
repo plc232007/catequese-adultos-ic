@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Santos — Catequese Adultos IC | Paróquia São José</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="src/assets/css/styles.css">
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 42vh;
+      background-image:
+        linear-gradient(180deg, rgba(20,15,10,.90) 0%, rgba(55,40,20,.80) 60%, rgba(20,15,10,.92) 100%),
+        url("src/assets/img/fundo.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 110px 24px 52px;
+      position: relative;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(198,165,90,.10) 0%, transparent 68%);
+    }
+
+    .page-hero .hero-parish   { position: relative; z-index:1; font-weight:300; color:rgba(255,255,255,.7); letter-spacing:4px; text-transform:uppercase; font-size:.82rem; margin-bottom:16px; }
+    .page-hero .hero-title    { position: relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size: clamp(2rem,5vw,3.4rem); line-height:1.12; margin-bottom:10px; }
+    .page-hero .hero-title span { color: var(--gold); }
+    .page-hero .hero-subtitle { position: relative; z-index:1; color:rgba(255,255,255,.5); font-size:.88rem; letter-spacing:3px; text-transform:uppercase; }
+
+    /* ── SAINTS SECTION ── */
+    #santos-lista {
+      background: var(--white-soft);
+      padding: 72px 24px 88px;
+    }
+
+    .saints-header {
+      max-width: 900px;
+      margin: 0 auto 52px;
+    }
+
+    /* ── SAINT CARD ── */
+    .saint-card {
+      max-width: 900px;
+      margin: 0 auto 56px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.08);
+      border: 1px solid rgba(198,165,90,.18);
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 340px;
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .saint-card:hover {
+      box-shadow: 0 18px 52px rgba(0,0,0,.14);
+      transform: translateY(-3px);
+    }
+
+    /* ── IMAGE COLUMN ── */
+    .saint-image-col {
+      position: relative;
+      background: var(--cream-soft);
+      overflow: hidden;
+    }
+
+    .saint-image-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform .4s ease;
+    }
+
+    .saint-card:hover .saint-image-col img {
+      transform: scale(1.03);
+    }
+
+    .saint-image-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(145deg, var(--cream-soft) 0%, #e0d8cc 100%);
+      color: rgba(94,85,76,.45);
+    }
+
+    .saint-image-placeholder .ph-icon {
+      font-size: 3.5rem;
+      opacity: .5;
+    }
+
+    .saint-image-placeholder span {
+      font-size: .78rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .saint-week-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      z-index: 2;
+    }
+
+    /* ── TEXT COLUMN ── */
+    .saint-content {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .saint-feast {
+      font-size: .72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .saint-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .saint-epithet {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--text-soft);
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .saint-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .saint-bio {
+      color: var(--text-light);
+      font-size: .93rem;
+      line-height: 1.82;
+      flex: 1;
+    }
+
+    .saint-bio p + p { margin-top: 12px; }
+    .saint-bio strong { color: var(--text); }
+
+    .saint-quote {
+      margin-top: 22px;
+      padding: 14px 18px;
+      border-left: 3px solid var(--gold);
+      background: rgba(198,165,90,.07);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .saint-quote p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--text);
+      font-size: .95rem;
+      line-height: 1.65;
+      margin-bottom: 4px;
+    }
+
+    .saint-quote cite {
+      font-size: .75rem;
+      color: var(--text-soft);
+      letter-spacing: .3px;
+    }
+
+    .saint-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .saint-tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(198,165,90,.5);
+      color: var(--gold);
+      background: rgba(198,165,90,.07);
+    }
+
+    /* ── PRÓXIMAS SEMANAS ── */
+    .upcoming-saints {
+      max-width: 900px;
+      margin: 16px auto 0;
+    }
+
+    .upcoming-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(198,165,90,.25);
+    }
+
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 14px;
+    }
+
+    .upcoming-card {
+      background: #fff;
+      border: 1px solid rgba(198,165,90,.2);
+      border-left: 3px solid rgba(198,165,90,.4);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color .2s, transform .18s, box-shadow .18s;
+    }
+
+    .upcoming-card:hover {
+      border-left-color: var(--gold);
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.07);
+    }
+
+    .upcoming-card.tbd {
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .upcoming-num {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: .8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .upcoming-card.tbd .upcoming-num {
+      background: var(--cream-soft);
+      color: var(--text-soft);
+    }
+
+    .upcoming-info h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      font-size: .95rem;
+      margin-bottom: 2px;
+    }
+
+    .upcoming-info p {
+      font-size: .78rem;
+      color: var(--text-soft);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .saint-card { grid-template-columns: 1fr; }
+      .saint-image-col { height: 260px; }
+      .saint-image-placeholder { min-height: 260px; }
+      .saint-content { padding: 24px 22px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="santos.html">Santos</a></li>
+      <li><a href="conteudos.html">Conteúdos</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="page-hero">
+    <p class="hero-parish">Paróquia São José</p>
+    <h1 class="hero-title">Vida dos <span>Santos</span></h1>
+    <p class="hero-subtitle">Testemunhas da fé que nos guiam e intercedem</p>
+  </div>
+
+  <!-- ═══ LISTA ═══ -->
+  <section id="santos-lista">
+
+    <div class="saints-header section-inner">
+      <p class="section-label">Semana a semana</p>
+      <h2 class="section-title">Nossos Intercessores</h2>
+      <div class="section-divider"></div>
+      <p style="color:var(--text-light); line-height:1.8; max-width:660px;">
+        A cada semana nos aproximamos de um servo de Deus que viveu radicalmente o Evangelho.
+        Que o seu exemplo de fé, esperança e caridade nos inspire, e as suas orações nos acompanhem
+        ao longo desta jornada de Iniciação Cristã.
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         COMO ADICIONAR UM NOVO SANTO:
+         1. Duplique o bloco .saint-card abaixo
+         2. Atualize data-semana, textos e imagem
+         3. Quando a semana passar, mova o card anterior
+            para .upcoming-grid como .upcoming-card (sem .tbd)
+            e deixe o novo como .saint-card ativo
+    ═══════════════════════════════════════════ -->
+
+    <!-- SEMANA 1 — SANTO TOMÁS DE AQUINO -->
+    <div class="saint-card" data-semana="1">
+
+      <div class="saint-image-col">
+        <span class="saint-week-badge">Semana 1</span>
+          <img src="src/assets/img/santos/tomas-aquino.png" alt="Santo Tomás de Aquino">
+      </div>
+
+      <div class="saint-content">
+        <p class="saint-feast">Festa: 28 de Janeiro</p>
+        <h2 class="saint-name">Santo Tomás de Aquino</h2>
+        <p class="saint-epithet">Doutor Angélico · Patrono dos Estudantes e Teólogos</p>
+        <div class="saint-divider"></div>
+
+        <div class="saint-bio">
+          <p>
+            Nascido em <strong>1225</strong> no castelo de Roccasecca, na Itália, Tomás pertencia a uma família nobre.
+            Contra a vontade dos familiares, entrou jovem na Ordem dos Pregadores — os Dominicanos —
+            seguindo o chamado de Deus com coragem e determinação.
+          </p>
+          <p>
+            Discípulo de <strong>São Alberto Magno</strong> em Colônia e Paris, tornou-se o maior teólogo
+            da história da Igreja. Sua obra monumental, a <em>Summa Theologiae</em>, harmoniza fé e razão
+            de modo que ainda hoje orienta a reflexão católica, pois acreditava que toda verdade,
+            onde quer que se encontre, pertence ao Espírito Santo.
+          </p>
+          <p>
+            Era um homem de oração profunda. Conta-se que, orando diante do crucifixo,
+            Cristo lhe disse: <em>"Escreveste bem sobre Mim, Tomás. Que recompensa desejas?"</em>
+            E ele respondeu: <em>"Nenhuma outra senão a Ti mesmo, Senhor."</em>
+            Morreu em <strong>1274</strong> e foi canonizado em 1323. É Doutor da Igreja.
+          </p>
+        </div>
+
+        <blockquote class="saint-quote">
+          <p>"A fé tem por objeto a verdade primeira; a inteligência é o seu instrumento,
+          e o amor, a sua razão de ser."</p>
+          <cite>— Santo Tomás de Aquino, Summa Theologiae</cite>
+        </blockquote>
+
+        <div class="saint-tags">
+          <span class="saint-tag">Doutor da Igreja</span>
+          <span class="saint-tag">Dominicano</span>
+          <span class="saint-tag">Teólogo</span>
+          <span class="saint-tag">Séc. XIII</span>
+          <span class="saint-tag">Patrono dos Estudantes</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- FIM SEMANA 1 -->
+
+
+    <!-- PRÓXIMAS SEMANAS -->
+    <div class="upcoming-saints">
+      <p class="upcoming-title">📅 Próximas semanas</p>
+      <div class="upcoming-grid">
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">2</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 2 · Em breve</p>
+          </div>
+        </div>
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">3</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 3 · Em breve</p>
+          </div>
+        </div>
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">4</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 4 · Em breve</p>
+          </div>
+        </div>
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">5</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 5 · Em breve</p>
+          </div>
+        </div>
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">6</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 6 · Em breve</p>
+          </div>
+        </div>
+
+        <div class="upcoming-card tbd">
+          <div class="upcoming-num">7</div>
+          <div class="upcoming-info">
+            <h4>[Santo a definir]</h4>
+            <p>Semana 7 · Em breve</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-icon">✝️</div>
+      <h3>Catequese — Adultos IC</h3>
+      <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
+      <div class="footer-divider"></div>
+      <p><em>"Veni, Creator Spiritus, mentes tuorum visita..."</em></p>
+      <p class="credits">Feito por Pedro Leite Campos</p>
+    </div>
+  </footer>
+
+  <script src="src/assets/js/main.js"></script>
+</body>
+</html>
