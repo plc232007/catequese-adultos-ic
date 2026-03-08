@@ -637,3 +637,31 @@ footer .credits {
 
   .timeline-item { flex-direction: column; gap: 8px; }
 }
+
+/* ─── CORREÇÃO MENU MOBILE ─── */
+@media (max-width: 640px) {
+  /* overlay NÃO cobre a área do menu */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    right: auto;
+    width: calc(100vw - 280px);
+    background: rgba(0,0,0,.45);
+    z-index: 149;
+    display: none;
+  }
+  .nav-overlay.open { display: block; }
+
+  /* garante que links fiquem sempre clicáveis */
+  .nav-links {
+    pointer-events: none;
+  }
+  .nav-links.open {
+    pointer-events: auto;
+  }
+  .nav-links a {
+    position: relative;
+    z-index: 160;
+    pointer-events: auto;
+  }
+}

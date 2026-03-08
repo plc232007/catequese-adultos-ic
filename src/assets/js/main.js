@@ -1,4 +1,4 @@
-// Marca o item ativo no nav conforme a página atual
+// ─── NAV ATIVO ───
 (function () {
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
@@ -18,37 +18,46 @@
   const links   = document.getElementById('nav-links');
   const overlay = document.getElementById('nav-overlay');
 
-  if (!toggle || !links || !overlay) return;
-
-  function abrirMenu() {
-    toggle.classList.add('open');
-    links.classList.add('open');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+  if (!toggle || !links) return;
 
   function fecharMenu() {
     toggle.classList.remove('open');
     links.classList.remove('open');
-    overlay.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  toggle.addEventListener('click', () => {
+  function abrirMenu() {
+    toggle.classList.add('open');
+    links.classList.add('open');
+    if (overlay) overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     toggle.classList.contains('open') ? fecharMenu() : abrirMenu();
   });
 
-  // fecha ao clicar no overlay
-  overlay.addEventListener('click', fecharMenu);
+  if (overlay) overlay.addEventListener('click', fecharMenu);
 
-  // fecha ao clicar em um link
-  links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', fecharMenu);
-  });
-
-  // fecha com Esc
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') fecharMenu();
+  });
+
+  // links de página: deixa o browser navegar normalmente, só limpa o estado
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      // se for link de página (não âncora), navega diretamente
+      if (href && !href.startsWith('#')) {
+        document.body.style.overflow = '';
+        window.location.href = href;
+        return;
+      }
+      // âncora: só fecha o menu
+      fecharMenu();
+    });
   });
 })();
 
