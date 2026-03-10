@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orações — Catequese Adultos IC | Paróquia São José</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="src/assets/css/styles.css">
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 44vh;
+      background-image:
+        linear-gradient(180deg, rgba(20,15,10,.92) 0%, rgba(45,30,12,.82) 55%, rgba(20,15,10,.95) 100%),
+        url("src/assets/img/fundo.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(198,165,90,.13) 0%, transparent 65%);
+    }
+
+    /* Velas decorativas no hero */
+    .hero-candle {
+      position: absolute;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to top, rgba(198,165,90,.0), rgba(198,165,90,.35) 60%, rgba(198,165,90,.0));
+      animation: flicker 3s ease-in-out infinite;
+    }
+    .hero-candle:nth-child(1) { left: 18%; height: 180px; animation-delay: 0s; }
+    .hero-candle:nth-child(2) { left: 82%; height: 140px; animation-delay: 1.2s; }
+    .hero-candle:nth-child(3) { left: 50%; height: 220px; animation-delay: 0.6s; }
+
+    @keyframes flicker {
+      0%,100% { opacity: .6; transform: scaleX(1); }
+      50%      { opacity: 1;  transform: scaleX(1.5); }
+    }
+
+    .page-hero .hero-parish   { position:relative; z-index:1; font-weight:300; color:rgba(255,255,255,.65); letter-spacing:4px; text-transform:uppercase; font-size:.78rem; margin-bottom:18px; }
+    .page-hero .hero-title    { position:relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size: clamp(2.2rem,5.5vw,3.8rem); line-height:1.1; margin-bottom:12px; }
+    .page-hero .hero-title span { color: var(--gold); }
+    .page-hero .hero-subtitle { position:relative; z-index:1; color:rgba(255,255,255,.45); font-size:.82rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:28px; }
+
+    .hero-cross {
+      position: relative;
+      z-index: 1;
+      color: rgba(198,165,90,.55);
+      font-size: 2.8rem;
+      margin-top: 10px;
+      animation: pulse-gold 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-gold {
+      0%,100% { opacity: .5; }
+      50%      { opacity: 1; color: rgba(198,165,90,.9); }
+    }
+
+    /* ── MAIN AREA ── */
+    #oracoes-lista {
+      background: var(--white-soft);
+      padding: 72px 24px 96px;
+    }
+
+    .oracoes-header {
+      max-width: 820px;
+      margin: 0 auto 60px;
+    }
+
+    /* ── PRAYER CARD ── */
+    .prayer-card {
+      max-width: 820px;
+      margin: 0 auto 52px;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 36px rgba(0,0,0,.08);
+      border: 1px solid rgba(198,165,90,.16);
+      transition: box-shadow .25s, transform .25s;
+    }
+
+    .prayer-card:hover {
+      box-shadow: 0 20px 56px rgba(0,0,0,.13);
+      transform: translateY(-3px);
+    }
+
+    /* ── CARD HEADER ── */
+    .prayer-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 26px 36px;
+      background: var(--dark);
+      border-bottom: 3px solid var(--gold);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: background .2s;
+    }
+
+    .prayer-header:hover { background: #231c14; }
+
+    .prayer-num {
+      min-width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid rgba(198,165,90,.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .prayer-header-info { flex: 1; }
+
+    .prayer-header-info h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.18rem;
+      margin-bottom: 3px;
+    }
+
+    .prayer-header-info p {
+      font-size: .72rem;
+      color: rgba(255,255,255,.4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .prayer-chevron {
+      color: var(--gold);
+      font-size: 1.1rem;
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      flex-shrink: 0;
+      opacity: .7;
+    }
+
+    .prayer-card.open .prayer-chevron { transform: rotate(180deg); }
+
+    /* ── CARD BODY ── */
+    .prayer-body {
+      display: none;
+    }
+
+    .prayer-card.open .prayer-body {
+      display: block;
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 18px 36px 0;
+    }
+
+    .lang-btn {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(198,165,90,.4);
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: all .18s;
+    }
+
+    .lang-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── PRAYER TEXT ── */
+    .prayer-text {
+      padding: 28px 36px 36px;
+    }
+
+    .prayer-version {
+      display: none;
+    }
+
+    .prayer-version.visible {
+      display: block;
+    }
+
+    /* Versão portuguesa */
+    .prayer-version.pt .strophe {
+      margin-bottom: 18px;
+    }
+
+    .prayer-version.pt .strophe p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    .prayer-version.pt .strophe p.response {
+      color: var(--gold);
+      font-weight: 700;
+      padding-left: 20px;
+      border-left: 2px solid var(--gold);
+    }
+
+    /* Versão latina */
+    .prayer-version.la .strophe {
+      margin-bottom: 18px;
+    }
+
+    .prayer-version.la .strophe p {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.07rem;
+      color: var(--text);
+      line-height: 2;
+      letter-spacing: .3px;
+    }
+
+    .prayer-version.la .strophe p.response {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 700;
+      padding-left: 20px;
+      border-left: 2px solid var(--gold);
+    }
+
+    /* Latin label */
+    .latin-badge {
+      display: inline-block;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(198,165,90,.4);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* Divider between strophes */
+    .strophe-divider {
+      width: 28px;
+      height: 1px;
+      background: rgba(198,165,90,.35);
+      margin: 0 auto 18px;
+    }
+
+    /* Incipit label */
+    .prayer-incipit {
+      font-size: .7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* ── NOTA LITÚRGICA ── */
+    .prayer-note {
+      margin: 0 36px 28px;
+      padding: 14px 18px;
+      background: rgba(198,165,90,.07);
+      border-left: 3px solid rgba(198,165,90,.5);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .prayer-note p {
+      font-size: .82rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    .prayer-note strong { color: var(--text); }
+
+    /* ── ORNAMENTAL DIVIDER ── */
+    .ornament {
+      text-align: center;
+      color: rgba(198,165,90,.4);
+      font-size: 1.1rem;
+      letter-spacing: 8px;
+      margin: 8px 0 28px;
+      user-select: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .prayer-header { padding: 20px 22px; gap: 14px; }
+      .prayer-text   { padding: 22px 22px 28px; }
+      .lang-toggle   { padding: 16px 22px 0; }
+      .prayer-note   { margin: 0 22px 22px; }
+      .prayer-version.pt .strophe p,
+      .prayer-version.la .strophe p { font-size: .97rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="santos.html">Santos</a></li>
+      <li><a href="conteudos.html">Conteúdos</a></li>
+      <li><a href="oracoes.html">Orações</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="page-hero">
+    <div class="hero-candle"></div>
+    <div class="hero-candle"></div>
+    <div class="hero-candle"></div>
+    <p class="hero-parish">Paróquia São José</p>
+    <h1 class="hero-title"><span>Orações</span></h1>
+    <p class="hero-subtitle"></p>
+    <div class="hero-cross">✝</div>
+  </div>
+
+  <!-- ═══ ORAÇÕES ═══ -->
+  <section id="oracoes-lista">
+
+    <div class="oracoes-header section-inner">
+      <p class="section-label">Orações</p>
+      <h2 class="section-title">Oremos juntos</h2>
+      <div class="section-divider"></div>
+      <p style="color:var(--text-light); line-height:1.85; max-width:620px;">
+        Estas são as orações que rezamos ao longo dos nossos encontros.
+        Cada uma pode ser rezada em <strong>português</strong> ou em <strong>latim</strong>,
+        língua milenar da Igreja.
+        Clique em qualquer oração para abri-la.
+      </p>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         1. VINDE ESPÍRITO SANTO
+    ═══════════════════════════════════════════ -->
+    <div class="prayer-card" data-prayer="1">
+      <div class="prayer-header" onclick="togglePrayer(this)">
+        <div class="prayer-num">I</div>
+        <div class="prayer-header-info">
+          <h3>Vinde, Espírito Santo</h3>
+          <p>Sequência de Pentecostes · Veni Sancte Spiritus</p>
+        </div>
+        <span class="prayer-chevron">▾</span>
+      </div>
+
+      <div class="prayer-body">
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 1)">Português</button>
+          <button class="lang-btn"        onclick="setLang(this, 'la', 1)">Latim</button>
+        </div>
+
+        <div class="prayer-text">
+
+          <!-- PORTUGUÊS -->
+          <div class="prayer-version pt visible" id="prayer-1-pt">
+  <p class="prayer-incipit">Em Português</p>
+
+  <div class="strophe">
+    <p>Vinde, Espírito Santo,</p>
+    <p>enchei os corações dos vossos fiéis</p>
+    <p>e acendei neles o fogo do vosso amor.</p>
+  </div>
+
+  <div class="strophe-divider"></div>
+
+  <div class="strophe">
+    <p>Enviai o vosso Espírito</p>
+    <p>e tudo será criado,</p>
+    <p>e renovareis a face da terra.</p>
+  </div>
+
+  <div class="strophe-divider"></div>
+
+  <div class="strophe">
+    <p><strong>Oremos: </strong></p>
+    <p>Ó Deus, que instruístes os corações dos vossos fiéis</p>
+    <p>com a luz do Espírito Santo,</p>
+  </div>
+
+  <div class="strophe-divider"></div>
+
+  <div class="strophe">
+    <p>fazei que apreciemos retamente todas as coisas</p>
+    <p>segundo o mesmo Espírito</p>
+    <p>e gozemos sempre da sua consolação.</p>
+  </div>
+
+  <div class="strophe-divider"></div>
+
+  <div class="strophe">
+    <p>Por Cristo, Senhor nosso.</p>
+    <p>Amém.</p>
+  </div>
+
+  <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+</div>
+
+          <!-- LATIM -->
+          <div class="prayer-version la" id="prayer-1-la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Veni, Sancte Spiritus,</p>
+              <p>et emitte caelitus</p>
+              <p>lucis tuae radium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Veni, pater pauperum,</p>
+              <p>veni, dator munerum,</p>
+              <p>veni, lumen cordium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Consolator optime,</p>
+              <p>dulcis hospes animae,</p>
+              <p>dulce refrigerium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>In labore requies,</p>
+              <p>in aestu temperies,</p>
+              <p>in fletu solatium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>O lux beatissima,</p>
+              <p>reple cordis intima</p>
+              <p>tuorum fidelium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Sine tuo numine,</p>
+              <p>nihil est in homine,</p>
+              <p>nihil est innoxium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Lava quod est sordidum,</p>
+              <p>riga quod est aridum,</p>
+              <p>sana quod est saucium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Flecte quod est rigidum,</p>
+              <p>fove quod est frigidum,</p>
+              <p>rege quod est devium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Da tuis fidelibus,</p>
+              <p>in te confidentibus,</p>
+              <p>sacrum septenarium.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Da virtutis meritum,</p>
+              <p>da salutis exitum,</p>
+              <p>da perenne gaudium.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+        </div>
+
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> A <em>Sequentia</em> <em>Veni Sancte Spiritus</em> é atribuída ao Papa Inocêncio III (séc. XIII) e cantada solenemente na Missa de Pentecostes. É uma das mais belas sequências da liturgia latina.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIM 1 -->
+
+
+    <!-- ════════════════════════════════════════
+         2. PAI NOSSO
+    ═══════════════════════════════════════════ -->
+    <div class="prayer-card" data-prayer="2">
+      <div class="prayer-header" onclick="togglePrayer(this)">
+        <div class="prayer-num">II</div>
+        <div class="prayer-header-info">
+          <h3>Pai Nosso</h3>
+          <p>Oração dominical · Pater Noster</p>
+        </div>
+        <span class="prayer-chevron">▾</span>
+      </div>
+
+      <div class="prayer-body">
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 2)">Português</button>
+          <button class="lang-btn"        onclick="setLang(this, 'la', 2)">Latim</button>
+        </div>
+
+        <div class="prayer-text">
+
+          <!-- PORTUGUÊS -->
+          <div class="prayer-version pt visible" id="prayer-2-pt">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Pai nosso que estais nos céus,</p>
+              <p>santificado seja o vosso nome,</p>
+              <p>venha a nós o vosso reino,</p>
+              <p>seja feita a vossa vontade,</p>
+              <p>assim na terra como no céu.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>O pão nosso de cada dia nos dai hoje,</p>
+              <p>perdoai-nos as nossas ofensas,</p>
+              <p>assim como nós perdoamos</p>
+              <p>a quem nos tem ofendido.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>E não nos deixeis cair em tentação,</p>
+              <p>mas livrai-nos do mal.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+          <!-- LATIM -->
+          <div class="prayer-version la" id="prayer-2-la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Pater noster, qui es in caelis,</p>
+              <p>sanctificetur nomen tuum,</p>
+              <p>adveniat regnum tuum,</p>
+              <p>fiat voluntas tua,</p>
+              <p>sicut in caelo, et in terra.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Panem nostrum cotidianum da nobis hodie,</p>
+              <p>et dimitte nobis debita nostra,</p>
+              <p>sicut et nos dimittimus</p>
+              <p>debitoribus nostris.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Et ne nos inducas in tentationem,</p>
+              <p>sed libera nos a malo.</p>
+            </div>
+            <div class="strophe">
+              <p>Amen.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+        </div>
+
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> O <em>Pater Noster</em> foi ensinado pelo próprio Senhor Jesus Cristo (cf. Mt 6,9-13; Lc 11,2-4) e é chamado de <em>"resumo de todo o Evangelho"</em> por Tertuliano. É a oração fundamental da fé cristã.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIM 2 -->
+
+
+    <!-- ════════════════════════════════════════
+         3. AVE MARIA
+    ═══════════════════════════════════════════ -->
+    <div class="prayer-card" data-prayer="3">
+      <div class="prayer-header" onclick="togglePrayer(this)">
+        <div class="prayer-num">III</div>
+        <div class="prayer-header-info">
+          <h3>Ave Maria</h3>
+          <p>Saudação angelical · Ave Maria</p>
+        </div>
+        <span class="prayer-chevron">▾</span>
+      </div>
+
+      <div class="prayer-body">
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 3)">Português</button>
+          <button class="lang-btn"        onclick="setLang(this, 'la', 3)">Latim</button>
+        </div>
+
+        <div class="prayer-text">
+
+          <!-- PORTUGUÊS -->
+          <div class="prayer-version pt visible" id="prayer-3-pt">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Ave Maria, cheia de graça,</p>
+              <p>o Senhor é convosco,</p>
+              <p>bendita sois vós entre as mulheres,</p>
+              <p>e bendito é o fruto do vosso ventre, Jesus.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Santa Maria, Mãe de Deus,</p>
+              <p>rogai por nós, pecadores,</p>
+              <p>agora e na hora da nossa morte.</p>
+            </div>
+            <div class="strophe">
+              <p>Amém.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+          <!-- LATIM -->
+          <div class="prayer-version la" id="prayer-3-la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Ave Maria, gratia plena,</p>
+              <p>Dominus tecum,</p>
+              <p>benedicta tu in mulieribus,</p>
+              <p>et benedictus fructus ventris tui, Iesus.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Sancta Maria, Mater Dei,</p>
+              <p>ora pro nobis peccatoribus,</p>
+              <p>nunc et in hora mortis nostrae.</p>
+            </div>
+            <div class="strophe">
+              <p>Amen.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+        </div>
+
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> A <em>Ave Maria</em> é composta pela saudação do anjo Gabriel (Lc 1,28), pela aclamação de Isabel (Lc 1,42) e pela súplica eclesial acrescentada gradualmente pela Tradição. Está no coração do Rosário.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIM 3 -->
+
+
+    <!-- ════════════════════════════════════════
+         4. INSPIRAI SENHOR AS NOSSAS AÇÕES
+    ═══════════════════════════════════════════ -->
+    <div class="prayer-card" data-prayer="4">
+      <div class="prayer-header" onclick="togglePrayer(this)">
+        <div class="prayer-num">IV</div>
+        <div class="prayer-header-info">
+          <h3>Inspirai, Senhor, as nossas ações</h3>
+          <p>Oração de abertura · Actiones nostras</p>
+        </div>
+        <span class="prayer-chevron">▾</span>
+      </div>
+
+      <div class="prayer-body">
+
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 4)">Português</button>
+          <button class="lang-btn"        onclick="setLang(this, 'la', 4)">Latim</button>
+        </div>
+
+        <div class="prayer-text">
+
+          <!-- PORTUGUÊS -->
+          <div class="prayer-version pt visible" id="prayer-4-pt">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Inspirai, Senhor, as nossas ações</p>
+              <p>e acompanhais a sua realização,</p>
+              <p>para que toda a nossa oração e obra</p>
+              <p>sempre comece em vós</p>
+              <p>e por vós seja completada.</p>
+            </div>
+            <div class="strophe">
+              <p>Amém.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+          <!-- LATIM -->
+          <div class="prayer-version la" id="prayer-4-la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Actiones nostras, quaesumus Domine,</p>
+              <p>aspirando praeveni</p>
+              <p>et adiuvando prosequere,</p>
+              <p>ut cuncta nostra oratio et operatio</p>
+              <p>a te semper incipiat</p>
+              <p>et per te coepta finiatur.</p>
+            </div>
+            <div class="strophe">
+              <p>Per Christum Dominum nostrum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+
+        </div>
+
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> A <em>Actiones nostras</em> é uma antiga coleta do Missale Romanum, recitada como oração de abertura antes de atividades importantes. Expressa a dependência total de Deus em toda ação humana — do início ao fim.</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIM 4 -->
+
+  </section>
+
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-icon">✝️</div>
+      <h3>Catequese — Adultos IC</h3>
+      <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
+      <div class="footer-divider"></div>
+      <p><em>Ignoratio Scripturarum ignoratio Christi est.</em></p>
+      <p class="credits">Feito por Pedro Leite Campos</p>
+    </div>
+  </footer>
+
+  <script src="src/assets/js/main.js"></script>
+  <script>
+    /* ── Abrir/fechar card ── */
+    function togglePrayer(header) {
+      const card = header.closest('.prayer-card');
+      card.classList.toggle('open');
+    }
+
+    /* ── Trocar idioma ── */
+    function setLang(btn, lang, num) {
+      // Atualiza botões
+      const toggle = btn.closest('.lang-toggle');
+      toggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Mostra versão correta
+      const ptEl = document.getElementById('prayer-' + num + '-pt');
+      const laEl = document.getElementById('prayer-' + num + '-la');
+      ptEl.classList.toggle('visible', lang === 'pt');
+      laEl.classList.toggle('visible', lang === 'la');
+    }
+
+    /* Abre o primeiro card por padrão */
+    document.querySelector('.prayer-card[data-prayer="1"]').classList.add('open');
+  </script>
+</body>
+</html>
