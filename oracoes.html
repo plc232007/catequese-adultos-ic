@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Orações — Catequese Adultos IC | Paróquia São José</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=IM+Fell+English:ital@0;1&display=swap"
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
   <style>
-
     /* ── PAGE HERO ── */
     .page-hero {
       min-height: 44vh;
       background-image:
-        linear-gradient(180deg, rgba(20,15,10,.92) 0%, rgba(45,30,12,.82) 55%, rgba(20,15,10,.95) 100%),
+        linear-gradient(180deg, rgba(20, 15, 10, .92) 0%, rgba(45, 30, 12, .82) 55%, rgba(20, 15, 10, .95) 100%),
         url("src/assets/img/fundo.jpg");
       background-size: cover;
       background-position: center;
@@ -34,7 +36,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 60%, rgba(198,165,90,.13) 0%, transparent 65%);
+      background: radial-gradient(ellipse at 50% 60%, rgba(198, 165, 90, .13) 0%, transparent 65%);
     }
 
     /* Velas decorativas no hero */
@@ -42,35 +44,97 @@
       position: absolute;
       bottom: 0;
       width: 1px;
-      background: linear-gradient(to top, rgba(198,165,90,.0), rgba(198,165,90,.35) 60%, rgba(198,165,90,.0));
+      background: linear-gradient(to top, rgba(198, 165, 90, .0), rgba(198, 165, 90, .35) 60%, rgba(198, 165, 90, .0));
       animation: flicker 3s ease-in-out infinite;
     }
-    .hero-candle:nth-child(1) { left: 18%; height: 180px; animation-delay: 0s; }
-    .hero-candle:nth-child(2) { left: 82%; height: 140px; animation-delay: 1.2s; }
-    .hero-candle:nth-child(3) { left: 50%; height: 220px; animation-delay: 0.6s; }
 
-    @keyframes flicker {
-      0%,100% { opacity: .6; transform: scaleX(1); }
-      50%      { opacity: 1;  transform: scaleX(1.5); }
+    .hero-candle:nth-child(1) {
+      left: 18%;
+      height: 180px;
+      animation-delay: 0s;
     }
 
-    .page-hero .hero-parish   { position:relative; z-index:1; font-weight:300; color:rgba(255,255,255,.65); letter-spacing:4px; text-transform:uppercase; font-size:.78rem; margin-bottom:18px; }
-    .page-hero .hero-title    { position:relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size: clamp(2.2rem,5.5vw,3.8rem); line-height:1.1; margin-bottom:12px; }
-    .page-hero .hero-title span { color: var(--gold); }
-    .page-hero .hero-subtitle { position:relative; z-index:1; color:rgba(255,255,255,.45); font-size:.82rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:28px; }
+    .hero-candle:nth-child(2) {
+      left: 82%;
+      height: 140px;
+      animation-delay: 1.2s;
+    }
+
+    .hero-candle:nth-child(3) {
+      left: 50%;
+      height: 220px;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes flicker {
+
+      0%,
+      100% {
+        opacity: .6;
+        transform: scaleX(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleX(1.5);
+      }
+    }
+
+    .page-hero .hero-parish {
+      position: relative;
+      z-index: 1;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .65);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: .78rem;
+      margin-bottom: 18px;
+    }
+
+    .page-hero .hero-title {
+      position: relative;
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .page-hero .hero-title span {
+      color: var(--gold);
+    }
+
+    .page-hero .hero-subtitle {
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, .45);
+      font-size: .82rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
 
     .hero-cross {
       position: relative;
       z-index: 1;
-      color: rgba(198,165,90,.55);
+      color: rgba(198, 165, 90, .55);
       font-size: 2.8rem;
       margin-top: 10px;
       animation: pulse-gold 4s ease-in-out infinite;
     }
 
     @keyframes pulse-gold {
-      0%,100% { opacity: .5; }
-      50%      { opacity: 1; color: rgba(198,165,90,.9); }
+
+      0%,
+      100% {
+        opacity: .5;
+      }
+
+      50% {
+        opacity: 1;
+        color: rgba(198, 165, 90, .9);
+      }
     }
 
     /* ── MAIN AREA ── */
@@ -91,13 +155,13 @@
       background: #fff;
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 8px 36px rgba(0,0,0,.08);
-      border: 1px solid rgba(198,165,90,.16);
+      box-shadow: 0 8px 36px rgba(0, 0, 0, .08);
+      border: 1px solid rgba(198, 165, 90, .16);
       transition: box-shadow .25s, transform .25s;
     }
 
     .prayer-card:hover {
-      box-shadow: 0 20px 56px rgba(0,0,0,.13);
+      box-shadow: 0 20px 56px rgba(0, 0, 0, .13);
       transform: translateY(-3px);
     }
 
@@ -115,13 +179,15 @@
       transition: background .2s;
     }
 
-    .prayer-header:hover { background: #231c14; }
+    .prayer-header:hover {
+      background: #231c14;
+    }
 
     .prayer-num {
       min-width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: 2px solid rgba(198,165,90,.55);
+      border: 2px solid rgba(198, 165, 90, .55);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -132,7 +198,9 @@
       flex-shrink: 0;
     }
 
-    .prayer-header-info { flex: 1; }
+    .prayer-header-info {
+      flex: 1;
+    }
 
     .prayer-header-info h3 {
       font-family: 'Playfair Display', serif;
@@ -143,7 +211,7 @@
 
     .prayer-header-info p {
       font-size: .72rem;
-      color: rgba(255,255,255,.4);
+      color: rgba(255, 255, 255, .4);
       letter-spacing: 1.5px;
       text-transform: uppercase;
     }
@@ -151,12 +219,14 @@
     .prayer-chevron {
       color: var(--gold);
       font-size: 1.1rem;
-      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1);
       flex-shrink: 0;
       opacity: .7;
     }
 
-    .prayer-card.open .prayer-chevron { transform: rotate(180deg); }
+    .prayer-card.open .prayer-chevron {
+      transform: rotate(180deg);
+    }
 
     /* ── CARD BODY ── */
     .prayer-body {
@@ -183,7 +253,7 @@
       text-transform: uppercase;
       padding: 5px 16px;
       border-radius: 20px;
-      border: 1.5px solid rgba(198,165,90,.4);
+      border: 1.5px solid rgba(198, 165, 90, .4);
       background: transparent;
       color: var(--text-soft);
       cursor: pointer;
@@ -263,7 +333,7 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--gold);
-      border: 1px solid rgba(198,165,90,.4);
+      border: 1px solid rgba(198, 165, 90, .4);
       padding: 3px 10px;
       border-radius: 12px;
       margin-bottom: 20px;
@@ -273,7 +343,7 @@
     .strophe-divider {
       width: 28px;
       height: 1px;
-      background: rgba(198,165,90,.35);
+      background: rgba(198, 165, 90, .35);
       margin: 0 auto 18px;
     }
 
@@ -291,8 +361,8 @@
     .prayer-note {
       margin: 0 36px 28px;
       padding: 14px 18px;
-      background: rgba(198,165,90,.07);
-      border-left: 3px solid rgba(198,165,90,.5);
+      background: rgba(198, 165, 90, .07);
+      border-left: 3px solid rgba(198, 165, 90, .5);
       border-radius: 0 10px 10px 0;
     }
 
@@ -302,12 +372,14 @@
       line-height: 1.7;
     }
 
-    .prayer-note strong { color: var(--text); }
+    .prayer-note strong {
+      color: var(--text);
+    }
 
     /* ── ORNAMENTAL DIVIDER ── */
     .ornament {
       text-align: center;
-      color: rgba(198,165,90,.4);
+      color: rgba(198, 165, 90, .4);
       font-size: 1.1rem;
       letter-spacing: 8px;
       margin: 8px 0 28px;
@@ -316,16 +388,31 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
-      .prayer-header { padding: 20px 22px; gap: 14px; }
-      .prayer-text   { padding: 22px 22px 28px; }
-      .lang-toggle   { padding: 16px 22px 0; }
-      .prayer-note   { margin: 0 22px 22px; }
-      .prayer-version.pt .strophe p,
-      .prayer-version.la .strophe p { font-size: .97rem; }
-    }
+      .prayer-header {
+        padding: 20px 22px;
+        gap: 14px;
+      }
 
+      .prayer-text {
+        padding: 22px 22px 28px;
+      }
+
+      .lang-toggle {
+        padding: 16px 22px 0;
+      }
+
+      .prayer-note {
+        margin: 0 22px 22px;
+      }
+
+      .prayer-version.pt .strophe p,
+      .prayer-version.la .strophe p {
+        font-size: .97rem;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ═══ NAV ═══ -->
@@ -385,54 +472,54 @@
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 1)">Português</button>
-          <button class="lang-btn"        onclick="setLang(this, 'la', 1)">Latim</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 1)">Latim</button>
         </div>
 
         <div class="prayer-text">
 
           <!-- PORTUGUÊS -->
           <div class="prayer-version pt visible" id="prayer-1-pt">
-  <p class="prayer-incipit">Em Português</p>
+            <p class="prayer-incipit">Em Português</p>
 
-  <div class="strophe">
-    <p>Vinde, Espírito Santo,</p>
-    <p>enchei os corações dos vossos fiéis</p>
-    <p>e acendei neles o fogo do vosso amor.</p>
-  </div>
+            <div class="strophe">
+              <p>Vinde, Espírito Santo,</p>
+              <p>enchei os corações dos vossos fiéis</p>
+              <p>e acendei neles o fogo do vosso amor.</p>
+            </div>
 
-  <div class="strophe-divider"></div>
+            <div class="strophe-divider"></div>
 
-  <div class="strophe">
-    <p>Enviai o vosso Espírito</p>
-    <p>e tudo será criado,</p>
-    <p>e renovareis a face da terra.</p>
-  </div>
+            <div class="strophe">
+              <p>Enviai o vosso Espírito</p>
+              <p>e tudo será criado,</p>
+              <p>e renovareis a face da terra.</p>
+            </div>
 
-  <div class="strophe-divider"></div>
+            <div class="strophe-divider"></div>
 
-  <div class="strophe">
-    <p><strong>Oremos: </strong></p>
-    <p>Ó Deus, que instruístes os corações dos vossos fiéis</p>
-    <p>com a luz do Espírito Santo,</p>
-  </div>
+            <div class="strophe">
+              <p><strong>Oremos: </strong></p>
+              <p>Ó Deus, que instruístes os corações dos vossos fiéis</p>
+              <p>com a luz do Espírito Santo,</p>
+            </div>
 
-  <div class="strophe-divider"></div>
+            <div class="strophe-divider"></div>
 
-  <div class="strophe">
-    <p>fazei que apreciemos retamente todas as coisas</p>
-    <p>segundo o mesmo Espírito</p>
-    <p>e gozemos sempre da sua consolação.</p>
-  </div>
+            <div class="strophe">
+              <p>fazei que apreciemos retamente todas as coisas</p>
+              <p>segundo o mesmo Espírito</p>
+              <p>e gozemos sempre da sua consolação.</p>
+            </div>
 
-  <div class="strophe-divider"></div>
+            <div class="strophe-divider"></div>
 
-  <div class="strophe">
-    <p>Por Cristo, Senhor nosso.</p>
-    <p>Amém.</p>
-  </div>
+            <div class="strophe">
+              <p>Por Cristo, Senhor nosso.</p>
+              <p>Amém.</p>
+            </div>
 
-  <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
-</div>
+            <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
 
           <!-- LATIM -->
           <div class="prayer-version la" id="prayer-1-la">
@@ -502,7 +589,9 @@
         </div>
 
         <div class="prayer-note">
-          <p><strong>Nota:</strong> A <em>Sequentia</em> <em>Veni Sancte Spiritus</em> é atribuída ao Papa Inocêncio III (séc. XIII) e cantada solenemente na Missa de Pentecostes. É uma das mais belas sequências da liturgia latina.</p>
+          <p><strong>Nota:</strong> A <em>Sequentia</em> <em>Veni Sancte Spiritus</em> é atribuída ao Papa Inocêncio III
+            (séc. XIII) e cantada solenemente na Missa de Pentecostes. É uma das mais belas sequências da liturgia
+            latina.</p>
         </div>
 
       </div>
@@ -527,7 +616,7 @@
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 2)">Português</button>
-          <button class="lang-btn"        onclick="setLang(this, 'la', 2)">Latim</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 2)">Latim</button>
         </div>
 
         <div class="prayer-text">
@@ -588,7 +677,9 @@
         </div>
 
         <div class="prayer-note">
-          <p><strong>Nota:</strong> O <em>Pater Noster</em> foi ensinado pelo próprio Senhor Jesus Cristo (cf. Mt 6,9-13; Lc 11,2-4) e é chamado de <em>"resumo de todo o Evangelho"</em> por Tertuliano. É a oração fundamental da fé cristã.</p>
+          <p><strong>Nota:</strong> O <em>Pater Noster</em> foi ensinado pelo próprio Senhor Jesus Cristo (cf. Mt
+            6,9-13; Lc 11,2-4) e é chamado de <em>"resumo de todo o Evangelho"</em> por Tertuliano. É a oração
+            fundamental da fé cristã.</p>
         </div>
 
       </div>
@@ -613,7 +704,7 @@
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 3)">Português</button>
-          <button class="lang-btn"        onclick="setLang(this, 'la', 3)">Latim</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 3)">Latim</button>
         </div>
 
         <div class="prayer-text">
@@ -663,7 +754,9 @@
         </div>
 
         <div class="prayer-note">
-          <p><strong>Nota:</strong> A <em>Ave Maria</em> é composta pela saudação do anjo Gabriel (Lc 1,28), pela aclamação de Isabel (Lc 1,42) e pela súplica eclesial acrescentada gradualmente pela Tradição. Está no coração do Rosário.</p>
+          <p><strong>Nota:</strong> A <em>Ave Maria</em> é composta pela saudação do anjo Gabriel (Lc 1,28), pela
+            aclamação de Isabel (Lc 1,42) e pela súplica eclesial acrescentada gradualmente pela Tradição. Está no
+            coração do Rosário.</p>
         </div>
 
       </div>
@@ -688,7 +781,7 @@
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 4)">Português</button>
-          <button class="lang-btn"        onclick="setLang(this, 'la', 4)">Latim</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 4)">Latim</button>
         </div>
 
         <div class="prayer-text">
@@ -697,11 +790,12 @@
           <div class="prayer-version pt visible" id="prayer-4-pt">
             <p class="prayer-incipit">Em Português</p>
             <div class="strophe">
-              <p>Inspirai, Senhor, as nossas ações</p>
-              <p>e acompanhais a sua realização,</p>
-              <p>para que toda a nossa oração e obra</p>
-              <p>sempre comece em vós</p>
-              <p>e por vós seja completada.</p>
+              <p>Inspirai, ó Senhor, as nossas ações</p>
+              <p>e ajudai-nos a realizá-las,</p>
+              <p>para que em vós comece</p>
+              <p>e para vós termine</p>
+              <p>tudo aquilo que fizermos.</p>
+              <p>Por Cristo, Senhor nosso.</p>
             </div>
             <div class="strophe">
               <p>Amém.</p>
@@ -730,7 +824,9 @@
         </div>
 
         <div class="prayer-note">
-          <p><strong>Nota:</strong> A <em>Actiones nostras</em> é uma antiga coleta do Missale Romanum, recitada como oração de abertura antes de atividades importantes. Expressa a dependência total de Deus em toda ação humana — do início ao fim.</p>
+          <p><strong>Nota:</strong> A <em>Actiones nostras</em> é uma antiga coleta do Missale Romanum, recitada como
+            oração de abertura antes de atividades importantes. Expressa a dependência total de Deus em toda ação humana
+            — do início ao fim.</p>
         </div>
 
       </div>
@@ -778,4 +874,5 @@
     document.querySelector('.prayer-card[data-prayer="1"]').classList.add('open');
   </script>
 </body>
+
 </html>

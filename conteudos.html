@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conteúdos — Catequese Adultos IC | Paróquia São José</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
   <style>
-
     /* ── PAGE HERO ── */
     .page-hero {
       min-height: 40vh;
       background-image:
-        linear-gradient(180deg, rgba(20,15,10,.90) 0%, rgba(55,40,20,.80) 60%, rgba(20,15,10,.92) 100%),
+        linear-gradient(180deg, rgba(20, 15, 10, .90) 0%, rgba(55, 40, 20, .80) 60%, rgba(20, 15, 10, .92) 100%),
         url("src/assets/img/fundo.jpg");
       background-size: cover;
       background-position: center;
@@ -28,16 +30,47 @@
       padding: 110px 24px 52px;
       position: relative;
     }
+
     .page-hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(198,165,90,.10) 0%, transparent 68%);
+      background: radial-gradient(ellipse at center, rgba(198, 165, 90, .10) 0%, transparent 68%);
     }
-    .page-hero .hero-parish   { position:relative; z-index:1; font-weight:300; color:rgba(255,255,255,.7); letter-spacing:4px; text-transform:uppercase; font-size:.82rem; margin-bottom:16px; }
-    .page-hero .hero-title    { position:relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size:clamp(2rem,5vw,3.4rem); line-height:1.12; margin-bottom:10px; }
-    .page-hero .hero-title span { color: var(--gold); }
-    .page-hero .hero-subtitle { position:relative; z-index:1; color:rgba(255,255,255,.5); font-size:.88rem; letter-spacing:3px; text-transform:uppercase; }
+
+    .page-hero .hero-parish {
+      position: relative;
+      z-index: 1;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .7);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin-bottom: 16px;
+    }
+
+    .page-hero .hero-title {
+      position: relative;
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .page-hero .hero-title span {
+      color: var(--gold);
+    }
+
+    .page-hero .hero-subtitle {
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, .5);
+      font-size: .88rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
 
     /* ── MAIN CONTENT AREA ── */
     #conteudos-lista {
@@ -56,13 +89,14 @@
       margin: 0 auto 40px;
       background: #fff;
       border-radius: 16px;
-      border: 1px solid rgba(198,165,90,.18);
-      box-shadow: 0 6px 24px rgba(0,0,0,.07);
+      border: 1px solid rgba(198, 165, 90, .18);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .07);
       overflow: hidden;
       transition: box-shadow .2s, transform .2s;
     }
+
     .encontro-card:hover {
-      box-shadow: 0 14px 42px rgba(0,0,0,.11);
+      box-shadow: 0 14px 42px rgba(0, 0, 0, .11);
       transform: translateY(-2px);
     }
 
@@ -91,7 +125,9 @@
       flex-shrink: 0;
     }
 
-    .encontro-header-info { flex: 1; }
+    .encontro-header-info {
+      flex: 1;
+    }
 
     .encontro-header-info h3 {
       font-family: 'Playfair Display', serif;
@@ -108,7 +144,7 @@
 
     .encontro-meta span {
       font-size: .75rem;
-      color: rgba(255,255,255,.5);
+      color: rgba(255, 255, 255, .5);
       letter-spacing: .5px;
     }
 
@@ -129,7 +165,7 @@
       line-height: 1.8;
       margin-bottom: 24px;
       padding-bottom: 24px;
-      border-bottom: 1px solid rgba(198,165,90,.15);
+      border-bottom: 1px solid rgba(198, 165, 90, .15);
     }
 
     /* grade de materiais */
@@ -146,18 +182,19 @@
       gap: 12px;
       padding: 14px 16px;
       border-radius: 10px;
-      border: 1px solid rgba(198,165,90,.22);
+      border: 1px solid rgba(198, 165, 90, .22);
       background: var(--cream);
       text-decoration: none;
       color: var(--text);
       transition: background .18s, border-color .18s, transform .18s, box-shadow .18s;
       cursor: pointer;
     }
+
     .mat-item:hover {
-      background: rgba(198,165,90,.10);
+      background: rgba(198, 165, 90, .10);
       border-color: var(--gold);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
     }
 
     .mat-icon {
@@ -165,9 +202,15 @@
       flex-shrink: 0;
       transition: transform .18s;
     }
-    .mat-item:hover .mat-icon { transform: scale(1.1); }
 
-    .mat-info { flex: 1; min-width: 0; }
+    .mat-item:hover .mat-icon {
+      transform: scale(1.1);
+    }
+
+    .mat-info {
+      flex: 1;
+      min-width: 0;
+    }
 
     .mat-type {
       font-size: .65rem;
@@ -200,13 +243,16 @@
       height: 0;
       border-radius: 10px;
       overflow: hidden;
-      border: 1px solid rgba(198,165,90,.22);
+      border: 1px solid rgba(198, 165, 90, .22);
       margin-top: 0;
-      grid-column: 1 / -1; /* ocupa linha inteira na grade */
+      grid-column: 1 / -1;
+      /* ocupa linha inteira na grade */
     }
+
     .video-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: none;
@@ -220,19 +266,21 @@
       grid-column: 1 / -1;
       margin-top: 0;
     }
+
     .foto-thumb {
       width: calc(33.333% - 8px);
       min-width: 100px;
       aspect-ratio: 4/3;
       object-fit: cover;
       border-radius: 8px;
-      border: 1px solid rgba(198,165,90,.2);
+      border: 1px solid rgba(198, 165, 90, .2);
       cursor: pointer;
       transition: transform .18s, box-shadow .18s;
     }
+
     .foto-thumb:hover {
       transform: scale(1.03);
-      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
     }
 
     /* ── LIGHTBOX ── */
@@ -240,22 +288,28 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.88);
+      background: rgba(0, 0, 0, .88);
       z-index: 999;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
-    .lightbox.active { display: flex; }
+
+    .lightbox.active {
+      display: flex;
+    }
+
     .lightbox img {
       max-width: 90vw;
       max-height: 88vh;
       border-radius: 10px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
     }
+
     .lightbox-close {
       position: absolute;
-      top: 20px; right: 24px;
+      top: 20px;
+      right: 24px;
       color: #fff;
       font-size: 2rem;
       cursor: pointer;
@@ -263,17 +317,22 @@
       opacity: .7;
       transition: opacity .15s;
     }
-    .lightbox-close:hover { opacity: 1; }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
 
     /* ── ENCONTRO PENDENTE ── */
     .encontro-card.pendente {
       opacity: .55;
       pointer-events: none;
     }
+
     .encontro-card.pendente .encontro-header {
       background: #2a2520;
-      border-bottom-color: rgba(198,165,90,.3);
+      border-bottom-color: rgba(198, 165, 90, .3);
     }
+
     .pendente-msg {
       padding: 28px 32px;
       color: var(--text-soft);
@@ -283,14 +342,26 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      .encontro-header { padding: 18px 20px; gap: 14px; }
-      .encontro-body   { padding: 20px; }
-      .materiais-grid  { grid-template-columns: 1fr; }
-      .foto-thumb { width: calc(50% - 5px); }
-    }
+      .encontro-header {
+        padding: 18px 20px;
+        gap: 14px;
+      }
 
+      .encontro-body {
+        padding: 20px;
+      }
+
+      .materiais-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .foto-thumb {
+        width: calc(50% - 5px);
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ═══ NAV ═══ -->
@@ -364,7 +435,8 @@
         <!-- RESUMO DO ENCONTRO -->
         <p class="encontro-resumo">
           No primeiro encontro nos apresentamos como turma e conhecemos a proposta da Catequese.
-          Refletimos sobre a finalidade do ser humano e como isso nos leva ao Catecismo da Igreja Católica e sua Doutrina.
+          Refletimos sobre a finalidade do ser humano e como isso nos leva ao Catecismo da Igreja Católica e sua
+          Doutrina.
           <!-- Edite este texto com o resumo real do encontro -->
         </p>
 
@@ -376,7 +448,8 @@
                2. Copie o link e substitua o href abaixo
                3. Para abrir em nova aba: target="_blank" rel="noopener"
           -->
-          <a class="mat-item" href="https://drive.google.com/drive/folders/125dnaBWpiwQJn40-amw8jlDrbYbZNTMM" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://drive.google.com/drive/folders/1LPyPBcImjLyPCMtuBtPnuCKGGg7VY-qs"
+            target="_blank" rel="noopener">
             <span class="mat-icon">📄</span>
             <div class="mat-info">
               <p class="mat-type">PDF</p>
@@ -386,7 +459,9 @@
           </a>
 
           <!-- LINK EXTERNO -->
-          <a class="mat-item" href="https://opusdei.org/pt-br/article/o-ceu-a-morte-o-purgatorio-o-que-sao-os-novissimos/" target="_blank" rel="noopener">
+          <a class="mat-item"
+            href="https://opusdei.org/pt-br/article/o-ceu-a-morte-o-purgatorio-o-que-sao-os-novissimos/" target="_blank"
+            rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
@@ -400,10 +475,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe
-              src="https://www.youtube.com/embed/DJDmbqzZTBQ"
-              title="Vídeo do 1º Encontro"
-              allowfullscreen>
+            <iframe src="https://www.youtube.com/embed/DJDmbqzZTBQ" title="Vídeo do 1º Encontro" allowfullscreen>
             </iframe>
           </div>
 
@@ -441,8 +513,11 @@
 
         <!-- RESUMO DO ENCONTRO -->
         <p class="encontro-resumo">
-          -
-          <!-- Edite este texto com o resumo real do encontro -->
+          No segundo encontro conversamos sobre o que significa crer: vimos que o homem é capaz de Deus,
+          pois traz no coração um desejo de verdade e pode reconhecê-Lo também pela razão, como ensina a
+          primeira via de Santo Tomás. Vimos ainda que Deus se revela por amor na história da salvação,
+          plenamente em Jesus Cristo, e que a resposta do homem a essa revelação é a fé: confiar em Deus,
+          aderir à sua verdade e entregar-se a Ele com inteligência e vontade.
         </p>
 
         <!-- GRADE DE MATERIAIS -->
@@ -453,7 +528,8 @@
                2. Copie o link e substitua o href abaixo
                3. Para abrir em nova aba: target="_blank" rel="noopener"
           -->
-          <a class="mat-item" href="https://drive.google.com/drive/folders/125dnaBWpiwQJn40-amw8jlDrbYbZNTMM" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://drive.google.com/drive/folders/1LPyPBcImjLyPCMtuBtPnuCKGGg7VY-qs"
+            target="_blank" rel="noopener">
             <span class="mat-icon">📄</span>
             <div class="mat-info">
               <p class="mat-type">PDF</p>
@@ -463,12 +539,14 @@
           </a>
 
           <!-- LINK EXTERNO -->
-          <a class="mat-item" href="https://opusdei.org/pt-br/article/o-ceu-a-morte-o-purgatorio-o-que-sao-os-novissimos/" target="_blank" rel="noopener">
+          <a class="mat-item"
+            href="https://comshalom.org/5-vias-que-dao-acesso-a-existencia-de-deus-em-santo-tomas-de-aquino/" target="_blank"
+            rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">Texto de referência</p>
-              <p class="mat-desc">Leitura complementar</p>
+              <p class="mat-desc">As 5 vias</p>
             </div>
           </a>
 
@@ -477,10 +555,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe
-              src="https://www.youtube.com/embed/DJDmbqzZTBQ"
-              title="Vídeo do 1º Encontro"
-              allowfullscreen>
+            <iframe src="https://www.youtube.com/embed/sekhbe8G8FI" title="Homilia sobre São Bento" allowfullscreen>
             </iframe>
           </div>
 
@@ -515,11 +590,11 @@
       <div class="encontro-header">
         <div class="encontro-num">3</div>
         <div class="encontro-header-info">
-          <h3>[Tema a definir]</h3>
+          <h3>Creio em Deus </h3>
           <div class="encontro-meta">
-            <span>📅 <strong>A definir</strong></span>
+            <span>📅 <strong>18 Mar 2026</strong></span>
             <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>A definir</strong></span>
+            <span>📍 <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -598,4 +673,5 @@
     });
   </script>
 </body>
+
 </html>

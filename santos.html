@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Santos — Catequese Adultos IC | Paróquia São José</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
   <style>
-
     /* ── PAGE HERO ── */
     .page-hero {
       min-height: 42vh;
       background-image:
-        linear-gradient(180deg, rgba(20,15,10,.90) 0%, rgba(55,40,20,.80) 60%, rgba(20,15,10,.92) 100%),
+        linear-gradient(180deg, rgba(20, 15, 10, .90) 0%, rgba(55, 40, 20, .80) 60%, rgba(20, 15, 10, .92) 100%),
         url("src/assets/img/fundo.jpg");
       background-size: cover;
       background-position: center;
@@ -33,13 +35,42 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(198,165,90,.10) 0%, transparent 68%);
+      background: radial-gradient(ellipse at center, rgba(198, 165, 90, .10) 0%, transparent 68%);
     }
 
-    .page-hero .hero-parish   { position: relative; z-index:1; font-weight:300; color:rgba(255,255,255,.7); letter-spacing:4px; text-transform:uppercase; font-size:.82rem; margin-bottom:16px; }
-    .page-hero .hero-title    { position: relative; z-index:1; font-family:'Playfair Display',serif; color:#fff; font-size: clamp(2rem,5vw,3.4rem); line-height:1.12; margin-bottom:10px; }
-    .page-hero .hero-title span { color: var(--gold); }
-    .page-hero .hero-subtitle { position: relative; z-index:1; color:rgba(255,255,255,.5); font-size:.88rem; letter-spacing:3px; text-transform:uppercase; }
+    .page-hero .hero-parish {
+      position: relative;
+      z-index: 1;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .7);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin-bottom: 16px;
+    }
+
+    .page-hero .hero-title {
+      position: relative;
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .page-hero .hero-title span {
+      color: var(--gold);
+    }
+
+    .page-hero .hero-subtitle {
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, .5);
+      font-size: .88rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
 
     /* ── SAINTS SECTION ── */
     #santos-lista {
@@ -59,8 +90,8 @@
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,.08);
-      border: 1px solid rgba(198,165,90,.18);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .08);
+      border: 1px solid rgba(198, 165, 90, .18);
       display: grid;
       grid-template-columns: 300px 1fr;
       min-height: 340px;
@@ -68,7 +99,7 @@
     }
 
     .saint-card:hover {
-      box-shadow: 0 18px 52px rgba(0,0,0,.14);
+      box-shadow: 0 18px 52px rgba(0, 0, 0, .14);
       transform: translateY(-3px);
     }
 
@@ -102,7 +133,7 @@
       justify-content: center;
       gap: 12px;
       background: linear-gradient(145deg, var(--cream-soft) 0%, #e0d8cc 100%);
-      color: rgba(94,85,76,.45);
+      color: rgba(94, 85, 76, .45);
     }
 
     .saint-image-placeholder .ph-icon {
@@ -179,14 +210,19 @@
       flex: 1;
     }
 
-    .saint-bio p + p { margin-top: 12px; }
-    .saint-bio strong { color: var(--text); }
+    .saint-bio p+p {
+      margin-top: 12px;
+    }
+
+    .saint-bio strong {
+      color: var(--text);
+    }
 
     .saint-quote {
       margin-top: 22px;
       padding: 14px 18px;
       border-left: 3px solid var(--gold);
-      background: rgba(198,165,90,.07);
+      background: rgba(198, 165, 90, .07);
       border-radius: 0 8px 8px 0;
     }
 
@@ -219,9 +255,9 @@
       text-transform: uppercase;
       padding: 4px 12px;
       border-radius: 20px;
-      border: 1px solid rgba(198,165,90,.5);
+      border: 1px solid rgba(198, 165, 90, .5);
       color: var(--gold);
-      background: rgba(198,165,90,.07);
+      background: rgba(198, 165, 90, .07);
     }
 
     /* ── PRÓXIMAS SEMANAS ── */
@@ -236,7 +272,7 @@
       font-size: 1.1rem;
       margin-bottom: 16px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(198,165,90,.25);
+      border-bottom: 1px solid rgba(198, 165, 90, .25);
     }
 
     .upcoming-grid {
@@ -247,8 +283,8 @@
 
     .upcoming-card {
       background: #fff;
-      border: 1px solid rgba(198,165,90,.2);
-      border-left: 3px solid rgba(198,165,90,.4);
+      border: 1px solid rgba(198, 165, 90, .2);
+      border-left: 3px solid rgba(198, 165, 90, .4);
       border-radius: 10px;
       padding: 16px 18px;
       display: flex;
@@ -260,7 +296,7 @@
     .upcoming-card:hover {
       border-left-color: var(--gold);
       transform: translateX(4px);
-      box-shadow: 0 6px 20px rgba(0,0,0,.07);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .07);
     }
 
     .upcoming-card.tbd {
@@ -301,14 +337,25 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
-      .saint-card { grid-template-columns: 1fr; }
-      .saint-image-col { height: 260px; }
-      .saint-image-placeholder { min-height: 260px; }
-      .saint-content { padding: 24px 22px; }
-    }
+      .saint-card {
+        grid-template-columns: 1fr;
+      }
 
+      .saint-image-col {
+        height: 260px;
+      }
+
+      .saint-image-placeholder {
+        min-height: 260px;
+      }
+
+      .saint-content {
+        padding: 24px 22px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ═══ NAV ═══ -->
@@ -360,8 +407,8 @@
     <div class="saint-card" data-semana="1">
 
       <div class="saint-image-col">
-        <span class="saint-week-badge">Semana 1</span>
-          <img src="src/assets/img/santos/tomas-aquino.png" alt="Santo Tomás de Aquino">
+        <span class="saint-week-badge">1º Encontro</span>
+        <img src="src/assets/img/santos/tomas-aquino.png" alt="Santo Tomás de Aquino">
       </div>
 
       <div class="saint-content">
@@ -392,7 +439,7 @@
 
         <blockquote class="saint-quote">
           <p>"A fé tem por objeto a verdade primeira; a inteligência é o seu instrumento,
-          e o amor, a sua razão de ser."</p>
+            e o amor, a sua razão de ser."</p>
           <cite>— Santo Tomás de Aquino, Summa Theologiae</cite>
         </blockquote>
 
@@ -408,6 +455,60 @@
     </div>
     <!-- FIM SEMANA 1 -->
 
+    <!-- SEMANA 2 — SÃO BENTO DE NÚRSIA -->
+
+    <div class="saint-card" data-semana="1">
+
+      <div class="saint-image-col">
+        <span class="saint-week-badge">2º Encontro</span>
+        <img src="./src/assets/img/santos/sao-bento.webp" alt="São Bento">
+      </div>
+
+      <div class="saint-content">
+        <p class="saint-feast">Festa: 11 de Julho</p>
+        <h2 class="saint-name">São Bento de Núrsia</h2>
+        <p class="saint-epithet">Pai do Monaquismo Ocidental</p>
+        <div class="saint-divider"></div>
+
+        <div class="saint-bio">
+          <p>
+            Nascido por volta de <strong>480</strong> em Núrsia, na Itália, Bento deixou ainda jovem os estudos em Roma,
+            desejando buscar acima de tudo a Deus. Segundo São Gregório Magno, ao ver a corrupção dos costumes,
+            retirou-se para a solidão de <strong>Subiaco</strong>, onde, no silêncio, na penitência e na oração,
+            amadureceu na vida espiritual.
+          </p>
+          <p>
+            Mais tarde, fundou mosteiros e estabeleceu-se em <strong>Monte Cassino</strong>, onde compôs a sua célebre
+            <em>Regra</em>, marcada pela sabedoria, equilíbrio e centralidade da busca de Deus.
+            Por essa obra, tornou-se o grande pai do monaquismo ocidental, ensinando uma vida de
+            oração, obediência, humildade e trabalho ordenado para a glória de Deus.
+          </p>
+          <p>
+            São Gregório Magno apresenta Bento como um verdadeiro <em>homem de Deus</em>, cuja vida estava profundamente
+            imersa na oração e cujo ensinamento brotava da própria santidade. Morreu por volta de
+            <strong>547</strong>, de pé em oração, e a Igreja o venera como patriarca dos monges do Ocidente e
+            <strong>Padroeiro da Europa</strong>.
+          </p>
+        </div>
+
+        <blockquote class="saint-quote">
+          <p>"O homem de Deus que brilhou nesta terra com tantos milagres não resplandeceu menos pela eloquência com que
+            soube expor a sua doutrina."</p>
+          <cite>— São Gregório Magno, Diálogos, livro II</cite>
+        </blockquote>
+
+        <div class="saint-tags">
+          <span class="saint-tag">Patriarca dos Monges</span>
+          <span class="saint-tag">Pai do Monaquismo Ocidental</span>
+          <span class="saint-tag">Abade</span>
+          <span class="saint-tag">Séc. VI</span>
+          <span class="saint-tag">Padroeiro da Europa</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FIM SEMANA 1 -->
 
     <!-- PRÓXIMAS SEMANAS -->
     <div class="upcoming-saints">
@@ -415,18 +516,10 @@
       <div class="upcoming-grid">
 
         <div class="upcoming-card tbd">
-          <div class="upcoming-num">2</div>
-          <div class="upcoming-info">
-            <h4>São Bento de Núrsia</h4>
-            <p>Semana 2 · </p>
-          </div>
-        </div>
-
-        <div class="upcoming-card tbd">
           <div class="upcoming-num">3</div>
           <div class="upcoming-info">
-            <h4>[Santo a definir]</h4>
-            <p>Semana 3 · Em breve</p>
+            <h4>São José - Pai adotivo de Jesus </h4>
+            <p>Semana 3 </p>
           </div>
         </div>
 
@@ -481,4 +574,5 @@
 
   <script src="src/assets/js/main.js"></script>
 </body>
+
 </html>
