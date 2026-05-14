@@ -475,7 +475,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/DJDmbqzZTBQ" title="Vídeo do 1º Encontro" allowfullscreen>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/DJDmbqzZTBQ" title="Vídeo do 1º Encontro" allowfullscreen>
             </iframe>
           </div>
 
@@ -555,7 +555,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/sekhbe8G8FI" title="Homilia sobre São Bento" allowfullscreen>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/sekhbe8G8FI" title="Homilia sobre São Bento" allowfullscreen>
             </iframe>
           </div>
 
@@ -633,7 +633,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/5dsEM1HFhis" title="Por que precisamos de São José?" allowfullscreen>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/5dsEM1HFhis" title="Por que precisamos de São José?" allowfullscreen>
             </iframe>
           </div>
 
@@ -710,7 +710,7 @@
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/4aTk2fnh6kg" title="São Pedro - Primeiro papa" allowfullscreen>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/4aTk2fnh6kg" title="São Pedro - Primeiro papa" allowfullscreen>
             </iframe>
           </div>
 
@@ -753,7 +753,7 @@
   <!-- ═══ LIGHTBOX (abre fotos em tela cheia) ═══ -->
   <div class="lightbox" id="lightbox" onclick="fecharLightbox()">
     <span class="lightbox-close" onclick="fecharLightbox()">✕</span>
-    <img id="lightbox-img" src="" alt="Foto ampliada">
+    <img id="lightbox-img" src="" alt="Foto ampliada" decoding="async">
   </div>
 
   <!-- ═══ FOOTER ═══ -->
@@ -768,7 +768,7 @@
     </div>
   </footer>
 
-  <script src="src/assets/js/main.js"></script>
+  <script src="src/assets/js/main.js" defer></script>
   <script>
     function abrirLightbox(src) {
       document.getElementById('lightbox-img').src = src;

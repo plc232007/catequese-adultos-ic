@@ -25,6 +25,7 @@
     links.classList.remove('open');
     if (overlay) overlay.classList.remove('open');
     document.body.style.overflow = '';
+    toggle.setAttribute('aria-expanded', 'false');
   }
 
   function abrirMenu() {
@@ -32,7 +33,11 @@
     links.classList.add('open');
     if (overlay) overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    toggle.setAttribute('aria-expanded', 'true');
   }
+
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', links.id || 'nav-links');
 
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -45,18 +50,14 @@
     if (e.key === 'Escape') fecharMenu();
   });
 
-  // links de página: deixa o browser navegar normalmente, só limpa o estado
   links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', function(e) {
+    a.addEventListener('click', function() {
       const href = this.getAttribute('href');
-      // se for link de página (não âncora), navega diretamente
       if (href && !href.startsWith('#')) {
-        document.body.style.overflow = '';
-        window.location.href = href;
-        return;
+        fecharMenu();
+      } else {
+        fecharMenu();
       }
-      // âncora: só fecha o menu
-      fecharMenu();
     });
   });
 })();
@@ -71,4 +72,92 @@ document.addEventListener('click', (e) => {
   const nav = document.querySelector('nav');
   const top = target.getBoundingClientRect().top + window.pageYOffset - (nav?.offsetHeight ?? 0) - 12;
   window.scrollTo({ top, behavior: 'smooth' });
+});
+
+// ─── PROGRESSO DE LEITURA E VOLTAR AO TOPO ───
+(function () {
+  const bar = document.createElement('span');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+
+  const backTop = document.createElement('button');
+  backTop.className = 'back-to-top';
+  backTop.type = 'button';
+  backTop.setAttribute('aria-label', 'Voltar ao topo');
+  backTop.textContent = '↑';
+  document.body.appendChild(backTop);
+
+  function updateScrollUi() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    bar.style.width = `${Math.min(progress, 100)}%`;
+    backTop.classList.toggle('is-visible', window.scrollY > 520);
+  }
+
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('scroll', updateScrollUi, { passive: true });
+  window.addEventListener('resize', updateScrollUi);
+  updateScrollUi();
+})();
+
+// ─── REVELAÇÃO LEVE DOS BLOCOS ───
+(function () {
+  const selectors = '.sobre-card, .timeline-item, .material-item, .aviso-card, .saint-card, .encontro-card, .prayer-card, .mat-item';
+  const elements = document.querySelectorAll(selectors);
+  if (!elements.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+  elements.forEach((el, index) => {
+    el.classList.add('js-reveal');
+    el.style.transitionDelay = `${Math.min(index % 4, 3) * 55}ms`;
+    observer.observe(el);
+  });
+})();
+
+// ─── CRONOGRAMA DINÂMICO ───
+(function () {
+  const items = Array.from(document.querySelectorAll('.timeline-item[data-date]'));
+  if (!items.length) return;
+
+  const now = new Date();
+  const meetings = items.map(item => ({ item, date: new Date(item.dataset.date) }));
+  const past = meetings.filter(meeting => meeting.date < now);
+  const next = meetings.find(meeting => meeting.date >= now);
+  const formatter = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+
+  meetings.forEach(meeting => {
+    if (meeting.date < now) meeting.item.classList.add('is-past');
+  });
+
+  if (next) {
+    next.item.classList.add('is-next');
+    document.getElementById('next-meeting-title').textContent = next.item.querySelector('h3')?.textContent || 'Próximo encontro';
+    document.getElementById('next-meeting-detail').textContent = `${formatter.format(next.date)} · Sala 204`;
+  } else {
+    document.getElementById('next-meeting-title').textContent = 'Etapa divulgada concluída';
+    document.getElementById('next-meeting-detail').textContent = 'Novos encontros podem ser adicionados ao cronograma quando forem confirmados.';
+  }
+
+  const percent = Math.round((past.length / meetings.length) * 100);
+  document.getElementById('agenda-progress-text').textContent = `${past.length}/${meetings.length} encontros realizados`;
+  document.getElementById('agenda-progress-bar').style.width = `${percent}%`;
+})();
+
+// ─── IMAGENS OPCIONAIS: EVITA ESPAÇOS QUEBRADOS EM GALERIAS FUTURAS ───
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('error', () => {
+    if (img.classList.contains('foto-thumb')) img.remove();
+  }, { once: true });
 });
