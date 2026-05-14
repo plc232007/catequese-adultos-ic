@@ -155,6 +155,62 @@ document.addEventListener('click', (e) => {
   document.getElementById('agenda-progress-bar').style.width = `${percent}%`;
 })();
 
+// ─── MOVIMENTO DAS IMAGENS DOS SANTOS ───
+(function () {
+  const saintImages = Array.from(document.querySelectorAll('.saint-image-col'));
+  const canAnimate = saintImages.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canAnimate) return;
+
+  let ticking = false;
+
+  function updateScrollParallax() {
+    ticking = false;
+    const viewportCenter = window.innerHeight / 2;
+
+    saintImages.forEach(col => {
+      const rect = col.getBoundingClientRect();
+      const colCenter = rect.top + rect.height / 2;
+      const distance = (viewportCenter - colCenter) / viewportCenter;
+      const clamped = Math.max(-1, Math.min(1, distance));
+      col.style.setProperty('--saint-scroll-y', `${(clamped * 14).toFixed(2)}px`);
+    });
+  }
+
+  function requestParallaxTick() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateScrollParallax);
+  }
+
+  saintImages.forEach(col => {
+    col.addEventListener('pointermove', event => {
+      const rect = col.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      col.style.setProperty('--saint-pointer-x', `${(x * 16).toFixed(2)}px`);
+      col.style.setProperty('--saint-pointer-y', `${(y * 12).toFixed(2)}px`);
+      col.style.setProperty('--saint-tilt-x', `${(-y * 4).toFixed(2)}deg`);
+      col.style.setProperty('--saint-tilt-y', `${(x * 5).toFixed(2)}deg`);
+      col.style.setProperty('--saint-light-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+      col.style.setProperty('--saint-light-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+    }, { passive: true });
+
+    col.addEventListener('pointerleave', () => {
+      col.style.setProperty('--saint-pointer-x', '0px');
+      col.style.setProperty('--saint-pointer-y', '0px');
+      col.style.setProperty('--saint-tilt-x', '0deg');
+      col.style.setProperty('--saint-tilt-y', '0deg');
+      col.style.setProperty('--saint-light-x', '50%');
+      col.style.setProperty('--saint-light-y', '35%');
+    });
+  });
+
+  window.addEventListener('scroll', requestParallaxTick, { passive: true });
+  window.addEventListener('resize', requestParallaxTick);
+  requestParallaxTick();
+})();
+
 // ─── YOUTUBE SOB DEMANDA: EVITA CARREGAR PLAYER PESADO ANTES DO CLIQUE ───
 (function () {
   document.querySelectorAll('.video-wrapper[data-video-id]').forEach(wrapper => {
