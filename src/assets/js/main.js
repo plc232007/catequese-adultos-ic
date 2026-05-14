@@ -155,6 +155,31 @@ document.addEventListener('click', (e) => {
   document.getElementById('agenda-progress-bar').style.width = `${percent}%`;
 })();
 
+// ─── YOUTUBE SOB DEMANDA: EVITA CARREGAR PLAYER PESADO ANTES DO CLIQUE ───
+(function () {
+  document.querySelectorAll('.video-wrapper[data-video-id]').forEach(wrapper => {
+    const button = wrapper.querySelector('.video-load');
+    if (!button) return;
+
+    button.addEventListener('click', () => {
+      const videoId = wrapper.dataset.videoId;
+      const title = wrapper.dataset.videoTitle || 'Vídeo do YouTube';
+      if (!videoId) return;
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+
+      wrapper.textContent = '';
+      wrapper.appendChild(iframe);
+      wrapper.classList.add('is-loaded');
+    });
+  });
+})();
+
 // ─── IMAGENS OPCIONAIS: EVITA ESPAÇOS QUEBRADOS EM GALERIAS FUTURAS ───
 document.querySelectorAll('img').forEach(img => {
   img.addEventListener('error', () => {
