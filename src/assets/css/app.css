@@ -4,8 +4,9 @@
    ================================================================ */
 
 /* ─── BOTTOM NAV: oculto por padrão (desktop mostra top nav) ─── */
-.bottom-nav { display: none; }
-.install-prompt { display: none; }
+.bottom-nav    { display: none; }
+.install-prompt{ display: none; }
+.install-fab   { display: none; }
 
 /* ─── MOBILE: ativa bottom nav e ajusta layout ─── */
 @media (max-width: 640px) {
@@ -16,15 +17,48 @@
   .nav-links   { display: none !important; }
 
   /* 2. Espaço para a bottom nav não cobrir o conteúdo */
-  body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
 
   /* 3. Sobe o botão "voltar ao topo" para não ficar atrás da nav */
   .back-to-top {
-    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* 4. Exibe o install prompt */
-  .install-prompt { display: flex; }
+  /* 4. Exibe install prompt e FAB */
+  .install-prompt:not([hidden]) { display: block; }
+  .install-fab:not([hidden])    { display: flex; }
+
+  /* 5. Polimento mobile geral */
+  nav { padding: 12px 18px !important; }
+  .nav-brand { font-size: .98rem !important; }
+
+  section { padding: 56px 20px !important; }
+  .section-title { font-size: clamp(1.5rem, 5.5vw, 2rem) !important; }
+
+  /* Hero mais respirável no celular */
+  #hero { padding: 88px 22px 70px !important; }
+  .hero-verse {
+    margin-top: 6px;
+    padding: 14px 18px !important;
+    font-size: .95rem;
+  }
+  .hero-verse p { font-size: 1rem !important; line-height: 1.7 !important; }
+
+  /* Cards com cantos mais arredondados (visual mais "app") */
+  .sobre-card,
+  .aviso-card,
+  .timeline-item,
+  .material-item,
+  .saint-card,
+  .encontro-card,
+  .prayer-card { border-radius: 14px !important; }
+
+  /* Touch targets maiores */
+  .mat-item { padding: 16px 16px !important; }
+  .upcoming-card { padding: 18px 18px !important; }
+
+  /* Hero das páginas internas: menos altura para conteúdo aparecer logo */
+  .page-hero { min-height: 32vh !important; padding: 100px 22px 40px !important; }
 }
 
 /* ─── BOTTOM NAV ─── */
@@ -38,10 +72,11 @@
     display: flex;
     align-items: stretch;
     background: rgba(20, 15, 10, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-top: 1px solid rgba(198, 165, 90, .18);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-top: 1px solid rgba(198, 165, 90, .22);
     padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, .25);
   }
 }
 
@@ -51,13 +86,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   padding: 10px 4px 8px;
   text-decoration: none;
-  color: rgba(255, 255, 255, .38);
-  transition: color .15s ease;
+  color: rgba(255, 255, 255, .42);
+  transition: color .18s ease, transform .15s ease;
   -webkit-tap-highlight-color: transparent;
-  min-height: 52px;
+  min-height: 54px;
   position: relative;
 }
 
@@ -65,14 +100,14 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 20%;
-  right: 20%;
-  height: 2px;
+  left: 50%;
+  width: 30px;
+  height: 2.5px;
   background: var(--gold);
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 4px 4px;
+  transform: translateX(-50%) scaleX(0);
   opacity: 0;
-  transform: scaleX(0);
-  transition: opacity .2s, transform .2s;
+  transition: transform .28s cubic-bezier(.4,0,.2,1), opacity .2s ease;
 }
 
 .bnav-item.active {
@@ -81,96 +116,213 @@
 
 .bnav-item.active::before {
   opacity: 1;
-  transform: scaleX(1);
+  transform: translateX(-50%) scaleX(1);
 }
 
 .bnav-item:active {
-  color: rgba(198, 165, 90, .7);
+  transform: scale(.94);
 }
 
 .bnav-svg {
-  width: 22px;
-  height: 22px;
+  width: 23px;
+  height: 23px;
   fill: currentColor;
   flex-shrink: 0;
+  transition: transform .22s ease;
+}
+
+.bnav-item.active .bnav-svg {
+  transform: translateY(-1px);
 }
 
 .bnav-label {
   font-family: 'Lato', sans-serif;
-  font-size: .6rem;
+  font-size: .62rem;
   font-weight: 700;
-  letter-spacing: .5px;
+  letter-spacing: .4px;
   text-transform: uppercase;
   line-height: 1;
 }
 
-/* ─── INSTALL PROMPT ─── */
+/* ─── INSTALL PROMPT — Card prominente ─── */
 .install-prompt {
   position: fixed;
-  bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 10px);
-  left: 12px;
-  right: 12px;
-  z-index: 190;
-  background: rgba(28, 22, 16, 0.96);
-  border: 1px solid rgba(198, 165, 90, .35);
-  border-radius: 14px;
-  padding: 14px 16px;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  animation: ip-slide-up .35s cubic-bezier(.2, .8, .2, 1);
+  bottom: calc(62px + env(safe-area-inset-bottom, 0px) + 14px);
+  left: 14px;
+  right: 14px;
+  z-index: 210;
+  background: linear-gradient(160deg, #1F1812 0%, #2C2218 100%);
+  border: 1px solid rgba(198, 165, 90, .38);
+  border-radius: 18px;
+  padding: 26px 22px 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255,255,255,.03);
+  animation: ip-slide-up .42s cubic-bezier(.2, .8, .2, 1);
 }
 
 @keyframes ip-slide-up {
-  from { transform: translateY(20px); opacity: 0; }
+  from { transform: translateY(30px); opacity: 0; }
   to   { transform: none; opacity: 1; }
 }
 
-.ip-icon {
-  font-size: 1.4rem;
-  flex-shrink: 0;
-}
-
-.install-prompt p {
-  flex: 1;
-  color: rgba(255, 255, 255, .82);
-  font-size: .82rem;
-  line-height: 1.4;
-  font-family: 'Lato', sans-serif;
-}
-
-.ip-btns {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.ip-btns button {
-  font-family: 'Lato', sans-serif;
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .5px;
-  text-transform: uppercase;
+.install-prompt__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
   border: none;
-  border-radius: 20px;
-  padding: 7px 14px;
+  background: rgba(255, 255, 255, .06);
+  color: rgba(255, 255, 255, .65);
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1;
   cursor: pointer;
-  transition: opacity .15s;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  transition: background .15s, color .15s;
 }
 
-.ip-btns button:active { opacity: .75; }
+.install-prompt__close:active {
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+}
 
-#install-confirm {
+.install-prompt__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: rgba(198, 165, 90, .12);
+  color: var(--gold);
+  border: 1px solid rgba(198, 165, 90, .3);
+}
+
+.install-prompt__title {
+  font-family: 'Playfair Display', serif;
+  color: #fff;
+  font-size: 1.22rem;
+  text-align: center;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.install-prompt__subtitle {
+  color: rgba(255, 255, 255, .65);
+  font-size: .87rem;
+  text-align: center;
+  margin-bottom: 18px;
+  line-height: 1.55;
+  font-family: 'Lato', sans-serif;
+}
+
+.install-prompt__action {
+  display: block;
+  width: 100%;
   background: var(--gold);
   color: var(--dark);
+  border: none;
+  border-radius: 999px;
+  padding: 14px 20px;
+  font-size: .88rem;
+  font-weight: 800;
+  letter-spacing: .6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  box-shadow: 0 8px 24px rgba(198, 165, 90, .35);
+  transition: opacity .15s, transform .12s;
 }
 
-#install-dismiss {
-  background: rgba(255, 255, 255, .08);
-  color: rgba(255, 255, 255, .55);
-  border: 1px solid rgba(255, 255, 255, .1);
+.install-prompt__action:active {
+  opacity: .85;
+  transform: scale(.98);
+}
+
+/* iOS — instruções de "Adicionar à tela de início" */
+.install-prompt__ios {
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid rgba(198, 165, 90, .18);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.install-prompt__ios-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.install-prompt__ios-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .88rem;
+  color: rgba(255, 255, 255, .85);
+  line-height: 1.5;
+  padding: 6px 0;
+  font-family: 'Lato', sans-serif;
+  flex-wrap: wrap;
+}
+
+.install-prompt__ios-step strong {
+  color: var(--gold);
+  font-weight: 800;
+  margin-right: 2px;
+}
+
+.install-prompt__ios-step em {
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.install-prompt__ios-icon {
+  flex-shrink: 0;
+  color: #4ca0ff;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+/* ─── FAB de instalação (depois que usuário dispensa) ─── */
+.install-fab {
+  position: fixed;
+  bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+  right: 14px;
+  z-index: 195;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 22px rgba(198, 165, 90, .45);
+  animation: fab-pulse 2.6s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.install-fab svg { fill: currentColor; }
+.install-fab:active { transform: scale(.92); }
+
+@keyframes fab-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 22px rgba(198, 165, 90, .45), 0 0 0 0 rgba(198, 165, 90, .35);
+  }
+  50% {
+    box-shadow: 0 8px 22px rgba(198, 165, 90, .45), 0 0 0 10px rgba(198, 165, 90, 0);
+  }
 }
 
 /* ─── BANNER OFFLINE ─── */
@@ -181,10 +333,10 @@
   transform: translateX(-50%);
   z-index: 400;
   background: rgba(28, 22, 16, 0.95);
-  color: rgba(255, 255, 255, .7);
-  border: 1px solid rgba(198, 165, 90, .3);
+  color: rgba(255, 255, 255, .75);
+  border: 1px solid rgba(198, 165, 90, .35);
   border-radius: 20px;
-  padding: 7px 18px;
+  padding: 8px 18px;
   font-family: 'Lato', sans-serif;
   font-size: .78rem;
   white-space: nowrap;
@@ -197,7 +349,118 @@
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* ─── MELHORIAS DESKTOP (logo ficou escondida no nav quando estreito) ─── */
+/* ─── ABAS DE ACESSO RÁPIDO ÀS ORAÇÕES ─── */
+.oracao-tabs {
+  position: sticky;
+  top: 56px;
+  z-index: 60;
+  display: flex;
+  gap: 6px;
+  padding: 12px;
+  margin: 0 auto 30px;
+  max-width: 820px;
+  background: rgba(250, 248, 243, 0.92);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(198, 165, 90, .22);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .07);
+}
+
+.oracao-tab {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 4px;
+  text-decoration: none;
+  color: var(--text-soft);
+  border-radius: 12px;
+  transition: background .18s, color .18s, transform .12s;
+  border: 1px solid transparent;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.oracao-tab__num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.oracao-tab__label {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--text);
+}
+
+.oracao-tab:hover,
+.oracao-tab.active {
+  background: linear-gradient(135deg, rgba(198, 165, 90, .14), rgba(198, 165, 90, .06));
+  border-color: rgba(198, 165, 90, .5);
+}
+
+.oracao-tab.active {
+  box-shadow: 0 4px 14px rgba(198, 165, 90, .18);
+}
+
+.oracao-tab:active {
+  transform: scale(.95);
+}
+
+@media (max-width: 640px) {
+  .oracao-tabs {
+    top: 0;
+    margin: 0 -20px 22px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 10px 8px;
+  }
+
+  .oracao-tab__num { font-size: .9rem; }
+  .oracao-tab__label { font-size: .58rem; letter-spacing: .3px; }
+
+  /* Aumenta o tamanho da fonte das orações no mobile para leitura confortável */
+  .prayer-version.pt .strophe p,
+  .prayer-version.la .strophe p {
+    font-size: 1.05rem !important;
+    line-height: 1.95 !important;
+  }
+
+  .prayer-text { padding: 24px 22px 30px !important; }
+  .prayer-note { margin: 0 22px 24px !important; padding: 14px 16px !important; }
+
+  /* Header dos cards de oração mais limpo */
+  .prayer-header { padding: 18px 20px !important; }
+  .prayer-header-info h3 { font-size: 1.08rem !important; }
+  .prayer-num { min-width: 42px !important; height: 42px !important; font-size: 1rem !important; }
+}
+
+/* ─── DESKTOP: garante bottom nav escondida ─── */
 @media (min-width: 641px) {
-  .bottom-nav { display: none !important; }
+  .bottom-nav   { display: none !important; }
+  .install-prompt { display: none !important; }
+  .install-fab    { display: none !important; }
+}
+
+/* ─── SUAVIZA SCROLL ─── */
+html { scroll-padding-top: 80px; }
+@media (max-width: 640px) {
+  html { scroll-padding-top: 70px; }
+}
+
+/* ─── REDUZ ANIMAÇÕES SE USUÁRIO PREFERIR ─── */
+@media (prefers-reduced-motion: reduce) {
+  .install-fab { animation: none; }
+  .install-prompt { animation: none; }
 }

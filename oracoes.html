@@ -462,14 +462,34 @@
         Estas são as orações que rezaremos ao longo dos nossos encontros.
         Cada uma pode ser rezada em <strong>português</strong> ou em <strong>latim</strong>,
         língua milenar da Igreja.
-        Clique em qualquer oração para abri-la.
+        Toque em uma das abas abaixo para abrir a oração desejada.
       </p>
     </div>
+
+    <!-- ═══ ABAS DE ACESSO RÁPIDO ═══ -->
+    <nav class="oracao-tabs" aria-label="Acesso rápido às orações">
+      <a href="#prayer-1" class="oracao-tab" data-target="1">
+        <span class="oracao-tab__num">I</span>
+        <span class="oracao-tab__label">Espírito<br>Santo</span>
+      </a>
+      <a href="#prayer-2" class="oracao-tab" data-target="2">
+        <span class="oracao-tab__num">II</span>
+        <span class="oracao-tab__label">Pai<br>Nosso</span>
+      </a>
+      <a href="#prayer-3" class="oracao-tab" data-target="3">
+        <span class="oracao-tab__num">III</span>
+        <span class="oracao-tab__label">Ave<br>Maria</span>
+      </a>
+      <a href="#prayer-4" class="oracao-tab" data-target="4">
+        <span class="oracao-tab__num">IV</span>
+        <span class="oracao-tab__label">Inspirai,<br>Senhor</span>
+      </a>
+    </nav>
 
     <!-- ════════════════════════════════════════
          1. VINDE ESPÍRITO SANTO
     ═══════════════════════════════════════════ -->
-    <div class="prayer-card" data-prayer="1">
+    <div class="prayer-card" data-prayer="1" id="prayer-1">
       <div class="prayer-header" onclick="togglePrayer(this)">
         <div class="prayer-num">I</div>
         <div class="prayer-header-info">
@@ -613,7 +633,7 @@
     <!-- ════════════════════════════════════════
          2. PAI NOSSO
     ═══════════════════════════════════════════ -->
-    <div class="prayer-card" data-prayer="2">
+    <div class="prayer-card" data-prayer="2" id="prayer-2">
       <div class="prayer-header" onclick="togglePrayer(this)">
         <div class="prayer-num">II</div>
         <div class="prayer-header-info">
@@ -701,7 +721,7 @@
     <!-- ════════════════════════════════════════
          3. AVE MARIA
     ═══════════════════════════════════════════ -->
-    <div class="prayer-card" data-prayer="3">
+    <div class="prayer-card" data-prayer="3" id="prayer-3">
       <div class="prayer-header" onclick="togglePrayer(this)">
         <div class="prayer-num">III</div>
         <div class="prayer-header-info">
@@ -778,7 +798,7 @@
     <!-- ════════════════════════════════════════
          4. INSPIRAI SENHOR AS NOSSAS AÇÕES
     ═══════════════════════════════════════════ -->
-    <div class="prayer-card" data-prayer="4">
+    <div class="prayer-card" data-prayer="4" id="prayer-4">
       <div class="prayer-header" onclick="togglePrayer(this)">
         <div class="prayer-num">IV</div>
         <div class="prayer-header-info">
@@ -882,14 +902,37 @@
   </nav>
 
   <!-- ═══ INSTALL PROMPT ═══ -->
-  <div id="install-prompt" class="install-prompt" aria-live="polite" hidden>
-    <span class="ip-icon">📲</span>
-    <p>Instale o app para acesso offline!</p>
-    <div class="ip-btns">
-      <button id="install-confirm">Instalar</button>
-      <button id="install-dismiss">Depois</button>
+  <div id="install-prompt" class="install-prompt" role="dialog" aria-labelledby="ip-title" hidden>
+    <button class="install-prompt__close" id="install-dismiss" aria-label="Fechar">×</button>
+    <div class="install-prompt__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18L5.5 8.5 6.91 9.91 11 5.83V16h2V5.83l4.09 4.08L18.5 8.5 12 2z"/></svg>
+    </div>
+    <h3 class="install-prompt__title" id="ip-title">Instalar IC 2026</h3>
+    <p class="install-prompt__subtitle">Acesse como app no seu celular — funciona mesmo sem internet.</p>
+
+    <button class="install-prompt__action" id="install-confirm" hidden>Instalar agora</button>
+
+    <div class="install-prompt__ios" id="install-ios" hidden>
+      <p class="install-prompt__ios-label">No seu iPhone</p>
+      <div class="install-prompt__ios-step">
+        <strong>1.</strong> Toque em
+        <svg class="install-prompt__ios-icon" viewBox="0 0 50 50" aria-hidden="true">
+          <path d="M30.3 13.7L25 8.4l-5.3 5.3-1.4-1.4L25 5.6l6.7 6.7z"/>
+          <path d="M24 7h2v21h-2z"/>
+          <path d="M35 40H15c-1.7 0-3-1.3-3-3V19c0-1.7 1.3-3 3-3h7v2h-7c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1h20c.6 0 1-.4 1-1V19c0-.6-.4-1-1-1h-7v-2h7c1.7 0 3 1.3 3 3v18c0 1.7-1.3 3-3 3z"/>
+        </svg>
+        <span>na barra inferior</span>
+      </div>
+      <div class="install-prompt__ios-step">
+        <strong>2.</strong> Selecione <em>"Adicionar à Tela de Início"</em>
+      </div>
     </div>
   </div>
+
+  <!-- ═══ FAB DE INSTALAÇÃO (botão flutuante) ═══ -->
+  <button id="install-fab" class="install-fab" aria-label="Instalar app" hidden>
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 20h14v-2H5v2zm7-18L5.5 8.5 6.91 9.91 11 5.83V16h2V5.83l4.09 4.08L18.5 8.5 12 2z"/></svg>
+  </button>
 
   <script src="/src/assets/js/pwa.js" defer></script>
   <script>
@@ -915,6 +958,37 @@
 
     /* Abre o primeiro card por padrão */
     document.querySelector('.prayer-card[data-prayer="1"]').classList.add('open');
+
+    /* ── ABAS DE ACESSO RÁPIDO ── */
+    (function () {
+      const tabs = document.querySelectorAll('.oracao-tab');
+
+      function abrirEAtivar(num) {
+        const card = document.querySelector('.prayer-card[data-prayer="' + num + '"]');
+        if (!card) return;
+        card.classList.add('open');
+
+        /* Marca aba ativa */
+        tabs.forEach(t => t.classList.remove('active'));
+        const aba = document.querySelector('.oracao-tab[data-target="' + num + '"]');
+        if (aba) aba.classList.add('active');
+
+        /* Scroll suave com offset para não ficar atrás da aba sticky */
+        const headerOffset = 90;
+        const top = card.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', e => {
+          e.preventDefault();
+          abrirEAtivar(tab.dataset.target);
+        });
+      });
+
+      /* Marca a primeira aba como ativa por padrão */
+      document.querySelector('.oracao-tab[data-target="1"]')?.classList.add('active');
+    })();
   </script>
 </body>
 
