@@ -1,0 +1,203 @@
+/* ================================================================
+   app.css — Camada PWA / Portal do Aluno
+   Complementa styles.css sem modificá-lo.
+   ================================================================ */
+
+/* ─── BOTTOM NAV: oculto por padrão (desktop mostra top nav) ─── */
+.bottom-nav { display: none; }
+.install-prompt { display: none; }
+
+/* ─── MOBILE: ativa bottom nav e ajusta layout ─── */
+@media (max-width: 640px) {
+
+  /* 1. Esconde o menu hamburguer — a bottom nav assume a navegação */
+  .nav-toggle  { display: none !important; }
+  .nav-overlay { display: none !important; }
+  .nav-links   { display: none !important; }
+
+  /* 2. Espaço para a bottom nav não cobrir o conteúdo */
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+
+  /* 3. Sobe o botão "voltar ao topo" para não ficar atrás da nav */
+  .back-to-top {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* 4. Exibe o install prompt */
+  .install-prompt { display: flex; }
+}
+
+/* ─── BOTTOM NAV ─── */
+@media (max-width: 640px) {
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: stretch;
+    background: rgba(20, 15, 10, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(198, 165, 90, .18);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+.bnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 4px 8px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, .38);
+  transition: color .15s ease;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 52px;
+  position: relative;
+}
+
+.bnav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 0 0 2px 2px;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity .2s, transform .2s;
+}
+
+.bnav-item.active {
+  color: var(--gold);
+}
+
+.bnav-item.active::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.bnav-item:active {
+  color: rgba(198, 165, 90, .7);
+}
+
+.bnav-svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.bnav-label {
+  font-family: 'Lato', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ─── INSTALL PROMPT ─── */
+.install-prompt {
+  position: fixed;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 10px);
+  left: 12px;
+  right: 12px;
+  z-index: 190;
+  background: rgba(28, 22, 16, 0.96);
+  border: 1px solid rgba(198, 165, 90, .35);
+  border-radius: 14px;
+  padding: 14px 16px;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: ip-slide-up .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes ip-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+.ip-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.install-prompt p {
+  flex: 1;
+  color: rgba(255, 255, 255, .82);
+  font-size: .82rem;
+  line-height: 1.4;
+  font-family: 'Lato', sans-serif;
+}
+
+.ip-btns {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ip-btns button {
+  font-family: 'Lato', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.ip-btns button:active { opacity: .75; }
+
+#install-confirm {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+#install-dismiss {
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+
+/* ─── BANNER OFFLINE ─── */
+.offline-toast {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  background: rgba(28, 22, 16, 0.95);
+  color: rgba(255, 255, 255, .7);
+  border: 1px solid rgba(198, 165, 90, .3);
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-family: 'Lato', sans-serif;
+  font-size: .78rem;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: toast-in .25s ease;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── MELHORIAS DESKTOP (logo ficou escondida no nav quando estreito) ─── */
+@media (min-width: 641px) {
+  .bottom-nav { display: none !important; }
+}
