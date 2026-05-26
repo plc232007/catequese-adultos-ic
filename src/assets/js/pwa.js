@@ -2,6 +2,33 @@
    pwa.js — Service Worker + Pílula/Modal de instalação + Offline
    ================================================================ */
 
+/* ─── RESET DE CACHE AUTOMÁTICO ───
+   Se a versão local do usuário não bate com a esperada, limpa caches
+   e service workers, e recarrega para garantir conteúdo fresco. */
+const APP_VERSION = '4';
+(function () {
+  try {
+    const last = localStorage.getItem('ic-app-version');
+    if (last && last !== APP_VERSION) {
+      const limpar = async () => {
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+        }
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(r => r.unregister()));
+        }
+        localStorage.setItem('ic-app-version', APP_VERSION);
+        location.reload();
+      };
+      limpar();
+      return;
+    }
+    localStorage.setItem('ic-app-version', APP_VERSION);
+  } catch (e) { /* ignora */ }
+})();
+
 function isIOS() {
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
