@@ -3,7 +3,7 @@
    Estratégia: Cache-first com atualização em background (SWR)
    ================================================================ */
 
-const CACHE = 'ic-2026-v2';
+const CACHE = 'ic-2026-v3';
 
 const PRECACHE = [
   '/',
@@ -24,7 +24,9 @@ const PRECACHE = [
   '/src/assets/img/santos/sao-pedro.jpg',
   '/src/assets/img/icons/icon.svg',
   '/src/assets/img/icons/icon-maskable.svg',
-  /* Adicione icon-192.png e icon-512.png aqui quando gerar os PNGs */
+  '/src/assets/img/icons/icon-192.png',
+  '/src/assets/img/icons/icon-512.png',
+  '/src/assets/img/icons/icon-maskable-512.png',
 ];
 
 /* ── INSTALL: pré-cacheamento ── */
