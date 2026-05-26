@@ -3,48 +3,33 @@
    Complementa styles.css sem modificá-lo.
    ================================================================ */
 
-/* ─── BOTTOM NAV: oculto por padrão (desktop mostra top nav) ─── */
 .bottom-nav    { display: none; }
-.install-prompt{ display: none; }
-.install-fab   { display: none; }
+.install-pill  { display: none; }
+.install-modal { display: none; }
 
 /* ─── MOBILE: ativa bottom nav e ajusta layout ─── */
 @media (max-width: 640px) {
 
-  /* 1. Esconde o menu hamburguer — a bottom nav assume a navegação */
   .nav-toggle  { display: none !important; }
   .nav-overlay { display: none !important; }
   .nav-links   { display: none !important; }
 
-  /* 2. Espaço para a bottom nav não cobrir o conteúdo */
   body { padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px)); }
 
-  /* 3. Sobe o botão "voltar ao topo" para não ficar atrás da nav */
   .back-to-top {
-    bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(120px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* 4. Exibe install prompt e FAB */
-  .install-prompt:not([hidden]) { display: block; }
-  .install-fab:not([hidden])    { display: flex; }
-
-  /* 5. Polimento mobile geral */
   nav { padding: 12px 18px !important; }
   .nav-brand { font-size: .98rem !important; }
 
   section { padding: 56px 20px !important; }
   .section-title { font-size: clamp(1.5rem, 5.5vw, 2rem) !important; }
 
-  /* Hero mais respirável no celular */
   #hero { padding: 88px 22px 70px !important; }
-  .hero-verse {
-    margin-top: 6px;
-    padding: 14px 18px !important;
-    font-size: .95rem;
-  }
+  .hero-verse { margin-top: 6px; padding: 14px 18px !important; font-size: .95rem; }
   .hero-verse p { font-size: 1rem !important; line-height: 1.7 !important; }
 
-  /* Cards com cantos mais arredondados (visual mais "app") */
   .sobre-card,
   .aviso-card,
   .timeline-item,
@@ -53,11 +38,9 @@
   .encontro-card,
   .prayer-card { border-radius: 14px !important; }
 
-  /* Touch targets maiores */
-  .mat-item { padding: 16px 16px !important; }
-  .upcoming-card { padding: 18px 18px !important; }
+  .mat-item       { padding: 16px 16px !important; }
+  .upcoming-card  { padding: 18px 18px !important; }
 
-  /* Hero das páginas internas: menos altura para conteúdo aparecer logo */
   .page-hero { min-height: 32vh !important; padding: 100px 22px 40px !important; }
 }
 
@@ -94,6 +77,7 @@
   -webkit-tap-highlight-color: transparent;
   min-height: 54px;
   position: relative;
+  pointer-events: auto;
 }
 
 .bnav-item::before {
@@ -110,18 +94,9 @@
   transition: transform .28s cubic-bezier(.4,0,.2,1), opacity .2s ease;
 }
 
-.bnav-item.active {
-  color: var(--gold);
-}
-
-.bnav-item.active::before {
-  opacity: 1;
-  transform: translateX(-50%) scaleX(1);
-}
-
-.bnav-item:active {
-  transform: scale(.94);
-}
+.bnav-item.active { color: var(--gold); }
+.bnav-item.active::before { opacity: 1; transform: translateX(-50%) scaleX(1); }
+.bnav-item:active { transform: scale(.94); }
 
 .bnav-svg {
   width: 23px;
@@ -129,11 +104,10 @@
   fill: currentColor;
   flex-shrink: 0;
   transition: transform .22s ease;
+  pointer-events: none;
 }
 
-.bnav-item.active .bnav-svg {
-  transform: translateY(-1px);
-}
+.bnav-item.active .bnav-svg { transform: translateY(-1px); }
 
 .bnav-label {
   font-family: 'Lato', sans-serif;
@@ -142,188 +116,234 @@
   letter-spacing: .4px;
   text-transform: uppercase;
   line-height: 1;
+  pointer-events: none;
 }
 
-/* ─── INSTALL PROMPT — Card prominente ─── */
-.install-prompt {
+/* ─── PÍLULA DE INSTALAÇÃO (pequena, sempre visível no mobile) ─── */
+@media (max-width: 640px) {
+  .install-pill:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 199;
+    background: linear-gradient(95deg, #C6A55A 0%, #E0C58E 100%);
+    color: #1C1610;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px 10px 14px;
+    font-family: 'Lato', sans-serif;
+    font-size: .8rem;
+    font-weight: 800;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 22px rgba(198, 165, 90, .55), 0 2px 6px rgba(0, 0, 0, .3);
+    cursor: pointer;
+    animation: pill-pulse 2.8s ease-in-out infinite;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+.install-pill__icon { fill: currentColor; flex-shrink: 0; }
+.install-pill:active { transform: translateX(-50%) scale(.96); }
+
+@keyframes pill-pulse {
+  0%, 100% { box-shadow: 0 8px 22px rgba(198, 165, 90, .55), 0 0 0 0 rgba(198, 165, 90, .45); }
+  50%      { box-shadow: 0 8px 22px rgba(198, 165, 90, .55), 0 0 0 14px rgba(198, 165, 90, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .install-pill { animation: none !important; }
+}
+
+/* ─── MODAL DE INSTALAÇÃO (instruções) ─── */
+.install-modal:not([hidden]) {
+  display: flex;
   position: fixed;
-  bottom: calc(62px + env(safe-area-inset-bottom, 0px) + 14px);
-  left: 14px;
-  right: 14px;
-  z-index: 210;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: modal-fade .25s ease;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.install-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.install-modal__sheet {
+  position: relative;
   background: linear-gradient(160deg, #1F1812 0%, #2C2218 100%);
   border: 1px solid rgba(198, 165, 90, .38);
-  border-radius: 18px;
-  padding: 26px 22px 22px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255,255,255,.03);
-  animation: ip-slide-up .42s cubic-bezier(.2, .8, .2, 1);
+  border-radius: 20px;
+  padding: 28px 22px 22px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+  animation: modal-up .35s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes ip-slide-up {
-  from { transform: translateY(30px); opacity: 0; }
+@keyframes modal-up {
+  from { transform: translateY(20px) scale(.96); opacity: 0; }
   to   { transform: none; opacity: 1; }
 }
 
-.install-prompt__close {
+.install-modal__close {
   position: absolute;
-  top: 10px;
-  right: 12px;
-  width: 30px;
-  height: 30px;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
   border: none;
-  background: rgba(255, 255, 255, .06);
-  color: rgba(255, 255, 255, .65);
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .8);
   border-radius: 50%;
-  font-size: 1.1rem;
-  line-height: 1;
   cursor: pointer;
-  padding: 0;
   display: grid;
   place-items: center;
-  transition: background .15s, color .15s;
+  transition: background .15s, color .15s, transform .12s;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.install-prompt__close:active {
-  background: rgba(255, 255, 255, .14);
+.install-modal__close:active {
+  background: rgba(255, 255, 255, .18);
   color: #fff;
+  transform: scale(.92);
 }
 
-.install-prompt__icon {
+.install-modal__close svg { fill: currentColor; }
+
+.install-modal__icon {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 12px;
+  width: 60px;
+  height: 60px;
+  margin: 6px auto 14px;
   border-radius: 50%;
-  background: rgba(198, 165, 90, .12);
+  background: rgba(198, 165, 90, .14);
   color: var(--gold);
   border: 1px solid rgba(198, 165, 90, .3);
 }
 
-.install-prompt__title {
+.install-modal__icon svg { fill: currentColor; }
+
+.install-modal__title {
   font-family: 'Playfair Display', serif;
   color: #fff;
-  font-size: 1.22rem;
+  font-size: 1.3rem;
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   line-height: 1.25;
 }
 
-.install-prompt__subtitle {
-  color: rgba(255, 255, 255, .65);
-  font-size: .87rem;
+.install-modal__subtitle {
+  color: rgba(255, 255, 255, .68);
+  font-size: .9rem;
   text-align: center;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   line-height: 1.55;
   font-family: 'Lato', sans-serif;
 }
 
-.install-prompt__action {
+.install-modal__action {
   display: block;
   width: 100%;
   background: var(--gold);
   color: var(--dark);
   border: none;
   border-radius: 999px;
-  padding: 14px 20px;
-  font-size: .88rem;
+  padding: 15px 20px;
+  font-size: .9rem;
   font-weight: 800;
   letter-spacing: .6px;
   cursor: pointer;
   text-transform: uppercase;
   font-family: 'Lato', sans-serif;
-  box-shadow: 0 8px 24px rgba(198, 165, 90, .35);
+  box-shadow: 0 10px 26px rgba(198, 165, 90, .4);
   transition: opacity .15s, transform .12s;
 }
 
-.install-prompt__action:active {
-  opacity: .85;
-  transform: scale(.98);
-}
+.install-modal__action:active { transform: scale(.97); opacity: .85; }
 
-/* iOS — instruções de "Adicionar à tela de início" */
-.install-prompt__ios {
+.install-modal__ios {
   background: rgba(0, 0, 0, .25);
-  border: 1px solid rgba(198, 165, 90, .18);
+  border: 1px solid rgba(198, 165, 90, .2);
   border-radius: 12px;
-  padding: 14px 16px;
+  padding: 16px 18px;
 }
 
-.install-prompt__ios-label {
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
+.install-modal__ios-label {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 10px;
   text-align: center;
+  font-family: 'Lato', sans-serif;
 }
 
-.install-prompt__ios-step {
+.install-modal__ios-step {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: .88rem;
-  color: rgba(255, 255, 255, .85);
+  font-size: .92rem;
+  color: rgba(255, 255, 255, .9);
   line-height: 1.5;
   padding: 6px 0;
   font-family: 'Lato', sans-serif;
   flex-wrap: wrap;
 }
 
-.install-prompt__ios-step strong {
+.install-modal__ios-step strong {
   color: var(--gold);
   font-weight: 800;
   margin-right: 2px;
 }
 
-.install-prompt__ios-step em {
+.install-modal__ios-step em {
   color: #fff;
   font-style: normal;
   font-weight: 700;
 }
 
-.install-prompt__ios-icon {
+.install-modal__ios-icon {
   flex-shrink: 0;
   color: #4ca0ff;
   width: 22px;
   height: 22px;
-  display: inline-block;
-  vertical-align: middle;
   fill: currentColor;
 }
 
-/* ─── FAB de instalação (depois que usuário dispensa) ─── */
-.install-fab {
-  position: fixed;
-  bottom: calc(74px + env(safe-area-inset-bottom, 0px));
-  right: 14px;
-  z-index: 195;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: var(--dark);
+.install-modal__skip {
+  display: block;
+  margin: 14px auto 0;
+  background: none;
   border: none;
+  color: rgba(255, 255, 255, .45);
+  font-size: .8rem;
+  font-family: 'Lato', sans-serif;
   cursor: pointer;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 8px 22px rgba(198, 165, 90, .45);
-  animation: fab-pulse 2.6s ease-in-out infinite;
-  -webkit-tap-highlight-color: transparent;
+  padding: 8px 12px;
 }
 
-.install-fab svg { fill: currentColor; }
-.install-fab:active { transform: scale(.92); }
-
-@keyframes fab-pulse {
-  0%, 100% {
-    box-shadow: 0 8px 22px rgba(198, 165, 90, .45), 0 0 0 0 rgba(198, 165, 90, .35);
-  }
-  50% {
-    box-shadow: 0 8px 22px rgba(198, 165, 90, .45), 0 0 0 10px rgba(198, 165, 90, 0);
-  }
-}
+.install-modal__skip:active { color: rgba(255, 255, 255, .75); }
 
 /* ─── BANNER OFFLINE ─── */
 .offline-toast {
@@ -413,9 +433,7 @@
   box-shadow: 0 4px 14px rgba(198, 165, 90, .18);
 }
 
-.oracao-tab:active {
-  transform: scale(.95);
-}
+.oracao-tab:active { transform: scale(.95); }
 
 @media (max-width: 640px) {
   .oracao-tabs {
@@ -427,10 +445,9 @@
     padding: 10px 8px;
   }
 
-  .oracao-tab__num { font-size: .9rem; }
+  .oracao-tab__num   { font-size: .9rem; }
   .oracao-tab__label { font-size: .58rem; letter-spacing: .3px; }
 
-  /* Aumenta o tamanho da fonte das orações no mobile para leitura confortável */
   .prayer-version.pt .strophe p,
   .prayer-version.la .strophe p {
     font-size: 1.05rem !important;
@@ -440,27 +457,20 @@
   .prayer-text { padding: 24px 22px 30px !important; }
   .prayer-note { margin: 0 22px 24px !important; padding: 14px 16px !important; }
 
-  /* Header dos cards de oração mais limpo */
-  .prayer-header { padding: 18px 20px !important; }
-  .prayer-header-info h3 { font-size: 1.08rem !important; }
-  .prayer-num { min-width: 42px !important; height: 42px !important; font-size: 1rem !important; }
+  .prayer-header        { padding: 18px 20px !important; }
+  .prayer-header-info h3{ font-size: 1.08rem !important; }
+  .prayer-num           { min-width: 42px !important; height: 42px !important; font-size: 1rem !important; }
 }
 
-/* ─── DESKTOP: garante bottom nav escondida ─── */
+/* ─── DESKTOP: garante PWA UI escondida ─── */
 @media (min-width: 641px) {
-  .bottom-nav   { display: none !important; }
-  .install-prompt { display: none !important; }
-  .install-fab    { display: none !important; }
+  .bottom-nav    { display: none !important; }
+  .install-pill  { display: none !important; }
+  .install-modal { display: none !important; }
 }
 
 /* ─── SUAVIZA SCROLL ─── */
 html { scroll-padding-top: 80px; }
 @media (max-width: 640px) {
   html { scroll-padding-top: 70px; }
-}
-
-/* ─── REDUZ ANIMAÇÕES SE USUÁRIO PREFERIR ─── */
-@media (prefers-reduced-motion: reduce) {
-  .install-fab { animation: none; }
-  .install-prompt { animation: none; }
 }

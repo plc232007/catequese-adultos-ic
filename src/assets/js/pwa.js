@@ -1,8 +1,7 @@
 /* ================================================================
-   pwa.js — Service Worker + Install Prompt (Android + iOS) + Offline
+   pwa.js — Service Worker + Pílula/Modal de instalação + Offline
    ================================================================ */
 
-/* ─── DETECÇÃO DE PLATAFORMA ─── */
 function isIOS() {
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -22,11 +21,18 @@ function isMobile() {
   return window.innerWidth <= 640 || /Android|iPhone|iPad|iPod/.test(navigator.userAgent);
 }
 
+function jaInstalado() {
+  return isStandalone() || localStorage.getItem('ic-installed') === '1';
+}
+
 /* ─── SERVICE WORKER ─── */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js', { scope: '/' })
-      .then(() => {})
+      .then(reg => {
+        /* Verifica atualizações a cada 30 min */
+        setInterval(() => reg.update(), 30 * 60 * 1000);
+      })
       .catch(() => {});
   });
 }
@@ -50,121 +56,117 @@ if ('serviceWorker' in navigator) {
   });
 })();
 
-/* ─── INSTALL PROMPT — Android + iOS ─── */
+/* ─── INSTALL: PÍLULA + MODAL ─── */
 let deferredPrompt = null;
 
+function mostrarPilula() {
+  if (jaInstalado()) return;
+  if (!isMobile()) return;
+  if (sessionStorage.getItem('install-skipped')) return;
+  const pill = document.getElementById('install-pill');
+  pill?.removeAttribute('hidden');
+}
+
+function esconderPilula() {
+  document.getElementById('install-pill')?.setAttribute('hidden', '');
+}
+
+function abrirModal() {
+  const modal = document.getElementById('install-modal');
+  const iosBox = document.getElementById('install-ios');
+  const confirmBt = document.getElementById('install-confirm');
+  if (!modal) return;
+
+  /* Decide qual conteúdo mostrar */
+  if (deferredPrompt) {
+    /* Android Chrome: botão nativo de instalação */
+    iosBox?.setAttribute('hidden', '');
+    confirmBt?.removeAttribute('hidden');
+  } else if (isIOS()) {
+    /* iOS Safari: instruções manuais */
+    iosBox?.removeAttribute('hidden');
+    confirmBt?.setAttribute('hidden', '');
+  } else {
+    /* Sem suporte detectado — mostra instruções iOS como genérico */
+    iosBox?.removeAttribute('hidden');
+    confirmBt?.setAttribute('hidden', '');
+  }
+
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function fecharModal() {
+  document.getElementById('install-modal')?.setAttribute('hidden', '');
+  document.body.style.overflow = '';
+}
+
+/* Escuta o evento do Chrome quando a PWA é instalável */
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
-  exibirInstallPrompt();
+  mostrarPilula();
 });
 
-function naoExibirSeJaInstalado() {
-  if (isStandalone()) return true;
-  if (localStorage.getItem('ic-installed') === '1') return true;
-  return false;
-}
-
-function exibirInstallPrompt() {
-  if (naoExibirSeJaInstalado()) return;
-  if (!isMobile()) return;
-
-  /* Se já foi dispensado nesta sessão, mostra apenas o FAB */
-  if (sessionStorage.getItem('ip-dismissed')) {
-    exibirFab();
-    return;
-  }
-
-  setTimeout(() => {
-    const prompt    = document.getElementById('install-prompt');
-    const iosBox    = document.getElementById('install-ios');
-    const confirmBt = document.getElementById('install-confirm');
-    if (!prompt) return;
-
-    if (isIOS() && !deferredPrompt) {
-      /* iOS Safari: mostra instruções manuais */
-      iosBox?.removeAttribute('hidden');
-      confirmBt?.setAttribute('hidden', '');
-    } else if (deferredPrompt) {
-      /* Android / Chrome: mostra botão de instalar nativo */
-      iosBox?.setAttribute('hidden', '');
-      confirmBt?.removeAttribute('hidden');
-    } else {
-      /* Sem suporte detectável — esconde tudo */
-      return;
-    }
-
-    prompt.removeAttribute('hidden');
-  }, 2200);
-}
-
-function exibirFab() {
-  const fab = document.getElementById('install-fab');
-  if (!fab) return;
-  if (naoExibirSeJaInstalado()) return;
-  if (!isMobile()) return;
-  /* Só mostra FAB se há algo a instalar (iOS sempre tem, Android só com deferredPrompt) */
-  if (!isIOS() && !deferredPrompt) return;
-  fab.removeAttribute('hidden');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  const prompt    = document.getElementById('install-prompt');
+  const pill      = document.getElementById('install-pill');
+  const modal     = document.getElementById('install-modal');
   const confirmBt = document.getElementById('install-confirm');
-  const dismissBt = document.getElementById('install-dismiss');
-  const fab       = document.getElementById('install-fab');
+  const closeBt   = document.getElementById('install-modal-close');
+  const skipBt    = document.getElementById('install-skip');
 
-  /* Botão "Instalar agora" — Android/Chrome */
+  /* Pílula → abre modal */
+  pill?.addEventListener('click', abrirModal);
+
+  /* Fechar modal */
+  closeBt?.addEventListener('click', fecharModal);
+  modal?.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', fecharModal);
+  });
+
+  /* Esc fecha modal */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharModal();
+  });
+
+  /* "Não agora" — esconde pílula nesta sessão */
+  skipBt?.addEventListener('click', () => {
+    sessionStorage.setItem('install-skipped', '1');
+    esconderPilula();
+    fecharModal();
+  });
+
+  /* Botão "Instalar agora" (Android) */
   confirmBt?.addEventListener('click', async () => {
     if (!deferredPrompt) {
-      prompt?.setAttribute('hidden', '');
+      fecharModal();
       return;
     }
-    prompt?.setAttribute('hidden', '');
+    fecharModal();
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
       localStorage.setItem('ic-installed', '1');
-      fab?.setAttribute('hidden', '');
-    } else {
-      sessionStorage.setItem('ip-dismissed', '1');
-      exibirFab();
+      esconderPilula();
     }
     deferredPrompt = null;
   });
 
-  /* Botão de fechar (×) */
-  dismissBt?.addEventListener('click', () => {
-    prompt?.setAttribute('hidden', '');
-    sessionStorage.setItem('ip-dismissed', '1');
-    exibirFab();
-  });
-
-  /* FAB — reabre o prompt */
-  fab?.addEventListener('click', () => {
-    fab.setAttribute('hidden', '');
-    sessionStorage.removeItem('ip-dismissed');
-    exibirInstallPrompt();
-  });
-
-  /* App foi instalado */
+  /* App instalado */
   window.addEventListener('appinstalled', () => {
     localStorage.setItem('ic-installed', '1');
-    prompt?.setAttribute('hidden', '');
-    fab?.setAttribute('hidden', '');
+    esconderPilula();
+    fecharModal();
     deferredPrompt = null;
   });
 
-  /* iOS Safari não dispara beforeinstallprompt — então força exibição aqui */
-  if (isIOS() && !isStandalone()) {
-    exibirInstallPrompt();
-  }
+  /* Sempre tenta mostrar a pílula no mobile (após pequeno delay para o carregamento terminar) */
+  setTimeout(mostrarPilula, 1200);
 });
 
 /* ─── INDICADOR OFFLINE ─── */
 (function () {
   let toast = null;
-
   function mostrar() {
     if (toast) return;
     toast = document.createElement('div');
@@ -172,13 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.textContent = '📡 Sem conexão — conteúdo salvo disponível';
     document.body.appendChild(toast);
   }
-
   function esconder() {
     if (!toast) return;
     toast.remove();
     toast = null;
   }
-
   window.addEventListener('offline', mostrar);
   window.addEventListener('online',  esconder);
   if (!navigator.onLine) mostrar();
