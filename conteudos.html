@@ -12,7 +12,18 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
     rel="stylesheet" />
 
+  <!-- PWA -->
+  <meta name="theme-color" content="#C6A55A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IC 2026">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/src/assets/img/icons/icon.svg">
+  <link rel="apple-touch-icon" href="/src/assets/img/icons/icon.svg">
+
   <link rel="stylesheet" href="src/assets/css/styles.css">
+  <link rel="stylesheet" href="/src/assets/css/app.css">
   <style>
     /* ── PAGE HERO ── */
     .page-hero {
@@ -236,26 +247,88 @@
       margin-top: 1px;
     }
 
-    /* ── YOUTUBE EMBED ── */
+    /* ── YOUTUBE LEVE: só cria o iframe quando o aluno clica ── */
     .video-wrapper {
       position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      border-radius: 10px;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(198, 165, 90, .22);
+      background: var(--dark);
       margin-top: 0;
       grid-column: 1 / -1;
       /* ocupa linha inteira na grade */
     }
 
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .video-wrapper iframe,
+    .video-load,
+    .video-load img {
       width: 100%;
       height: 100%;
+    }
+
+    .video-wrapper iframe {
+      display: block;
       border: none;
+    }
+
+    .video-load {
+      position: relative;
+      display: block;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      color: #fff;
+      background: #111;
+      font: inherit;
+    }
+
+    .video-load img {
+      display: block;
+      object-fit: cover;
+      opacity: .72;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .video-load::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.58));
+    }
+
+    .video-load:hover img {
+      opacity: .86;
+      transform: scale(1.025);
+    }
+
+    .video-play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--gold);
+      color: var(--dark);
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+      font-size: 1.35rem;
+      padding-left: 4px;
+    }
+
+    .video-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      z-index: 1;
+      color: rgba(255,255,255,.86);
+      font-size: .78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     /* ── IMAGES ROW ── */
@@ -412,7 +485,7 @@
 
          Tipos de material disponíveis (use/remova conforme precisar):
            · PDF via Google Drive  (mat-item com link)
-           · Vídeo do YouTube      (video-wrapper com iframe)
+           · Vídeo do YouTube      (video-wrapper leve, iframe sob demanda)
            · Imagens/fotos         (fotos-row com foto-thumb)
            · Link externo          (mat-item com link)
     ═══════════════════════════════════════════════════════════════ -->
@@ -474,9 +547,12 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/DJDmbqzZTBQ" title="Vídeo do 1º Encontro" allowfullscreen>
-            </iframe>
+          <div class="video-wrapper" data-video-id="DJDmbqzZTBQ" data-video-title="Vídeo do 1º Encontro">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Vídeo do 1º Encontro">
+              <img src="https://i.ytimg.com/vi/DJDmbqzZTBQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+              <span class="video-play" aria-hidden="true">▶</span>
+              <span class="video-caption">Clique para carregar o vídeo</span>
+            </button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -554,9 +630,12 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/sekhbe8G8FI" title="Homilia sobre São Bento" allowfullscreen>
-            </iframe>
+          <div class="video-wrapper" data-video-id="sekhbe8G8FI" data-video-title="Homilia sobre São Bento">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Homilia sobre São Bento">
+              <img src="https://i.ytimg.com/vi/sekhbe8G8FI/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+              <span class="video-play" aria-hidden="true">▶</span>
+              <span class="video-caption">Clique para carregar o vídeo</span>
+            </button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -632,9 +711,12 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/5dsEM1HFhis" title="Por que precisamos de São José?" allowfullscreen>
-            </iframe>
+          <div class="video-wrapper" data-video-id="5dsEM1HFhis" data-video-title="Por que precisamos de São José?">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Por que precisamos de São José?">
+              <img src="https://i.ytimg.com/vi/5dsEM1HFhis/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+              <span class="video-play" aria-hidden="true">▶</span>
+              <span class="video-caption">Clique para carregar o vídeo</span>
+            </button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -709,9 +791,12 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/4aTk2fnh6kg" title="São Pedro - Primeiro papa" allowfullscreen>
-            </iframe>
+          <div class="video-wrapper" data-video-id="4aTk2fnh6kg" data-video-title="São Pedro - Primeiro papa">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: São Pedro - Primeiro papa">
+              <img src="https://i.ytimg.com/vi/4aTk2fnh6kg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+              <span class="video-play" aria-hidden="true">▶</span>
+              <span class="video-caption">Clique para carregar o vídeo</span>
+            </button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -753,7 +838,7 @@
   <!-- ═══ LIGHTBOX (abre fotos em tela cheia) ═══ -->
   <div class="lightbox" id="lightbox" onclick="fecharLightbox()">
     <span class="lightbox-close" onclick="fecharLightbox()">✕</span>
-    <img id="lightbox-img" src="" alt="Foto ampliada">
+    <img id="lightbox-img" src="" alt="Foto ampliada" decoding="async">
   </div>
 
   <!-- ═══ FOOTER ═══ -->
@@ -768,7 +853,39 @@
     </div>
   </footer>
 
-  <script src="src/assets/js/main.js"></script>
+  <script src="src/assets/js/main.js" defer></script>
+
+  <!-- ═══ BOTTOM NAV ═══ -->
+  <nav class="bottom-nav" aria-label="Navegação principal">
+    <a href="index.html" class="bnav-item" data-nav="home" aria-label="Início">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span class="bnav-label">Início</span>
+    </a>
+    <a href="conteudos.html" class="bnav-item" data-nav="encontros" aria-label="Encontros">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+      <span class="bnav-label">Encontros</span>
+    </a>
+    <a href="santos.html" class="bnav-item" data-nav="santos" aria-label="Santos">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <span class="bnav-label">Santos</span>
+    </a>
+    <a href="oracoes.html" class="bnav-item" data-nav="oracoes" aria-label="Orações">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      <span class="bnav-label">Orações</span>
+    </a>
+  </nav>
+
+  <!-- ═══ INSTALL PROMPT ═══ -->
+  <div id="install-prompt" class="install-prompt" aria-live="polite" hidden>
+    <span class="ip-icon">📲</span>
+    <p>Instale o app para acesso offline!</p>
+    <div class="ip-btns">
+      <button id="install-confirm">Instalar</button>
+      <button id="install-dismiss">Depois</button>
+    </div>
+  </div>
+
+  <script src="/src/assets/js/pwa.js" defer></script>
   <script>
     function abrirLightbox(src) {
       document.getElementById('lightbox-img').src = src;

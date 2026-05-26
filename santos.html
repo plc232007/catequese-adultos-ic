@@ -12,7 +12,18 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
     rel="stylesheet" />
 
+  <!-- PWA -->
+  <meta name="theme-color" content="#C6A55A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IC 2026">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/src/assets/img/icons/icon.svg">
+  <link rel="apple-touch-icon" href="/src/assets/img/icons/icon.svg">
+
   <link rel="stylesheet" href="src/assets/css/styles.css">
+  <link rel="stylesheet" href="/src/assets/css/app.css">
   <style>
     /* ── PAGE HERO ── */
     .page-hero {
@@ -100,14 +111,64 @@
 
     .saint-card:hover {
       box-shadow: 0 18px 52px rgba(0, 0, 0, .14);
-      transform: translateY(-3px);
     }
 
     /* ── IMAGE COLUMN ── */
+    @property --saint-float-x {
+      syntax: '<length>';
+      inherits: false;
+      initial-value: 0px;
+    }
+
+    @property --saint-float-y {
+      syntax: '<length>';
+      inherits: false;
+      initial-value: 0px;
+    }
+
+    @property --saint-aura {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 0;
+    }
+
     .saint-image-col {
+      --saint-pointer-x: 0px;
+      --saint-pointer-y: 0px;
+      --saint-scroll-y: 0px;
+      --saint-tilt-x: 0deg;
+      --saint-tilt-y: 0deg;
+      --saint-scale: 1.055;
       position: relative;
       background: var(--cream-soft);
       overflow: hidden;
+      perspective: 900px;
+      transform-style: preserve-3d;
+      isolation: isolate;
+    }
+
+    .saint-image-col::before,
+    .saint-image-col::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .saint-image-col::before {
+      background:
+        radial-gradient(circle at var(--saint-light-x, 50%) var(--saint-light-y, 35%), rgba(255, 235, 170, .32), transparent 34%),
+        linear-gradient(120deg, transparent 22%, rgba(255, 255, 255, .24) 48%, transparent 70%);
+      mix-blend-mode: screen;
+      opacity: calc(.18 + var(--saint-aura) * .5);
+      transform: translateX(calc((var(--saint-aura) - .5) * 18px));
+      transition: opacity .24s ease, transform .24s ease;
+    }
+
+    .saint-image-col::after {
+      border: 1px solid rgba(255, 224, 145, .34);
+      box-shadow: inset 0 0 46px rgba(198, 165, 90, .22);
     }
 
     .saint-image-col img {
@@ -116,11 +177,64 @@
       object-fit: cover;
       object-position: top center;
       display: block;
-      transition: transform .4s ease;
+      transform:
+        translate3d(
+          calc(var(--saint-pointer-x) + var(--saint-float-x)),
+          calc(var(--saint-pointer-y) + var(--saint-float-y) + var(--saint-scroll-y)),
+          34px
+        )
+        rotateX(var(--saint-tilt-x))
+        rotateY(var(--saint-tilt-y))
+        scale(var(--saint-scale));
+      transform-origin: center;
+      transition: transform .28s cubic-bezier(.2, .8, .2, 1), filter .28s ease;
+      will-change: transform, filter;
+      animation: saint-sacred-drift 7s ease-in-out infinite alternate;
+    }
+
+    .saint-card:nth-of-type(2n) .saint-image-col img { animation-duration: 8.5s; animation-delay: -.8s; }
+    .saint-card:nth-of-type(3n) .saint-image-col img { animation-duration: 9.5s; animation-delay: -1.6s; }
+
+    .saint-card:hover .saint-image-col {
+      --saint-scale: 1.095;
+      --saint-aura: 1;
     }
 
     .saint-card:hover .saint-image-col img {
-      transform: scale(1.03);
+      filter: saturate(1.06) contrast(1.04) brightness(1.03);
+    }
+
+    @keyframes saint-sacred-drift {
+      0% {
+        --saint-float-x: -5px;
+        --saint-float-y: -7px;
+        --saint-aura: .12;
+      }
+      50% {
+        --saint-float-x: 4px;
+        --saint-float-y: 6px;
+        --saint-aura: .34;
+      }
+      100% {
+        --saint-float-x: 7px;
+        --saint-float-y: -4px;
+        --saint-aura: .2;
+      }
+    }
+
+    @supports (animation-timeline: view()) {
+      .saint-image-col img {
+        animation:
+          saint-scroll-entrance linear both,
+          saint-sacred-drift 7s ease-in-out infinite alternate;
+        animation-timeline: view(), auto;
+        animation-range: entry 0% cover 42%, normal;
+      }
+
+      @keyframes saint-scroll-entrance {
+        from { filter: sepia(.22) saturate(.88); }
+        to { filter: sepia(0) saturate(1); }
+      }
     }
 
     .saint-image-placeholder {
@@ -335,6 +449,20 @@
       color: var(--text-soft);
     }
 
+
+    @media (prefers-reduced-motion: reduce) {
+      .saint-image-col img {
+        animation: none;
+        transform: scale(1.02);
+        transition: none;
+      }
+
+      .saint-image-col::before {
+        opacity: .12;
+        transform: none;
+      }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
       .saint-card {
@@ -408,7 +536,7 @@
 
       <div class="saint-image-col">
         <span class="saint-week-badge">1º Encontro</span>
-        <img src="src/assets/img/santos/santo-tomas-aquino.jpg" alt="Santo Tomás de Aquino">
+        <img src="src/assets/img/santos/santo-tomas-aquino.jpg" alt="Santo Tomás de Aquino" width="676" height="1200" loading="lazy" decoding="async">
       </div>
 
       <div class="saint-content">
@@ -461,7 +589,7 @@
 
       <div class="saint-image-col">
         <span class="saint-week-badge">2º Encontro</span>
-        <img src="./src/assets/img/santos/sao-bento.webp" alt="São Bento">
+        <img src="./src/assets/img/santos/sao-bento.webp" alt="São Bento" width="645" height="650" loading="lazy" decoding="async">
       </div>
 
       <div class="saint-content">
@@ -514,7 +642,7 @@
     <div class="saint-card" data-semana="3">
       <div class="saint-image-col">
         <span class="saint-week-badge">3º Encontro</span>
-        <img src="src/assets/img/santos/sao-jose.jpg" alt="São José">
+        <img src="src/assets/img/santos/sao-jose.jpg" alt="São José" width="756" height="960" loading="lazy" decoding="async">
       </div>
 
       <div class="saint-content">
@@ -571,7 +699,7 @@
     <div class="saint-card" data-semana="4">
       <div class="saint-image-col">
         <span class="saint-week-badge">4º Encontro</span>
-        <img src="src/assets/img/santos/sao-pedro.jpg" alt="São Pedro">
+        <img src="src/assets/img/santos/sao-pedro.jpg" alt="São Pedro" width="800" height="1053" loading="lazy" decoding="async">
       </div>
 
       <div class="saint-content">
@@ -666,7 +794,39 @@
     </div>
   </footer>
 
-  <script src="src/assets/js/main.js"></script>
+  <script src="src/assets/js/main.js" defer></script>
+
+  <!-- ═══ BOTTOM NAV ═══ -->
+  <nav class="bottom-nav" aria-label="Navegação principal">
+    <a href="index.html" class="bnav-item" data-nav="home" aria-label="Início">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span class="bnav-label">Início</span>
+    </a>
+    <a href="conteudos.html" class="bnav-item" data-nav="encontros" aria-label="Encontros">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+      <span class="bnav-label">Encontros</span>
+    </a>
+    <a href="santos.html" class="bnav-item" data-nav="santos" aria-label="Santos">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      <span class="bnav-label">Santos</span>
+    </a>
+    <a href="oracoes.html" class="bnav-item" data-nav="oracoes" aria-label="Orações">
+      <svg class="bnav-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      <span class="bnav-label">Orações</span>
+    </a>
+  </nav>
+
+  <!-- ═══ INSTALL PROMPT ═══ -->
+  <div id="install-prompt" class="install-prompt" aria-live="polite" hidden>
+    <span class="ip-icon">📲</span>
+    <p>Instale o app para acesso offline!</p>
+    <div class="ip-btns">
+      <button id="install-confirm">Instalar</button>
+      <button id="install-dismiss">Depois</button>
+    </div>
+  </div>
+
+  <script src="/src/assets/js/pwa.js" defer></script>
 </body>
 
 </html>
