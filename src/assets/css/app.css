@@ -474,3 +474,17 @@ html { scroll-padding-top: 80px; }
 @media (max-width: 640px) {
   html { scroll-padding-top: 70px; }
 }
+
+/* ─── REDE DE SEGURANÇA: garante que conteúdo SEMPRE seja visível ───
+   O styles.css aplica .js-reveal { opacity: 0 } esperando que o
+   IntersectionObserver adicione .is-visible. Se algo falhar no JS
+   (ex: SW servindo conteúdo stale), os cards ficam invisíveis para
+   sempre. Aqui forçamos opacidade 1 para impedir isso. */
+.js-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.js-reveal.is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
