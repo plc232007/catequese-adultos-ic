@@ -5,7 +5,7 @@
 /* ─── RESET DE CACHE AUTOMÁTICO ───
    Se a versão local do usuário não bate com a esperada, limpa caches
    e service workers, e recarrega para garantir conteúdo fresco. */
-const APP_VERSION = '4';
+const APP_VERSION = '5';
 (function () {
   try {
     const last = localStorage.getItem('ic-app-version');
