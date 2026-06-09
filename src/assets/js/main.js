@@ -75,6 +75,25 @@ document.addEventListener('click', (e) => {
   window.scrollTo({ top, behavior: 'smooth' });
 });
 
+// ─── YOUTUBE SOB DEMANDA (facade → player só no clique) ───
+(function () {
+  const lites = document.querySelectorAll('.yt-lite');
+  if (!lites.length) return;
+  lites.forEach(el => {
+    el.addEventListener('click', function () {
+      if (el.dataset.loaded) return;
+      el.dataset.loaded = '1';
+      const id = el.dataset.id;
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      iframe.title = el.dataset.title || 'Vídeo do YouTube';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      el.appendChild(iframe);
+    }, { once: true });
+  });
+})();
+
 // ─── REVEAL ON SCROLL ───
 // Só esconde elementos DEPOIS de marcar tudo — nunca deixa nada invisível sem observer ativo
 (function () {

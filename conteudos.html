@@ -8,34 +8,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://i.ytimg.com" />
+  <link rel="dns-prefetch" href="https://www.youtube-nocookie.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
     rel="stylesheet" />
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            gold: '#C6A55A',
-            'gold-soft': '#D6B873',
-            cream: '#F3EFE7',
-            text: '#2E2A26',
-            'text-soft': '#5E554C',
-            'text-light': '#5E554C',
-            dark: '#1C1610',
-            'white-soft': '#FAF8F3',
-          },
-          fontFamily: {
-            playfair: ['"Playfair Display"', 'serif'],
-            lato: ['Lato', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Tailwind compilado estaticamente (só as classes usadas). Regenerar: ver README -->
+  <link rel="stylesheet" href="src/assets/css/tailwind.css">
   <style>
     /* ── PAGE HERO ── */
     .page-hero {
@@ -139,6 +120,86 @@
     }
 
     /* ── IMAGES ROW ── */
+
+    /* ── YOUTUBE FACADE (carrega o player só no clique) ── */
+    .yt-lite {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(198, 165, 90, .2);
+      background: #000;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+    }
+
+    .yt-lite .yt-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity .2s, transform .3s;
+    }
+
+    .yt-lite::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .28));
+      transition: background .2s;
+      pointer-events: none;
+    }
+
+    .yt-lite:hover::after {
+      background: rgba(0, 0, 0, .12);
+    }
+
+    .yt-lite:hover .yt-thumb {
+      transform: scale(1.03);
+    }
+
+    .yt-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 48px;
+      border: 0;
+      border-radius: 14px;
+      background: rgba(28, 22, 16, .78);
+      cursor: pointer;
+      z-index: 1;
+      transition: background .2s, transform .2s;
+    }
+
+    .yt-play::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 53%;
+      transform: translate(-50%, -50%);
+      border-style: solid;
+      border-width: 11px 0 11px 18px;
+      border-color: transparent transparent transparent #fff;
+    }
+
+    .yt-lite:hover .yt-play {
+      background: var(--gold);
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+
+    .yt-lite iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -304,9 +365,9 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="relative pb-[56.25%] h-0 rounded-xl overflow-hidden border border-gold/20 col-span-full shadow-sm">
-            <iframe src="https://www.youtube.com/embed/DJDmbqzZTBQ" title="Vídeo do 1º Encontro" allowfullscreen loading="lazy" class="absolute top-0 left-0 w-full h-full border-none">
-            </iframe>
+          <div class="yt-lite col-span-full" data-id="DJDmbqzZTBQ" data-title="Vídeo do 1º Encontro">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/DJDmbqzZTBQ/hqdefault.jpg" alt="Vídeo do 1º Encontro" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -383,9 +444,9 @@
                Substitua "ID_DO_VIDEO" pelo código do vídeo (parte após "?v=" na URL do YouTube)
                Ex: youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
           -->
-          <div class="relative pb-[56.25%] h-0 rounded-xl overflow-hidden border border-gold/20 col-span-full shadow-sm">
-            <iframe src="https://www.youtube.com/embed/sekhbe8G8FI" title="Homilia sobre São Bento" allowfullscreen loading="lazy" class="absolute top-0 left-0 w-full h-full border-none">
-            </iframe>
+          <div class="yt-lite col-span-full" data-id="sekhbe8G8FI" data-title="Homilia sobre São Bento">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/sekhbe8G8FI/hqdefault.jpg" alt="Homilia sobre São Bento" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
           </div>
 
           <!-- FOTOS DO ENCONTRO
@@ -406,60 +467,433 @@
 
 
     <!-- ════════════════════════════════════════════════════════════
-         ENCONTRO 2 — PENDENTE (ainda não aconteceu)
-         Quando o encontro acontecer:
-           1. Remova a classe "pendente" do .encontro-card
-           2. Substitua <div class="p-7 sm:p-8 text-text-soft italic text-[0.9rem]"> pelo bloco
-              .encontro-body completo (copie do Encontro 1 acima)
-           3. Preencha os dados reais
+         ENCONTROS 3–13 — CRONOGRAMA DO CREDO
+         Estrutura trinitária: Deus Pai → Jesus Cristo → Espírito Santo/Igreja,
+         com tema mariano complementar ao final (ver cronograma-credo.md).
+         Cada card já traz: resumo temático + link de referência + vídeo.
+         Ao realizar o encontro, basta atualizar o resumo e acrescentar
+         o PDF/fotos reais na grade de materiais (modelo no Encontro 1).
     ═══════════════════════════════════════════════════════════════ -->
 
-
-    <div class="encontro-card pendente" data-encontro="3">
+    <!-- Bloco I — Deus Pai -->
+    <div class="encontro-card" data-encontro="3">
             <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
         <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">3</div>
         <div class="flex-1">
-          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">Creio em Deus </h3>
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">Deus Pai, Criador Todo-Poderoso</h3>
           <div class="flex flex-wrap gap-2 sm:gap-4">
             <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">18 Mar 2026</strong></span>
             <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
             <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
         </div>
       </div>
-      <div class="p-7 sm:p-8 text-text-soft italic text-[0.9rem]">
-        O conteúdo deste encontro será publicado após a realização da aula.
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          Professamos a primeira verdade do Credo: existe um só Deus, Pai todo-poderoso, que cria o céu e a terra por amor. Refletimos sobre a Santíssima Trindade, a criação como obra das três Pessoas divinas e o sentido de chamar Deus de “Pai”.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://opusdei.org/pt-br/article/tema-6-a-criacao/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">A Criação — Opus Dei</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Texto de referência</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="tv_3BGwcy9Q" data-title="Catequese — Creio em Deus Pai, o Criador">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/tv_3BGwcy9Q/hqdefault.jpg" alt="Catequese — Creio em Deus Pai, o Criador" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <div class="encontro-card pendente" data-encontro="4">
+    <!-- Bloco II — Jesus Cristo (os mistérios da vida do Filho) -->
+    <div class="encontro-card" data-encontro="4">
             <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
         <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">4</div>
         <div class="flex-1">
-          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">[Tema a definir]</h3>
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">Jesus Cristo, Filho Único e Senhor</h3>
           <div class="flex flex-wrap gap-2 sm:gap-4">
-            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">A definir</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">25 Mar 2026</strong></span>
             <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
-            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">A definir</strong></span>          </div>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
         </div>
       </div>
-      <div class="p-7 sm:p-8 text-text-soft italic text-[0.9rem]">
-        O conteúdo deste encontro será publicado após a realização da aula.
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          Entramos no coração do Credo: Jesus Cristo. Vemos o significado dos seus nomes — “Jesus” (Deus salva), “Cristo” (o Ungido, o Messias), “Filho Único” e “Senhor” — e como a Igreja confessa que Ele é verdadeiro Deus e verdadeiro homem.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://catequizar.com.br/curso-02-aula-10-creio-em-jesus-cristo-filho-unico-de-deus/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Creio em Jesus Cristo, Filho Único</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Texto de referência</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="95wrvN0muME" data-title="Catequese — Creio em Jesus Cristo, Filho único de Deus">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/95wrvN0muME/hqdefault.jpg" alt="Catequese — Creio em Jesus Cristo, Filho único de Deus" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
       </div>
     </div>
 
-    <div class="encontro-card pendente" data-encontro="5">
+    <div class="encontro-card" data-encontro="5">
             <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
         <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">5</div>
         <div class="flex-1">
-          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">[Tema a definir]</h3>
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">A Encarnação: concebido pelo Espírito Santo</h3>
           <div class="flex flex-wrap gap-2 sm:gap-4">
-            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">A definir</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">08 Abr 2026</strong></span>
             <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
-            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">A definir</strong></span>          </div>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
         </div>
       </div>
-      <div class="p-7 sm:p-8 text-text-soft italic text-[0.9rem]">
-        O conteúdo deste encontro será publicado após a realização da aula.
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “E o Verbo se fez carne.” Contemplamos o mistério da Encarnação: o Filho de Deus assume a nossa humanidade pela ação do Espírito Santo no seio da Virgem Maria, para a nossa salvação.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://formacao.cancaonova.com/igreja/catequese/fe-na-encarnacao-filho-de-deus-segundo-igreja/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">A fé na Encarnação</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Texto de referência</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="EdGQeU3Qjnw" data-title="Catequese — A Encarnação, concebido pelo Espírito Santo">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/EdGQeU3Qjnw/hqdefault.jpg" alt="Catequese — A Encarnação, concebido pelo Espírito Santo" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="6">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">6</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">O Nascimento: nascido da Virgem Maria</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">15 Abr 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Nasceu da Virgem Maria.” Aprofundamos a maternidade divina e a virgindade de Maria, e o nascimento de Jesus, que revela Deus feito menino, próximo dos pequenos e dos pobres.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://www.a12.com/academia/catequese/dogmas-marianos-a-maternidade-divina" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">A Maternidade Divina de Maria</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Dogmas marianos</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="JaslVJ2Mzyo" data-title="Jesus nasceu da Virgem Maria">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/JaslVJ2Mzyo/hqdefault.jpg" alt="Jesus nasceu da Virgem Maria" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="7">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">7</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">A Paixão: sofrimento, cruz e morte</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">22 Abr 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          O centro da nossa redenção: a Paixão. Jesus “padeceu sob Pôncio Pilatos” — em tempo e lugar reais —, foi crucificado, morto e sepultado, oferecendo-se em sacrifício por amor para nos reconciliar com o Pai.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://www.vaticannews.va/pt/igreja/news/2024-03/crucificado-morto-sepultado.html" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Crucificado, morto e sepultado</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Vatican News</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="ivmy9r25T5Q" data-title="Padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/ivmy9r25T5Q/hqdefault.jpg" alt="Padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="8">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">8</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">A Descida aos mortos</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">29 Abr 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Desceu à mansão dos mortos.” Jesus, verdadeiramente morto, desce ao reino dos mortos para anunciar a salvação aos justos que o aguardavam, abrindo-lhes as portas do Céu.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://formacao.cancaonova.com/liturgia/tempo-liturgico/advento/jesus-desceu-mesmo-a-mansao-dos-mortos/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Jesus desceu à mansão dos mortos?</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Texto de referência</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="MAKj7JSPFc0" data-title="A descida de Jesus aos infernos">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/MAKj7JSPFc0/hqdefault.jpg" alt="A descida de Jesus aos infernos" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="9">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">9</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">A Ressurreição ao terceiro dia</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">06 Mai 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Ressuscitou ao terceiro dia.” A Ressurreição é a verdade culminante da fé: Cristo vence a morte e o pecado. Vemos o túmulo vazio, as aparições do Ressuscitado e o que a Páscoa significa para nós.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://comshalom.org/credo-ressuscitou-ao-terceiro-dia/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Ressuscitou ao terceiro dia</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Comunidade Shalom</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="wZpXsSyKi74" data-title="Jesus ressuscitou no terceiro dia?">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/wZpXsSyKi74/hqdefault.jpg" alt="Jesus ressuscitou no terceiro dia?" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="10">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">10</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">A Ascensão e o Juízo Final</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">13 Mai 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Subiu aos céus... donde há de vir a julgar os vivos e os mortos.” A Ascensão é a entrada de Cristo na glória, e a sua vinda gloriosa nos remete ao Juízo final e à esperança cristã.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://opusdei.org/pt-br/article/tema-11-ressurreicao-ascensao-e-segunda-vinda-de-cristo/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Ascensão e Segunda vinda de Cristo</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Opus Dei</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="CMjS1l-WKP0" data-title="A Ascensão de Jesus ao Céu">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/CMjS1l-WKP0/hqdefault.jpg" alt="A Ascensão de Jesus ao Céu" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco III — Espírito Santo e a Igreja -->
+    <div class="encontro-card" data-encontro="11">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">11</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">O Espírito Santo e a Igreja Católica</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">20 Mai 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Creio no Espírito Santo, na santa Igreja Católica.” Conhecemos a terceira Pessoa da Trindade, que dá vida à Igreja, e as quatro notas da Igreja: una, santa, católica e apostólica.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://comshalom.org/entenda-porque-a-igreja-e-una-santa-catolica-e-apostolica/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Igreja una, santa, católica e apostólica</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Comunidade Shalom</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="zgnq0T1c5Co" data-title="Quem é a Igreja? Santa, Católica e Apostólica">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/zgnq0T1c5Co/hqdefault.jpg" alt="Quem é a Igreja? Santa, Católica e Apostólica" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="encontro-card" data-encontro="12">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">12</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">Comunhão dos Santos e a Vida Eterna</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">27 Mai 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          “Creio na comunhão dos santos... na vida eterna.” Somos um só Corpo com os santos do Céu, as almas do purgatório e os fiéis na terra. Falamos da remissão dos pecados, da ressurreição da carne e da vida eterna.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://opusdei.org/pt-br/article/tema-16-creio-na-ressurreicao-da-carne-e-na-vida-eterna/" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Ressurreição da carne e vida eterna</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Opus Dei</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="JBi26qKAlr8" data-title="Comunhão dos Santos — Padre Paulo Ricardo">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/JBi26qKAlr8/hqdefault.jpg" alt="Comunhão dos Santos — Padre Paulo Ricardo" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco IV — Tema complementar -->
+    <div class="encontro-card" data-encontro="13">
+            <div class="flex items-center gap-3 px-5 py-4 sm:gap-5 sm:px-8 sm:py-6 bg-dark border-b-[3px] border-gold">
+        <div class="flex items-center justify-center min-w-[44px] h-[44px] sm:min-w-[52px] sm:h-[52px] rounded-full border-2 border-gold font-playfair text-lg sm:text-[1.2rem] font-bold text-gold shrink-0">13</div>
+        <div class="flex-1">
+          <h3 class="font-playfair text-white text-base sm:text-[1.15rem] mb-1">Nossa Senhora na Doutrina (Mariologia)</h3>
+          <div class="flex flex-wrap gap-2 sm:gap-4">
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📅 <strong class="text-gold-soft ml-[4px]">03 Jun 2026</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">🕗 <strong class="text-gold-soft ml-[4px]">20h – 22h</strong></span>
+            <span class="text-[0.75rem] text-white/50 tracking-[0.5px]">📍 <strong class="text-gold-soft ml-[4px]">Sala 204</strong></span>          </div>
+        </div>
+      </div>
+
+      <div class="encontro-body">
+
+        <p class="encontro-resumo">
+          Tema complementar que coroa o estudo do Credo: o papel de Nossa Senhora na fé católica. Percorremos os quatro dogmas marianos — Mãe de Deus, sempre Virgem, Imaculada Conceição e Assunção.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <a class="group flex items-center gap-3 p-3.5 rounded-xl border border-gold/20 bg-cream text-text no-underline transition-all duration-300 ease-out hover:bg-gold/10 hover:border-gold hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:border-gold/50 cursor-pointer" href="https://www.a12.com/academia/catequese/os-dogmas-marianos" target="_blank" rel="noopener">
+            <span class="text-[1.6rem] shrink-0 transition-transform duration-300 group-hover:scale-110">🔗</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-[0.65rem] font-bold tracking-[1.5px] uppercase text-gold mb-[2px]">Link</p>
+              <p class="text-[0.88rem] font-semibold whitespace-nowrap overflow-hidden text-ellipsis text-text">Os quatro dogmas marianos</p>
+              <p class="text-[0.75rem] text-text-soft mt-[1px]">Mariologia</p>
+            </div>
+          </a>
+
+          <div class="yt-lite col-span-full" data-id="giEfR-SYTTY" data-title="Dogmas Marianos: Maria, Mãe de Deus">
+            <img class="yt-thumb" src="https://i.ytimg.com/vi/giEfR-SYTTY/hqdefault.jpg" alt="Dogmas Marianos: Maria, Mãe de Deus" loading="lazy" width="480" height="360">
+            <button type="button" class="yt-play" aria-label="Reproduzir vídeo"></button>
+          </div>
+
+        </div>
       </div>
     </div>
 
