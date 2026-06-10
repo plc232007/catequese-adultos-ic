@@ -254,19 +254,7 @@ O site é 100% estático — funciona em qualquer serviço que sirva arquivos HT
 - Todas as animações respeitam `prefers-reduced-motion` (acessibilidade)
 - O layout é responsivo — em telas menores que 640px o nav colapsa e os grids viram coluna única
 - PDFs e links externos abrem sempre em nova aba (`target="_blank" rel="noopener"`)
-- Os vídeos do YouTube usam **facade** (miniatura + lazy-load): o player só carrega ao clicar, evitando o consumo de memória de vários iframes simultâneos. Lógica em `main.js` (`.yt-lite`)
-
-### Tailwind (CSS estático)
-
-`conteudos.html` usa utilitárias do Tailwind, mas **sem o CDN em runtime**. O CSS é pré-compilado só com as classes realmente usadas, em `src/assets/css/tailwind.css` (~10 KB).
-
-Para regenerar após mexer nas classes de `conteudos.html`:
-
-```bash
-npx tailwindcss@3.4.17 -c .build/tailwind.config.js -i .build/input.css -o src/assets/css/tailwind.css --minify
-```
-
-A config (cores do projeto + arquivo escaneado) está em `.build/`.
+- Os vídeos do YouTube usam **facade** (miniatura + lazy-load): o player só é criado quando o aluno clica, evitando o consumo de memória de vários iframes simultâneos. Marcação `.video-wrapper[data-video-id]` + botão `.video-load`; lógica em `main.js`
 
 ---
 

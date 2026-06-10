@@ -12,22 +12,12 @@
   });
 })();
 
-// ─── NAV SCROLL STATE ───
-(function () {
-  const nav = document.querySelector('nav');
-  if (!nav) return;
-  function updateNav() {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }
-  updateNav();
-  window.addEventListener('scroll', updateNav, { passive: true });
-})();
-
 // ─── MENU HAMBURGUER ───
 (function () {
   const toggle  = document.getElementById('nav-toggle');
   const links   = document.getElementById('nav-links');
   const overlay = document.getElementById('nav-overlay');
+
   if (!toggle || !links) return;
 
   function fecharMenu() {
@@ -35,35 +25,44 @@
     links.classList.remove('open');
     if (overlay) overlay.classList.remove('open');
     document.body.style.overflow = '';
+    toggle.setAttribute('aria-expanded', 'false');
   }
+
   function abrirMenu() {
     toggle.classList.add('open');
     links.classList.add('open');
     if (overlay) overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    toggle.setAttribute('aria-expanded', 'true');
   }
+
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', links.id || 'nav-links');
 
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
     toggle.classList.contains('open') ? fecharMenu() : abrirMenu();
   });
+
   if (overlay) overlay.addEventListener('click', fecharMenu);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharMenu(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharMenu();
+  });
 
   links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', function (e) {
+    a.addEventListener('click', function() {
       const href = this.getAttribute('href');
       if (href && !href.startsWith('#')) {
-        document.body.style.overflow = '';
-        window.location.href = href;
-        return;
+        fecharMenu();
+      } else {
+        fecharMenu();
       }
-      fecharMenu();
     });
   });
 })();
 
-// ─── SCROLL SUAVE ───
+// ─── SCROLL SUAVE para âncoras ───
 document.addEventListener('click', (e) => {
   const link = e.target.closest('a[href^="#"]');
   if (!link) return;
@@ -71,90 +70,175 @@ document.addEventListener('click', (e) => {
   if (!target) return;
   e.preventDefault();
   const nav = document.querySelector('nav');
-  const top = target.getBoundingClientRect().top + window.pageYOffset - (nav?.offsetHeight ?? 0) - 16;
+  const top = target.getBoundingClientRect().top + window.pageYOffset - (nav?.offsetHeight ?? 0) - 12;
   window.scrollTo({ top, behavior: 'smooth' });
 });
 
-// ─── YOUTUBE SOB DEMANDA (facade → player só no clique) ───
+// ─── PROGRESSO DE LEITURA E VOLTAR AO TOPO ───
 (function () {
-  const lites = document.querySelectorAll('.yt-lite');
-  if (!lites.length) return;
-  lites.forEach(el => {
-    el.addEventListener('click', function () {
-      if (el.dataset.loaded) return;
-      el.dataset.loaded = '1';
-      const id = el.dataset.id;
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
-      iframe.title = el.dataset.title || 'Vídeo do YouTube';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      el.appendChild(iframe);
-    }, { once: true });
-  });
+  const bar = document.createElement('span');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+
+  const backTop = document.createElement('button');
+  backTop.className = 'back-to-top';
+  backTop.type = 'button';
+  backTop.setAttribute('aria-label', 'Voltar ao topo');
+  backTop.textContent = '↑';
+  document.body.appendChild(backTop);
+
+  function updateScrollUi() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    bar.style.width = `${Math.min(progress, 100)}%`;
+    backTop.classList.toggle('is-visible', window.scrollY > 520);
+  }
+
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('scroll', updateScrollUi, { passive: true });
+  window.addEventListener('resize', updateScrollUi);
+  updateScrollUi();
 })();
 
-// ─── REVEAL ON SCROLL ───
-// Só esconde elementos DEPOIS de marcar tudo — nunca deixa nada invisível sem observer ativo
+// ─── REVELAÇÃO LEVE DOS BLOCOS ───
 (function () {
-  if (!window.IntersectionObserver) return;
+  const selectors = '.sobre-card, .timeline-item, .material-item, .aviso-card, .saint-card, .encontro-card, .prayer-card, .mat-item';
+  const elements = document.querySelectorAll(selectors);
+  if (!elements.length) return;
 
-  // 1. Aplica stagger indexes
-  document.querySelectorAll('.stagger').forEach(parent => {
-    [...parent.children].forEach((child, i) => child.style.setProperty('--i', i));
-  });
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
 
-  // 2. Marca elementos para animar
-  document.querySelectorAll('.section-divider').forEach(d => d.classList.add('reveal'));
-
-  [
-    ['.sobre-cards',   '.sobre-card'],
-    ['.material-grid', '.material-item'],
-    ['.avisos-grid',   '.aviso-card'],
-    ['.upcoming-grid', '.upcoming-card'],
-    ['.timeline',      '.timeline-item'],
-  ].forEach(([parent, child]) => {
-    const p = document.querySelector(parent);
-    if (!p) return;
-    p.classList.add('stagger');
-    p.querySelectorAll(child).forEach((el, i) => {
-      el.classList.add('reveal');
-      el.style.setProperty('--i', i);
-    });
-  });
-
-  document.querySelectorAll('.prayer-card, .encontro-card, .saint-card').forEach((el, i) => {
-    el.classList.add('reveal');
-    el.style.transitionDelay = i * 70 + 'ms';
-  });
-
-  const bl = document.querySelector('.bento-image-col');
-  const br = document.querySelector('.bento-text-col');
-  if (bl) bl.classList.add('reveal-left');
-  if (br) br.classList.add('reveal-right');
-
-  document.querySelectorAll('.quote, .bento-quote').forEach(el => el.classList.add('reveal'));
-
-  // 3. SÓ AGORA ativa o CSS que esconde os elementos
-  document.documentElement.classList.add('js-ready');
-
-  // 4. Observer
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
-  // Elementos já visíveis na viewport → revelar imediatamente
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      el.classList.add('visible');
-    } else {
-      observer.observe(el);
-    }
+  elements.forEach((el, index) => {
+    el.classList.add('js-reveal');
+    el.style.transitionDelay = `${Math.min(index % 4, 3) * 55}ms`;
+    observer.observe(el);
   });
 })();
+
+// ─── CRONOGRAMA DINÂMICO ───
+(function () {
+  const items = Array.from(document.querySelectorAll('.timeline-item[data-date]'));
+  if (!items.length) return;
+
+  const now = new Date();
+  const meetings = items.map(item => ({ item, date: new Date(item.dataset.date) }));
+  const past = meetings.filter(meeting => meeting.date < now);
+  const next = meetings.find(meeting => meeting.date >= now);
+  const formatter = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+
+  meetings.forEach(meeting => {
+    if (meeting.date < now) meeting.item.classList.add('is-past');
+  });
+
+  if (next) {
+    next.item.classList.add('is-next');
+    document.getElementById('next-meeting-title').textContent = next.item.querySelector('h3')?.textContent || 'Próximo encontro';
+    document.getElementById('next-meeting-detail').textContent = `${formatter.format(next.date)} · Sala 204`;
+  } else {
+    document.getElementById('next-meeting-title').textContent = 'Etapa divulgada concluída';
+    document.getElementById('next-meeting-detail').textContent = 'Novos encontros podem ser adicionados ao cronograma quando forem confirmados.';
+  }
+
+  const percent = Math.round((past.length / meetings.length) * 100);
+  document.getElementById('agenda-progress-text').textContent = `${past.length}/${meetings.length} encontros realizados`;
+  document.getElementById('agenda-progress-bar').style.width = `${percent}%`;
+})();
+
+// ─── MOVIMENTO DAS IMAGENS DOS SANTOS ───
+(function () {
+  const saintImages = Array.from(document.querySelectorAll('.saint-image-col'));
+  const canAnimate = saintImages.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canAnimate) return;
+
+  let ticking = false;
+
+  function updateScrollParallax() {
+    ticking = false;
+    const viewportCenter = window.innerHeight / 2;
+
+    saintImages.forEach(col => {
+      const rect = col.getBoundingClientRect();
+      const colCenter = rect.top + rect.height / 2;
+      const distance = (viewportCenter - colCenter) / viewportCenter;
+      const clamped = Math.max(-1, Math.min(1, distance));
+      col.style.setProperty('--saint-scroll-y', `${(clamped * 14).toFixed(2)}px`);
+    });
+  }
+
+  function requestParallaxTick() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateScrollParallax);
+  }
+
+  saintImages.forEach(col => {
+    col.addEventListener('pointermove', event => {
+      const rect = col.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      col.style.setProperty('--saint-pointer-x', `${(x * 16).toFixed(2)}px`);
+      col.style.setProperty('--saint-pointer-y', `${(y * 12).toFixed(2)}px`);
+      col.style.setProperty('--saint-tilt-x', `${(-y * 4).toFixed(2)}deg`);
+      col.style.setProperty('--saint-tilt-y', `${(x * 5).toFixed(2)}deg`);
+      col.style.setProperty('--saint-light-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+      col.style.setProperty('--saint-light-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+    }, { passive: true });
+
+    col.addEventListener('pointerleave', () => {
+      col.style.setProperty('--saint-pointer-x', '0px');
+      col.style.setProperty('--saint-pointer-y', '0px');
+      col.style.setProperty('--saint-tilt-x', '0deg');
+      col.style.setProperty('--saint-tilt-y', '0deg');
+      col.style.setProperty('--saint-light-x', '50%');
+      col.style.setProperty('--saint-light-y', '35%');
+    });
+  });
+
+  window.addEventListener('scroll', requestParallaxTick, { passive: true });
+  window.addEventListener('resize', requestParallaxTick);
+  requestParallaxTick();
+})();
+
+// ─── YOUTUBE SOB DEMANDA: EVITA CARREGAR PLAYER PESADO ANTES DO CLIQUE ───
+(function () {
+  document.querySelectorAll('.video-wrapper[data-video-id]').forEach(wrapper => {
+    const button = wrapper.querySelector('.video-load');
+    if (!button) return;
+
+    button.addEventListener('click', () => {
+      const videoId = wrapper.dataset.videoId;
+      const title = wrapper.dataset.videoTitle || 'Vídeo do YouTube';
+      if (!videoId) return;
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+
+      wrapper.textContent = '';
+      wrapper.appendChild(iframe);
+      wrapper.classList.add('is-loaded');
+    });
+  });
+})();
+
+// ─── IMAGENS OPCIONAIS: EVITA ESPAÇOS QUEBRADOS EM GALERIAS FUTURAS ───
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('error', () => {
+    if (img.classList.contains('foto-thumb')) img.remove();
+  }, { once: true });
+});
