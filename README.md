@@ -254,6 +254,7 @@ O site é 100% estático — funciona em qualquer serviço que sirva arquivos HT
 - Todas as animações respeitam `prefers-reduced-motion` (acessibilidade)
 - O layout é responsivo — em telas menores que 640px o nav colapsa e os grids viram coluna única
 - PDFs e links externos abrem sempre em nova aba (`target="_blank" rel="noopener"`)
+- Os vídeos do YouTube usam **facade** (miniatura + lazy-load): o player só é criado quando o aluno clica, evitando o consumo de memória de vários iframes simultâneos. Marcação `.video-wrapper[data-video-id]` + botão `.video-load`; lógica em `main.js`
 
 ---
 
