@@ -200,6 +200,8 @@ Cada item da timeline precisa do atributo `data-date` em **formato ISO completo,
 
 O painel acima da timeline (próximo encontro + progresso) é preenchido pelo `main.js` e depende dos IDs `#next-meeting-title`, `#next-meeting-detail`, `#agenda-progress-text` e `#agenda-progress-bar` — não remova nenhum deles.
 
+**Você não precisa mexer no cronograma toda semana.** Todos os encontros do semestre ficam no HTML desde o começo, e cada um aparece sozinho na **quinta-feira da semana anterior** ao seu dia — a mesma regra alimenta o cartão de *Próximo encontro* que fica no topo da página. Ao planejar um semestre novo, basta inserir todos os encontros de uma vez, com `data-date` e `data-semestre`, que o site vai revelando um por semana.
+
 ### Atualizar o santo de devoção (`index.html`)
 
 Três lugares: a **faixa dourada** abaixo do hero, a **seção São Bento** (imagem, biografia, citação e tags) e o texto do **rodapé**.

@@ -155,6 +155,98 @@
       background: rgba(198,165,90,.07);
     }
 
+    /* ── PRÓXIMO ENCONTRO NO HERO ── */
+    .hero-proximo {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      margin-top: 26px;
+      padding: 14px 30px;
+      border-radius: 16px;
+      border: 1px solid rgba(198, 165, 90, .5);
+      background: rgba(20, 15, 10, .55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-decoration: none;
+      text-align: center;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .hero-proximo:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+      background: rgba(20, 15, 10, .72);
+    }
+
+    .hero-proximo-rotulo {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: 2.4px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .hero-proximo-quando {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.18rem;
+      color: #fff;
+      line-height: 1.25;
+    }
+
+    .hero-proximo-titulo {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .68);
+      max-width: 34ch;
+      line-height: 1.5;
+    }
+
+    /* ── CRONOGRAMA: divulgação semanal ── */
+    /* Encontro ainda não divulgado: sai da página até chegar a quinta-feira
+       da semana anterior. Quem controla isso é o main.js. */
+    .timeline-item.is-oculto { display: none; }
+
+    .timeline-semestre {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 34px 0 26px;
+    }
+
+    .timeline-semestre-linha {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(198, 165, 90, .5), transparent);
+    }
+
+    .timeline-semestre-texto {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .agenda-nota {
+      margin-top: 14px;
+      font-size: .78rem;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+
+    @media (max-width: 680px) {
+      .hero-proximo {
+        margin-top: 20px;
+        padding: 12px 20px;
+      }
+
+      .hero-proximo-quando { font-size: 1.02rem; }
+      .timeline-semestre-texto { white-space: normal; text-align: center; }
+    }
+
     /* ── RETOMADA DO SEMESTRE ── */
     .semestre-fatos {
       display: flex;
@@ -403,6 +495,16 @@
       <small>Hino ao Espírito Santo</small>
     </div>
 
+    <!-- PRÓXIMO ENCONTRO
+         Preenchido pelo main.js a partir do cronograma; fica escondido
+         se não houver encontro divulgado à frente. Não precisa de edição
+         manual — o texto vem sempre do próximo .timeline-item. -->
+    <a class="hero-proximo" id="hero-proximo" href="#cronograma" hidden>
+      <span class="hero-proximo-rotulo">Próximo encontro</span>
+      <span class="hero-proximo-quando" id="hero-proximo-quando"></span>
+      <span class="hero-proximo-titulo" id="hero-proximo-titulo"></span>
+    </a>
+
     <p class="scroll-hint">↓ &nbsp; role para baixo</p>
   </section>
 
@@ -510,9 +612,11 @@
         </div>
       </div>
 
+      <p class="agenda-nota">Os encontros são divulgados semana a semana: cada quinta-feira entra o encontro da quarta seguinte.</p>
+
       <div class="timeline" id="timeline">
 
-        <div class="timeline-item" data-date="2026-03-04T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-03-04T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">04</div>
             <div class="month">Mar</div>
@@ -523,7 +627,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-03-11T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-03-11T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">11</div>
             <div class="month">Mar</div>
@@ -534,7 +638,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-03-18T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-03-18T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">18</div>
             <div class="month">Mar</div>
@@ -545,7 +649,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-03-25T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-03-25T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">25</div>
             <div class="month">Mar</div>
@@ -556,7 +660,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-04-08T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-04-08T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">08</div>
             <div class="month">Abr</div>
@@ -567,7 +671,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-04-15T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-04-15T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">15</div>
             <div class="month">Abr</div>
@@ -578,7 +682,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-04-22T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-04-22T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">22</div>
             <div class="month">Abr</div>
@@ -589,7 +693,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-04-29T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-04-29T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">29</div>
             <div class="month">Abr</div>
@@ -600,7 +704,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-05-06T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-05-06T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">06</div>
             <div class="month">Mai</div>
@@ -611,7 +715,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-05-13T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-05-13T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">13</div>
             <div class="month">Mai</div>
@@ -622,7 +726,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-05-20T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-05-20T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">20</div>
             <div class="month">Mai</div>
@@ -633,7 +737,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-05-27T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-05-27T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">27</div>
             <div class="month">Mai</div>
@@ -644,7 +748,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-06-03T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-06-03T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">03</div>
             <div class="month">Jun</div>
@@ -655,7 +759,7 @@
           </div>
         </div>
 
-        <div class="timeline-item" data-date="2026-06-10T20:00:00-03:00">
+        <div class="timeline-item" data-semestre="1" data-date="2026-06-10T20:00:00-03:00">
           <div class="timeline-date">
             <div class="day">10</div>
             <div class="month">Jun</div>
@@ -663,6 +767,189 @@
           <div class="timeline-info">
             <h3>14º Encontro — A Encíclica <em>Magnifica Humanitas</em></h3>
             <p>Local: Sala 204 · Horário: 20h</p>
+          </div>
+        </div>
+
+        <!-- ═══ 2º SEMESTRE · os encontros aparecem sozinhos, um por semana ═══ -->
+        <div class="timeline-semestre">
+          <span class="timeline-semestre-linha" aria-hidden="true"></span>
+          <span class="timeline-semestre-texto">2º semestre · Mandamentos e Sacramentos</span>
+          <span class="timeline-semestre-linha" aria-hidden="true"></span>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-08-12T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">12</div>
+            <div class="month">Ago</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro I — Kahoot de revisão e apresentação do cronograma</h3>
+            <p>Abertura · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-08-19T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">19</div>
+            <div class="month">Ago</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro II — O homem, a liberdade e a lei</h3>
+            <p>Moral fundamental · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-08-26T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">26</div>
+            <div class="month">Ago</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro III — A Deus somente adorarás</h3>
+            <p>1º e 2º Mandamentos · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-09-02T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">02</div>
+            <div class="month">Set</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro IV — O Dia do Senhor e a família</h3>
+            <p>3º e 4º Mandamentos · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-09-09T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">09</div>
+            <div class="month">Set</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro V — Não matarás</h3>
+            <p>5º Mandamento · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-09-16T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">16</div>
+            <div class="month">Set</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro VI — Castidade, matrimônio e pureza de coração</h3>
+            <p>6º e 9º Mandamentos · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-09-23T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">23</div>
+            <div class="month">Set</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro VII — Não furtarás: bens, justiça e os pobres</h3>
+            <p>7º Mandamento · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-09-30T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">30</div>
+            <div class="month">Set</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro VIII — A verdade e o coração desapegado</h3>
+            <p>8º e 10º Mandamentos · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-10-07T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">07</div>
+            <div class="month">Out</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro IX — Do Decálogo às Bem-aventuranças</h3>
+            <p>Ponte entre as duas partes · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-10-14T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">14</div>
+            <div class="month">Out</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro X — O que é um sacramento</h3>
+            <p>Economia sacramental · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-10-21T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">21</div>
+            <div class="month">Out</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XI — Batismo</h3>
+            <p>Iniciação Cristã · I · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-10-28T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">28</div>
+            <div class="month">Out</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XII — Confirmação</h3>
+            <p>Iniciação Cristã · II · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-11-04T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">04</div>
+            <div class="month">Nov</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XIII — Eucaristia</h3>
+            <p>Fonte e ápice · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-11-11T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">11</div>
+            <div class="month">Nov</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XIV — Penitência e Unção dos Enfermos</h3>
+            <p>Sacramentos de cura · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-11-18T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">18</div>
+            <div class="month">Nov</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XV — Ordem e Matrimônio</h3>
+            <p>Sacramentos de serviço · Sala 204 · 20h às 22h</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-semestre="2" data-date="2026-11-25T20:00:00-03:00">
+          <div class="timeline-date">
+            <div class="day">25</div>
+            <div class="month">Nov</div>
+          </div>
+          <div class="timeline-info">
+            <h3>Encontro XVI — Encerramento do semestre</h3>
+            <p>Confraternização · Sala 204 · 20h às 22h</p>
           </div>
         </div>
 

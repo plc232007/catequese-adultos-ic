@@ -126,33 +126,111 @@ document.addEventListener('click', (e) => {
   });
 })();
 
-// ─── CRONOGRAMA DINÂMICO ───
+// ─── CRONOGRAMA DINÂMICO E DIVULGAÇÃO SEMANAL ───
+/* Todos os encontros do semestre já ficam no HTML, mas só aparecem na
+   página quando chega a vez de cada um: na quinta-feira divulga-se o
+   encontro da quarta seguinte. Como a regra é de data, o site se
+   atualiza sozinho — não é preciso editar nada toda semana.
+   Também é daqui que sai o cartão de próximo encontro do hero. */
 (function () {
   const items = Array.from(document.querySelectorAll('.timeline-item[data-date]'));
   if (!items.length) return;
 
-  const now = new Date();
-  const meetings = items.map(item => ({ item, date: new Date(item.dataset.date) }));
-  const past = meetings.filter(meeting => meeting.date < now);
-  const next = meetings.find(meeting => meeting.date >= now);
-  const formatter = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+  const DURACAO = 2 * 60 * 60 * 1000; /* o encontro dura 2h */
+  const agora = new Date();
 
-  meetings.forEach(meeting => {
-    if (meeting.date < now) meeting.item.classList.add('is-past');
-  });
-
-  if (next) {
-    next.item.classList.add('is-next');
-    document.getElementById('next-meeting-title').textContent = next.item.querySelector('h3')?.textContent || 'Próximo encontro';
-    document.getElementById('next-meeting-detail').textContent = `${formatter.format(next.date)} · Sala 204`;
-  } else {
-    document.getElementById('next-meeting-title').textContent = 'Etapa divulgada concluída';
-    document.getElementById('next-meeting-detail').textContent = 'Novos encontros podem ser adicionados ao cronograma quando forem confirmados.';
+  /* Quinta-feira da semana anterior, à meia-noite: a partir daí o
+     encontro da quarta seguinte passa a aparecer no cronograma. */
+  function divulgadoEm(data) {
+    const d = new Date(data);
+    d.setDate(d.getDate() - 6);
+    d.setHours(0, 0, 0, 0);
+    return d;
   }
 
-  const percent = Math.round((past.length / meetings.length) * 100);
-  document.getElementById('agenda-progress-text').textContent = `${past.length}/${meetings.length} encontros realizados`;
-  document.getElementById('agenda-progress-bar').style.width = `${percent}%`;
+  const encontros = items.map(item => ({
+    item,
+    data: new Date(item.dataset.date),
+    semestre: item.dataset.semestre || '1',
+  }));
+
+  const divulgados = [];
+  encontros.forEach(e => {
+    const visivel = agora >= divulgadoEm(e.data);
+    e.item.classList.toggle('is-oculto', !visivel);
+    e.item.classList.toggle('is-past', visivel && agora >= +e.data + DURACAO);
+    if (visivel) divulgados.push(e);
+  });
+
+  const emCurso = divulgados.find(e => agora >= e.data && agora < +e.data + DURACAO);
+  const proximo = emCurso || divulgados.find(e => e.data > agora);
+  /* Existe encontro à frente que ainda não foi divulgado? */
+  const aDivulgar = !proximo && encontros.some(e => e.data > agora);
+
+  /* Progresso do semestre em curso, contando também os encontros que
+     ainda não foram divulgados — o total do semestre é conhecido. */
+  const refer = proximo || divulgados[divulgados.length - 1] || encontros[0];
+  const doSemestre = encontros.filter(e => e.semestre === refer.semestre);
+  const realizados = doSemestre.filter(e => agora >= +e.data + DURACAO).length;
+
+  function porExtenso(data) {
+    const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+    const dia = new Date(data); dia.setHours(0, 0, 0, 0);
+    const faltam = Math.round((dia - hoje) / 86400000);
+    const hora = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(data);
+    if (faltam === 0) return `Hoje, às ${hora}`;
+    if (faltam === 1) return `Amanhã, às ${hora}`;
+    const quando = new Intl.DateTimeFormat('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' }).format(data);
+    return `${quando.charAt(0).toUpperCase()}${quando.slice(1)}, às ${hora}`;
+  }
+
+  function temaDe(encontro) {
+    const texto = encontro.item.querySelector('h3')?.textContent.trim() || 'Próximo encontro';
+    const partes = texto.split('—');
+    return (partes.length > 1 ? partes.slice(1).join('—') : texto).trim();
+  }
+
+  /* Painel acima da timeline */
+  const titulo = document.getElementById('next-meeting-title');
+  const detalhe = document.getElementById('next-meeting-detail');
+
+  if (proximo) {
+    proximo.item.classList.add('is-next');
+    if (titulo) titulo.textContent = proximo.item.querySelector('h3')?.textContent || 'Próximo encontro';
+    if (detalhe) {
+      detalhe.textContent = emCurso
+        ? 'Acontecendo agora · Sala 204'
+        : `${porExtenso(proximo.data)} · Sala 204`;
+    }
+  } else if (aDivulgar) {
+    /* Janela entre o fim do encontro e a quinta-feira: o próximo já existe,
+       só ainda não chegou a vez de divulgá-lo. */
+    if (titulo) titulo.textContent = 'Próximo encontro a divulgar';
+    if (detalhe) detalhe.textContent = 'O encontro da semana que vem entra no cronograma na quinta-feira.';
+  } else {
+    if (titulo) titulo.textContent = 'Semestre concluído';
+    if (detalhe) detalhe.textContent = 'Novos encontros aparecem aqui assim que forem confirmados.';
+  }
+
+  const texto = document.getElementById('agenda-progress-text');
+  const barra = document.getElementById('agenda-progress-bar');
+  if (texto) texto.textContent = `${realizados}/${doSemestre.length} encontros realizados`;
+  if (barra) barra.style.width = `${Math.round((realizados / doSemestre.length) * 100)}%`;
+
+  /* Cartão do hero */
+  const cartao = document.getElementById('hero-proximo');
+  const quando = document.getElementById('hero-proximo-quando');
+  const tema = document.getElementById('hero-proximo-titulo');
+
+  if (cartao && proximo) {
+    if (quando) quando.textContent = emCurso ? 'Acontecendo agora' : porExtenso(proximo.data);
+    if (tema) tema.textContent = temaDe(proximo);
+    cartao.hidden = false;
+  } else if (cartao && aDivulgar) {
+    if (quando) quando.textContent = 'Em breve';
+    if (tema) tema.textContent = 'O encontro da próxima semana é divulgado na quinta-feira.';
+    cartao.hidden = false;
+  }
 })();
 
 // ─── MOVIMENTO DAS IMAGENS DOS SANTOS ───

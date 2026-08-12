@@ -133,7 +133,20 @@ Duplicar o primeiro `.saint-card`, atualizar `data-semana`, `.saint-week-badge`,
 Duas ressalvas sobre o estado atual: o comentário-guia dentro do arquivo fala em mover o card antigo para `.upcoming-grid`, mas esse padrão foi abandonado — `.upcoming-grid`/`.upcoming-card` existem só no CSS, sem markup. E há dois cards com `data-semana="1"` (Santo Tomás e São Bento); o segundo deveria ser `2`.
 
 ### Cronograma (`index.html`)
-Cada `.timeline-item` usa `data-date` em ISO completo com fuso: `data-date="2026-03-04T20:00:00-03:00"`. O `main.js` usa isso para marcar `.is-past`/`.is-next` e para preencher quatro elementos que **precisam existir na página**: `#next-meeting-title`, `#next-meeting-detail`, `#agenda-progress-text`, `#agenda-progress-bar`. O local ("Sala 204") está hardcoded no `main.js`.
+Cada `.timeline-item` usa `data-date` em ISO completo com fuso (`data-date="2026-08-12T20:00:00-03:00"`) e `data-semestre` (`"1"` ou `"2"`). O `main.js` usa isso para marcar `.is-past`/`.is-next`/`.is-oculto` e para preencher elementos que **precisam existir na página**: `#next-meeting-title`, `#next-meeting-detail`, `#agenda-progress-text`, `#agenda-progress-bar` e o cartão do hero (`#hero-proximo` + `#hero-proximo-quando` + `#hero-proximo-titulo`). O local ("Sala 204") está hardcoded no `main.js`.
+
+### ⚠️ Divulgação semanal automática
+**Todos os encontros do semestre já ficam no HTML**, mas só aparecem quando chega a vez de cada um: um encontro entra no cronograma na **quinta-feira da semana anterior** (`data - 6 dias`, à meia-noite). Quem não foi divulgado recebe `.is-oculto` e some da página.
+
+Isso significa que **não se edita o cronograma toda semana** — a regra é de data e roda no navegador de quem acessa. Ao planejar um semestre novo, insira todos os encontros de uma vez.
+
+Estados que o `main.js` cobre, e que valem testar ao mexer nessa lógica:
+- Encontro acontecendo agora (até 2h depois do início) → "Acontecendo agora"
+- Hoje / amanhã → texto por extenso em vez da data
+- **Janela entre o fim do encontro e a quinta** → "Próximo encontro a divulgar"; sem esse caso o painel anunciaria "Semestre concluído" por engano toda quarta à noite
+- Semestre terminado → "Semestre concluído" e cartão do hero escondido
+
+O progresso conta o semestre do próximo encontro, incluindo os ainda não divulgados (o total do semestre é público pelo PDF).
 
 ### Planejamento
 `cronograma-credo.md` e `cronograma-santos.md` são as fontes de verdade dos temas e santos por data. Consulte-os antes de criar encontros ou santos novos; eles não são publicados no site.

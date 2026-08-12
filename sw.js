@@ -3,7 +3,7 @@
    Estratégia: Cache-first com atualização em background (SWR)
    ================================================================ */
 
-const CACHE = 'ic-2026-v7';
+const CACHE = 'ic-2026-v8';
 
 const PRECACHE = [
   '/',
