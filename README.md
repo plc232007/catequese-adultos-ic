@@ -1,38 +1,54 @@
 # ✝ Catequese — Adultos IC · Paróquia São José
 
 Site estático da turma de **Iniciação Cristã de Adultos (IC) 2026** da Paróquia São José.
-Desenvolvido em HTML, CSS e JavaScript puro — sem framework, sem servidor, sem banco de dados.
+HTML, CSS e JavaScript puro — sem framework, sem build, sem banco de dados. Funciona como **PWA**: dá para instalar no celular e navegar offline.
+
+---
+
+## Rodar localmente
+
+Não há build nem dependências. Como o site usa Service Worker, ele precisa ser servido por HTTP (abrir como `file://` não funciona):
+
+```bash
+python3 -m http.server 8080
+# ou
+npx serve .
+```
+
+Depois é só abrir `http://localhost:8080`. Vários caminhos são absolutos (`/sw.js`, `/src/assets/js/pwa.js`), então sirva sempre a partir da raiz do projeto.
 
 ---
 
 ## Estrutura de arquivos
 
 ```
-catequese/
-├── index.html               ← Página inicial
-├── santos.html              ← Página dos Santos de Devoção
-├── conteudos.html           ← Página de Conteúdos dos Encontros
+catequese-adultos-ic/
+├── index.html               ← Início
+├── santos.html              ← Santos semana a semana
+├── conteudos.html           ← Conteúdo dos encontros
+├── oracoes.html             ← Orações (PT / Latim)
+├── sw.js                    ← Service Worker (cache offline)
+├── manifest.json            ← Manifesto da PWA (ícones, nome, atalhos)
+├── vercel.json              ← Cabeçalhos de cache da hospedagem
+├── cronograma-credo.md      ← Planejamento dos temas do Credo
+├── cronograma-santos.md     ← Planejamento dos santos por data
 ├── README.md                ← Este arquivo
-└── src/
-    └── assets/
-        ├── css/
-        │   └── styles.css   ← Estilos compartilhados por todas as páginas
-        ├── js/
-        │   └── main.js      ← Scripts compartilhados (nav ativa, scroll suave)
-        └── img/
-            ├── fundo.jpg           ← Imagem de fundo do hero (todas as páginas)
-            ├── sao-bento.jpg       ← Foto/imagem de São Bento (index.html)
-            └── encontros/
-                ├── encontro-01/    ← Fotos do 1º encontro
-                │   ├── foto-01.jpg
-                │   ├── foto-02.jpg
-                │   └── foto-03.jpg
-                ├── encontro-02/    ← Fotos do 2º encontro (criar quando necessário)
-                └── ...
+├── CLAUDE.md                ← Notas técnicas de manutenção
+└── src/assets/
+    ├── css/
+    │   ├── styles.css       ← Estilos globais (nav, hero, cards, rodapé)
+    │   └── app.css          ← Camada PWA/mobile (bottom nav, instalação, offline)
+    ├── js/
+    │   ├── main.js          ← Nav, scroll, cronograma dinâmico, YouTube sob demanda
+    │   └── pwa.js           ← Service Worker, instalação, aviso de offline
+    └── img/
+        ├── fundo.jpg               ← Fundo do hero (todas as páginas)
+        ├── sao-bento.jpg           ← São Bento (index.html)
+        ├── icons/                  ← Ícones da PWA (192, 512, maskable, SVG)
+        └── santos/                 ← Imagens dos santos
 ```
 
-> **Importante:** a pasta `img/` e seus arquivos não são gerados automaticamente.
-> Você deve criar as subpastas e colocar as imagens manualmente conforme descrito abaixo.
+> **Atenção:** boa parte do CSS de cada página está num bloco `<style>` dentro do próprio HTML — `.saint-card`, `.encontro-card`, `.prayer-card` e `.lightbox` ficam lá, não em `styles.css`. Ao procurar um estilo, olhe primeiro o `<head>` da página.
 
 ---
 
@@ -40,50 +56,30 @@ catequese/
 
 ### `index.html` — Início
 
-Página principal do site. Contém:
-
 | Seção | Descrição |
 |---|---|
-| **Nav** | Barra de navegação fixa com links para as 3 páginas |
 | **Hero** | Imagem de fundo, título, subtítulo e trecho do *Veni Creator Spiritus* |
-| **Faixa dourada** | Nome do santo de devoção da turma (São Bento) |
+| **Faixa dourada** | Santo de devoção da turma (São Bento) |
 | **Sobre** | Explicação da catequese + citação de Bento XVI + 4 cards (Estudo, Oração, Sacramentos, Comunidade) |
-| **Cronograma** | Timeline dos encontros com data, local e horário |
-| **Material** | Lista de itens que os catequizandos devem trazer |
-| **Avisos** | Cards com comunicados, lembretes e recados |
-| **São Bento** | Seção dedicada ao santo da turma: imagem + biografia + citação + tags |
-| **Rodapé** | Nome da catequese, paróquia, ano, frase e créditos |
+| **Cronograma** | Timeline dos encontros; marca sozinha o que já passou e qual é o próximo |
+| **Material** | Itens que os catequizandos devem trazer |
+| **Avisos** | Comunicados e lembretes |
+| **São Bento** | Seção do santo da turma: imagem, biografia, citação e tags |
+| **Rodapé** | Paróquia, ano, frase e créditos |
 
----
+### `santos.html` — Santos
 
-### `santos.html` — Santos de Devoção
+Um card por semana, empilhados **do mais recente para o mais antigo** (13 hoje). Cada card traz imagem, nome, epíteto, dia da festa, biografia, citação e tags.
 
-Página com os santos apresentados semana a semana. Contém:
+### `conteudos.html` — Encontros
 
-| Elemento | Descrição |
-|---|---|
-| **Card do santo atual** | Layout em duas colunas: imagem à esquerda, texto à direita. Inclui: nome, epiteto, data da festa, biografia, citação e tags temáticas |
-| **Grade de próximas semanas** | Cards compactos indicando os santos futuros (aparecem esmaecidos enquanto `tbd`) |
+Um card por encontro (14 hoje), com número, título, data, horário, local, resumo e a grade de materiais. Fotos abrem em lightbox (fecha com clique fora ou `Esc`).
 
-**Santo atual:** São Tomás de Aquino (Semana 1)
+Materiais suportados: 📄 PDF via Google Drive · 🔗 link externo · 🎥 vídeo do YouTube · 🖼️ fotos com lightbox.
 
----
+### `oracoes.html` — Orações
 
-### `conteudos.html` — Conteúdos dos Encontros
-
-Página com o material de cada encontro. Contém:
-
-| Elemento | Descrição |
-|---|---|
-| **Encontro ativo** | Card completo com: número, título, data, horário, local, resumo e grade de materiais |
-| **Encontro pendente** | Card esmaecido com mensagem "será publicado após a aula" |
-| **Lightbox** | Ao clicar em uma foto, ela abre em tela cheia (fechar com clique ou tecla `Esc`) |
-
-**Tipos de material suportados em cada encontro:**
-- 📄 PDF via Google Drive
-- 🔗 Link externo
-- 🎥 Vídeo do YouTube (embed)
-- 🖼️ Fotos/imagens com lightbox
+Cards expansíveis, cada oração com versão em **português e latim** alternáveis, e abas fixas no topo para pular direto para uma oração.
 
 ---
 
@@ -91,141 +87,121 @@ Página com o material de cada encontro. Contém:
 
 ### Adicionar um novo encontro (`conteudos.html`)
 
-1. Localize o card `pendente` do encontro desejado:
-   ```html
-   <div class="encontro-card pendente" data-encontro="2">
-   ```
-2. **Remova** a classe `pendente`:
-   ```html
-   <div class="encontro-card" data-encontro="2">
-   ```
-3. **Substitua** o bloco `<div class="pendente-msg">` pelo bloco `.encontro-body` completo — copie do Encontro 1 como modelo e preencha com os dados reais.
+Duplique o último `.encontro-card` e atualize:
 
----
-
-### Adicionar PDF de um encontro
-
-1. No Google Drive, clique com botão direito no arquivo → **Compartilhar** → **"Qualquer pessoa com o link pode ver"**
-2. Copie o link gerado
-3. No HTML, cole o link no `href` do mat-item correspondente:
-   ```html
-   <a class="mat-item" href="COLE_O_LINK_AQUI" target="_blank" rel="noopener">
-   ```
-
----
-
-### Adicionar vídeo do YouTube
-
-1. Abra o vídeo no YouTube e copie a URL
-2. Extraia o **ID do vídeo** — é a parte após `?v=`
-   - Exemplo: `youtube.com/watch?v=`**`dQw4w9WgXcQ`**
-3. No HTML, substitua `ID_DO_VIDEO`:
-   ```html
-   <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" ...>
-   ```
-
----
-
-### Adicionar fotos de um encontro
-
-1. Crie a pasta correspondente: `src/assets/img/encontros/encontro-02/`
-2. Coloque as fotos dentro da pasta (JPG ou PNG)
-3. No HTML, aponte os `src` para os arquivos:
-   ```html
-   <img class="foto-thumb" src="src/assets/img/encontros/encontro-02/foto-01.jpg" alt="..." onclick="abrirLightbox(this.src)">
-   ```
-4. Adicione ou remova `<img>` conforme o número de fotos disponíveis
-
-> Se não tiver fotos para um encontro, apague o bloco `<div class="fotos-row">` inteiro para evitar imagens quebradas.
-
----
-
-### Adicionar um novo santo semanal (`santos.html`)
-
-1. **Duplique** o bloco `<div class="saint-card">` existente
-2. Atualize `data-semana`, nome, epiteto, festa, biografia, citação e tags
-3. **Mova o card anterior** para dentro de `.upcoming-grid` como um `.upcoming-card` (sem a classe `tbd`):
-   ```html
-   <div class="upcoming-card">
-     <div class="upcoming-num">1</div>
-     <div class="upcoming-info">
-       <h4>Santo Tomás de Aquino</h4>
-       <p>Semana 1 · 28 de Janeiro</p>
-     </div>
-   </div>
-   ```
-4. Atualize o número `data-semana` no novo card principal
-
----
-
-### Adicionar imagem de um santo
-
-Para o **card semanal** (`santos.html`), substitua o placeholder:
 ```html
-<!-- Remova isto: -->
-<div class="saint-image-placeholder"> ... </div>
-
-<!-- Coloque isto: -->
-<img src="src/assets/img/santos/nome-do-santo.jpg" alt="Nome do Santo">
-```
-
-Para **São Bento** na página inicial (`index.html`), mesma lógica:
-```html
-<!-- Remova isto: -->
-<div class="bento-image-placeholder"> ... </div>
-
-<!-- Coloque isto: -->
-<img src="src/assets/img/sao-bento.jpg" alt="São Bento de Núrsia">
-```
-
----
-
-### Atualizar o cronograma (`index.html`)
-
-Cada item da timeline segue este modelo. Edite os valores entre as tags:
-```html
-<div class="timeline-item">
-  <div class="timeline-date">
-    <div class="day">11</div>      <!-- dia do mês -->
-    <div class="month">Mar</div>   <!-- mês abreviado -->
+<div class="encontro-card" data-encontro="15">
+  <div class="encontro-header">
+    <div class="encontro-num">15</div>
+    <div class="encontro-header-info">
+      <h3>Título do encontro</h3>
+      <div class="encontro-meta">
+        <span>📅 <strong>17 Jun 2026</strong></span>
+        <span>🕗 <strong>20h – 22h</strong></span>
+      </div>
+    </div>
   </div>
-  <div class="timeline-info">
-    <h3>2º Encontro — Título do Tema</h3>
-    <p>Local: Sala 204 · Horário: 20h</p>
-    <span class="badge">11/03/2026</span>
+  <div class="encontro-body">
+    <p class="encontro-resumo">Resumo do que foi visto…</p>
+    <!-- materiais aqui -->
   </div>
 </div>
 ```
 
----
+Existe também a variação `.encontro-card.pendente` (card esmaecido com `.pendente-msg`) para um encontro que ainda não aconteceu — hoje ela só existe no CSS, sem nenhum card usando.
+
+### Adicionar PDF de um encontro
+
+1. No Google Drive: botão direito no arquivo → **Compartilhar** → **"Qualquer pessoa com o link pode ver"**
+2. Copie o link e cole no `href`:
+
+```html
+<a class="mat-item" href="COLE_O_LINK_AQUI" target="_blank" rel="noopener">
+```
+
+### Adicionar vídeo do YouTube
+
+O player só é criado quando o aluno clica (evita carregar vários iframes pesados). Basta informar o **ID do vídeo** — a parte depois de `?v=`:
+
+```html
+<div class="video-wrapper" data-video-id="dQw4w9WgXcQ" data-video-title="Título do vídeo">
+  <button class="video-load">▶ Assistir</button>
+</div>
+```
+
+O `main.js` monta o iframe (via `youtube-nocookie`) no clique.
+
+### Adicionar fotos de um encontro
+
+1. Crie a pasta `src/assets/img/encontros/encontro-15/` e coloque as fotos (JPG ou PNG)
+2. Aponte os `src`:
+
+```html
+<img class="foto-thumb" src="src/assets/img/encontros/encontro-15/foto-01.jpg"
+     alt="Foto do 15º encontro" onclick="abrirLightbox(this.src)">
+```
+
+> A pasta `src/assets/img/encontros/` **ainda não existe** no repositório, mas os encontros 1 e 2 já apontam para fotos dentro dela. Como o `main.js` remove automaticamente `.foto-thumb` que não carrega, essas fotos simplesmente não aparecem no site — nada quebra. Ao subir as fotos de verdade, elas passam a aparecer sozinhas.
+
+### Adicionar um novo santo semanal (`santos.html`)
+
+1. Duplique o **primeiro** `.saint-card` e coloque a cópia no topo da lista (a ordem é decrescente)
+2. Atualize `data-semana`, o badge `.saint-week-badge`, nome, epíteto, festa, biografia, citação, tags e a imagem
+3. Se a imagem for local, adicione o caminho ao `PRECACHE` do `sw.js` para funcionar offline
+
+> O comentário dentro do arquivo manda mover o card antigo para `.upcoming-grid` — esse padrão foi abandonado. `.upcoming-grid` e `.upcoming-card` sobrevivem só no CSS, sem nenhum uso no HTML.
+
+### Imagens dos santos
+
+Hoje 4 santos usam imagem local (`src/assets/img/santos/`) e 9 usam URL do Wikimedia Commons. **Imagens remotas não ficam disponíveis offline** — o Service Worker ignora requisições de outros domínios de propósito. Para o site funcionar bem sem internet, o ideal é baixar a imagem, salvar em `src/assets/img/santos/` e incluí-la no `PRECACHE` do `sw.js`.
+
+### Atualizar o cronograma (`index.html`)
+
+Cada item da timeline precisa do atributo `data-date` em **formato ISO completo, com o fuso `-03:00`** — é ele que faz o JS marcar o que já passou, destacar o próximo encontro e calcular a barra de progresso:
+
+```html
+<div class="timeline-item" data-date="2026-06-17T20:00:00-03:00">
+  <div class="timeline-date">
+    <div class="day">17</div>
+    <div class="month">Jun</div>
+  </div>
+  <div class="timeline-info">
+    <h3>15º Encontro — Título do Tema</h3>
+    <p>Local: Sala 204 · Horário: 20h</p>
+  </div>
+</div>
+```
+
+O painel acima da timeline (próximo encontro + progresso) é preenchido pelo `main.js` e depende dos IDs `#next-meeting-title`, `#next-meeting-detail`, `#agenda-progress-text` e `#agenda-progress-bar` — não remova nenhum deles.
 
 ### Atualizar o santo de devoção (`index.html`)
 
-Há três lugares para atualizar quando o santo da turma for definido:
+Três lugares: a **faixa dourada** abaixo do hero, a **seção São Bento** (imagem, biografia, citação e tags) e o texto do **rodapé**.
 
-1. **Faixa dourada** (logo abaixo do hero):
-   ```html
-   <strong>São Bento de Núrsia</strong>
-   ```
-2. **Seção São Bento** — texto, imagem e citação no corpo da página
-3. **Rodapé**:
-   ```html
-   <p class="credits">Santo de devoção: São Bento de Núrsia · ...</p>
-   ```
+### Planejamento do conteúdo
+
+`cronograma-credo.md` e `cronograma-santos.md` têm os temas e santos previstos por data. Use-os como referência antes de criar encontros ou santos novos — eles não são publicados no site.
 
 ---
 
-## Hospedagem recomendada
+## ⚠️ Antes de publicar: subir a versão do cache
 
-O site é 100% estático — funciona em qualquer serviço que sirva arquivos HTML:
+O site guarda tudo em cache para funcionar offline, e a hospedagem serve CSS/JS/imagens com validade de um ano. Por isso, **toda vez que houver mudança relevante, duas constantes precisam ser incrementadas juntas**:
 
-| Serviço | Como fazer |
-|---|---|
-| **GitHub Pages** | Suba a pasta no repositório, ative Pages em Settings → Pages → Branch: main |
-| **Netlify** | Arraste a pasta para [app.netlify.com/drop](https://app.netlify.com/drop) |
-| **Vercel** | Conecte o repositório GitHub em [vercel.com](https://vercel.com) |
+| Arquivo | Constante | Valor atual |
+|---|---|---|
+| `sw.js` | `const CACHE` | `'ic-2026-v6'` |
+| `src/assets/js/pwa.js` | `const APP_VERSION` | `'6'` |
 
-> Todos os serviços acima têm plano gratuito suficiente para este projeto.
+Se só uma for alterada, alguns usuários ficam com uma mistura de arquivos novos e antigos. Ao subir as duas, o `pwa.js` percebe a diferença, limpa os caches do aparelho e recarrega a página com o conteúdo novo.
+
+Adicionou uma **página nova** ou uma **imagem local**? Inclua também no array `PRECACHE` do `sw.js`, senão ela não fica disponível offline.
+
+---
+
+## Hospedagem
+
+O site está no **Vercel**, com os cabeçalhos de cache definidos em `vercel.json` (`sw.js` nunca é cacheado, HTML sempre revalida, assets ficam um ano). Por ser 100% estático, também roda em GitHub Pages ou Netlify — mas aí o `vercel.json` é ignorado e o cuidado com a versão do cache fica ainda mais importante.
 
 ---
 
@@ -233,28 +209,28 @@ O site é 100% estático — funciona em qualquer serviço que sirva arquivos HT
 
 | Variável CSS | Valor | Uso |
 |---|---|---|
-| `--gold` | `#C6A55A` | Acentos, bordas, badges principais |
+| `--gold` | `#C6A55A` | Acentos, bordas, badges |
 | `--gold-soft` | `#D6B873` | Hover, variações suaves do dourado |
-| `--cream-main` | `#F3EFE7` | Fundo principal das seções |
-| `--white-soft` | `#FAF8F3` | Fundo de seções alternadas |
-| `--dark` | `#1C1610` | Fundo do nav, headers de cards, rodapé |
+| `--cream-main` | `#F3EFE7` | Fundo principal |
+| `--cream-soft` | `#E9E3D8` | Fundo alternado, divisórias |
+| `--white-soft` | `#FAF8F3` | Fundo de cards e seções claras |
+| `--dark` | `#1C1610` | Nav, headers de cards, rodapé |
 | `--text` | `#2E2A26` | Texto principal |
-| `--text-soft` | `#5E554C` | Texto secundário, descrições |
+| `--text-soft` | `#5E554C` | Texto secundário |
 
-**Tipografia:**
-- Títulos e destaques: `Playfair Display` (Google Fonts)
-- Corpo de texto: `Lato` (Google Fonts)
+**Tipografia:** `Playfair Display` nos títulos e `Lato` no corpo, ambas via Google Fonts.
 
 ---
 
 ## Observações técnicas
 
-- O arquivo `main.js` marca automaticamente o item **ativo** no nav conforme a página atual
-- O **lightbox** de fotos (`conteudos.html`) fecha com clique fora da imagem ou tecla `Esc`
-- Todas as animações respeitam `prefers-reduced-motion` (acessibilidade)
-- O layout é responsivo — em telas menores que 640px o nav colapsa e os grids viram coluna única
-- PDFs e links externos abrem sempre em nova aba (`target="_blank" rel="noopener"`)
-- Os vídeos do YouTube usam **facade** (miniatura + lazy-load): o player só é criado quando o aluno clica, evitando o consumo de memória de vários iframes simultâneos. Marcação `.video-wrapper[data-video-id]` + botão `.video-load`; lógica em `main.js`
+- O `main.js` marca sozinho o item ativo do nav (topo) e o `pwa.js` faz o mesmo no bottom nav do celular
+- Abaixo de **640px** o menu hamburguer some e entra o **bottom nav** fixo; os grids viram coluna única
+- No celular aparece a pílula **"Instalar este app"**: no Android abre o instalador nativo, no iPhone mostra as instruções do Safari
+- Sem internet, um aviso discreto aparece no rodapé da tela e o conteúdo já visitado continua acessível
+- As animações respeitam `prefers-reduced-motion`
+- PDFs e links externos abrem em nova aba (`target="_blank" rel="noopener"`)
+- Detalhes de arquitetura e armadilhas de manutenção estão no `CLAUDE.md`
 
 ---
 
