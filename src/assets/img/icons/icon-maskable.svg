@@ -1,5 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#1C1610"/>
-  <rect x="242" y="128" width="28" height="256" fill="#C6A55A" rx="14"/>
-  <rect x="168" y="210" width="176" height="28" fill="#C6A55A" rx="14"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Cruz dourada">
+
+  <defs>
+    <linearGradient id="ouro" x1=".12" y1="0" x2=".72" y2="1">
+      <stop offset="0" stop-color="#F2E1AE"/>
+      <stop offset=".3" stop-color="#DCC084"/>
+      <stop offset=".62" stop-color="#C6A55A"/>
+      <stop offset="1" stop-color="#9B7B35"/>
+    </linearGradient>
+    <radialGradient id="fundo" cx=".5" cy=".34" r=".82">
+      <stop offset="0" stop-color="#302619"/>
+      <stop offset=".58" stop-color="#1C1610"/>
+      <stop offset="1" stop-color="#0E0A05"/>
+    </radialGradient>
+    <radialGradient id="halo" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#D6B873" stop-opacity=".40"/>
+      <stop offset=".48" stop-color="#C6A55A" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#C6A55A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#fundo)"/>
+  <circle cx="256" cy="256" r="150" fill="url(#halo)"/>
+  <circle cx="256" cy="256" r="182" fill="none" stroke="#C6A55A" stroke-width="5" opacity=".3"/>
+  <g fill="url(#ouro)">
+      <path d="M280 228Q274.7 166 306 128L206 128Q237.3 166 232 228Z"/>
+      <path d="M232 228Q237.3 334.6 206 400L306 400Q274.7 334.6 280 228Z"/>
+      <path d="M256 204Q172.9 209.3 122 178L122 278Q172.9 246.7 256 252Z"/>
+      <path d="M256 252Q339.1 246.7 390 278L390 178Q339.1 209.3 256 204Z"/>
+  </g>
+  <g fill="none" stroke="#F4E6BC" stroke-width="2.5" opacity=".5">
+      <path d="M269 228Q266.1 177.2 288 146L224 146Q245.9 177.2 243 228Z"/>
+      <path d="M243 228Q245.9 321.6 224 379L288 379Q266.1 321.6 269 228Z"/>
+      <path d="M256 215Q185.3 217.9 142 196L142 260Q185.3 238.1 256 241Z"/>
+      <path d="M256 241Q326.7 238.1 370 260L370 196Q326.7 217.9 256 215Z"/>
+  </g>
+  <circle cx="256" cy="228" r="27" fill="url(#ouro)"/>
+  <circle cx="256" cy="228" r="27" fill="none" stroke="#F4E6BC" stroke-width="2.5" opacity=".55"/>
+  <circle cx="256" cy="228" r="8" fill="#F4E6BC" opacity=".75"/>
 </svg>

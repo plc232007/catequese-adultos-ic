@@ -1,6 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#1C1610"/>
-  <circle cx="256" cy="256" r="218" fill="none" stroke="#C6A55A" stroke-width="2" opacity="0.25"/>
-  <rect x="238" y="96" width="36" height="320" fill="#C6A55A" rx="18"/>
-  <rect x="144" y="192" width="224" height="36" fill="#C6A55A" rx="18"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Cruz dourada">
+
+  <defs>
+    <linearGradient id="ouro" x1=".12" y1="0" x2=".72" y2="1">
+      <stop offset="0" stop-color="#F2E1AE"/>
+      <stop offset=".3" stop-color="#DCC084"/>
+      <stop offset=".62" stop-color="#C6A55A"/>
+      <stop offset="1" stop-color="#9B7B35"/>
+    </linearGradient>
+    <radialGradient id="fundo" cx=".5" cy=".34" r=".82">
+      <stop offset="0" stop-color="#302619"/>
+      <stop offset=".58" stop-color="#1C1610"/>
+      <stop offset="1" stop-color="#0E0A05"/>
+    </radialGradient>
+    <radialGradient id="halo" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#D6B873" stop-opacity=".40"/>
+      <stop offset=".48" stop-color="#C6A55A" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#C6A55A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="url(#fundo)"/>
+  <circle cx="256" cy="256" r="188" fill="url(#halo)"/>
+  <circle cx="256" cy="256" r="225" fill="none" stroke="#C6A55A" stroke-width="6" opacity=".32"/>
+  <circle cx="256" cy="256" r="208" fill="none" stroke="#D6B873" stroke-width="2" opacity=".2"/>
+  <circle cx="394.6" cy="394.6" r="7" fill="#D6B873" opacity=".5"/><circle cx="117.4" cy="394.6" r="7" fill="#D6B873" opacity=".5"/><circle cx="117.4" cy="117.4" r="7" fill="#D6B873" opacity=".5"/><circle cx="394.6" cy="117.4" r="7" fill="#D6B873" opacity=".5"/>
+  <g fill="url(#ouro)">
+      <path d="M286 214Q279.4 135.9 318 88L194 88Q232.6 135.9 226 214Z"/>
+      <path d="M226 214Q232.6 347.9 194 430L318 430Q279.4 347.9 286 214Z"/>
+      <path d="M256 184Q151.8 190.6 88 152L88 276Q151.8 237.4 256 244Z"/>
+      <path d="M256 244Q360.2 237.4 424 276L424 152Q360.2 190.6 256 184Z"/>
+  </g>
+  <g fill="none" stroke="#F4E6BC" stroke-width="3" opacity=".5">
+      <path d="M273 214Q269.3 149.5 296 110L216 110Q242.7 149.5 239 214Z"/>
+      <path d="M239 214Q242.7 331.8 216 404L296 404Q269.3 331.8 273 214Z"/>
+      <path d="M256 197Q166.7 200.7 112 174L112 254Q166.7 227.3 256 231Z"/>
+      <path d="M256 231Q345.3 227.3 400 254L400 174Q345.3 200.7 256 197Z"/>
+  </g>
+  <circle cx="256" cy="214" r="34" fill="url(#ouro)"/>
+  <circle cx="256" cy="214" r="34" fill="none" stroke="#F4E6BC" stroke-width="3" opacity=".55"/>
+  <circle cx="256" cy="214" r="10" fill="#F4E6BC" opacity=".75"/>
 </svg>
