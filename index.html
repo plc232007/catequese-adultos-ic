@@ -155,7 +155,208 @@
       background: rgba(198,165,90,.07);
     }
 
+    /* ── RETOMADA DO SEMESTRE ── */
+    .semestre-fatos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      margin: 22px 0 30px;
+      padding: 0;
+    }
+
+    .semestre-fatos li {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(198, 165, 90, .35);
+      background: rgba(198, 165, 90, .07);
+      color: var(--text);
+      font-size: .82rem;
+      letter-spacing: .3px;
+    }
+
+    .semestre-partes {
+      display: flex;
+      flex-direction: column;
+      max-width: 720px;
+      margin: 0 0 30px;
+    }
+
+    .parte-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: start;
+      background: var(--cream);
+      border: 1px solid rgba(198, 165, 90, .28);
+      border-radius: 14px;
+      padding: 22px 24px;
+    }
+
+    .parte-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: 2px;
+      min-width: 64px;
+      padding: 14px 8px 12px;
+      text-align: center;
+      border: 1px solid rgba(198, 165, 90, .45);
+      border-radius: 10px;
+      background: var(--white-soft);
+    }
+
+    .parte-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.12rem;
+      color: var(--dark);
+      margin-bottom: 3px;
+    }
+
+    .parte-papel {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 9px;
+    }
+
+    .parte-texto p:not(.parte-papel) {
+      color: var(--text-soft);
+      font-size: .88rem;
+      line-height: 1.7;
+    }
+
+    /* o styles.css uniformiza todo <p> filho de .section-inner dentro de
+       #sobre; sem isto o rótulo da seção perde o dourado e sai grande
+       demais, ao contrário do que acontece nas outras seções */
+    #sobre .section-inner > p.section-label {
+      font-size: .72rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      line-height: 1.4;
+    }
+
+    /* a ponte entre as duas partes (encontro IX) */
+    .parte-ponte {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 12px;
+    }
+
+    .parte-ponte-linha {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(198, 165, 90, .55), transparent);
+    }
+
+    .parte-ponte-texto {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    /* ── BOTÃO DO CRONOGRAMA EM PDF ── */
+    .pdf-cta {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: 720px;
+      padding: 18px 22px;
+      border-radius: 14px;
+      border: 1px solid var(--gold);
+      background: linear-gradient(135deg, rgba(198, 165, 90, .14), rgba(198, 165, 90, .05));
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .pdf-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(198, 165, 90, .26);
+      background: linear-gradient(135deg, rgba(198, 165, 90, .22), rgba(198, 165, 90, .09));
+    }
+
+    .pdf-cta-icone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      border: 1px solid rgba(198, 165, 90, .45);
+      background: var(--white-soft);
+    }
+
+    .pdf-cta-texto {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pdf-cta-texto strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+    }
+
+    .pdf-cta-texto span {
+      font-size: .8rem;
+      color: var(--text-soft);
+    }
+
+    .pdf-cta-acao {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--gold);
+      transition: transform .2s ease;
+    }
+
+    .pdf-cta-acao .ic { color: var(--dark); }
+
+    .pdf-cta:hover .pdf-cta-acao { transform: translateY(2px); }
+
     @media (max-width: 680px) {
+      .parte-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .parte-num {
+        min-width: 0;
+        width: 58px;
+      }
+
+      .parte-ponte-texto {
+        white-space: normal;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      .pdf-cta {
+        gap: 14px;
+        padding: 16px;
+      }
+
+      .pdf-cta-icone { width: 44px; height: 44px; }
+
       .bento-layout {
         grid-template-columns: 1fr;
         gap: 28px;
@@ -213,47 +414,80 @@
   <!-- ═══ SOBRE ═══ -->
   <section id="sobre">
     <div class="section-inner">
-      <p class="section-label">Bem-vindos</p>
-      <h2 class="section-title">O que é a Catequese?</h2>
+      <p class="section-label">Avisos</p>
+      <h2 class="section-title">A catequese está de volta</h2>
       <div class="section-divider"></div>
 
       <p>
-        A <strong>catequese</strong> é a missão da Igreja de formar cristãos maduros na fé,
-        transmitindo de modo fiel e orgânico a doutrina recebida dos Apóstolos,
-        conduzindo cada pessoa ao encontro verdadeiro com <strong>Jesus Cristo</strong>.
+        Retomamos os nossos encontros no <strong>2º semestre de 2026</strong>:
+        são <strong>16 encontros</strong>, de <strong>12 de agosto a 25 de novembro</strong>.
+        O semestre tem duas partes e uma articulação entre elas — a primeira pergunta
+        <em>o que devemos fazer</em>; a segunda, <em>de onde vem a força para fazer</em>.
       </p>
 
-      <blockquote class="quote">
-        <p>"No início do ser cristão não há uma decisão ética ou uma grande ideia,
-        mas o encontro com um acontecimento, com uma Pessoa."</p>
-        <cite>— Papa Bento XVI, Deus Caritas Est</cite>
-      </blockquote>
+      <!-- fatos rápidos do semestre -->
+      <ul class="semestre-fatos">
+        <li>
+          <svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg>
+          Quartas-feiras
+        </li>
+        <li>
+          <svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg>
+          20h às 22h
+        </li>
+        <li>
+          <svg class="ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Sala 204
+        </li>
+      </ul>
 
-      <div class="sobre-cards">
-        <div class="sobre-card">
-          <span class="icon"><svg class="ic" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.2C10 4.9 7.4 4.4 4 4.8v12.4c3.4-.4 6 .1 8 1.4 2-1.3 4.6-1.8 8-1.4V4.8c-3.4-.4-6 .1-8 1.4Z"/><path d="M12 6.2v12.4"/></svg></span>
-          <h3>Estudo</h3>
-          <p>Aprofundamento na Palavra de Deus e na Doutrina da Santa Mãe Igreja.</p>
+      <!-- as duas partes do semestre -->
+      <div class="semestre-partes">
+        <div class="parte-card">
+          <span class="parte-num">X</span>
+          <div class="parte-texto">
+            <h3>Os Dez Mandamentos</h3>
+          <p class="parte-papel">Parte I · a lei que obriga</p>
+          <p>Da moral fundamental — vocação, liberdade, consciência, virtude — até o Decálogo, mandamento por mandamento.</p>
+          </div>
         </div>
 
-        <div class="sobre-card">
-          <span class="icon"><svg class="ic" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.3" r="5.2" stroke-dasharray="1.5 2.7"/><path d="M12 14.5v2.3"/><path d="M12 16.8v3.8M10.2 18.3h3.6"/></svg></span>
-          <h3>Oração</h3>
-          <p>Momentos de oração comunitária, adoração e silêncio sagrado.</p>
+        <div class="parte-ponte">
+          <span class="parte-ponte-linha" aria-hidden="true"></span>
+          <span class="parte-ponte-texto">Do Decálogo às Bem-aventuranças</span>
+          <span class="parte-ponte-linha" aria-hidden="true"></span>
         </div>
 
-        <div class="sobre-card">
-          <span class="icon"><svg class="ic" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 4.2h10.4v2.6a5.2 5.2 0 0 1-10.4 0V4.2Z"/><path d="M12 12v6.2"/><path d="M8.2 20.4c0-1.3 1.7-2.3 3.8-2.3s3.8 1 3.8 2.3"/></svg></span>
-          <h3>Sacramentos</h3>
-          <p>Preparação para o Batismo, Crisma e Primeira Eucaristia.</p>
-        </div>
-
-        <div class="sobre-card">
-          <span class="icon"><svg class="ic" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.2" r="2.5"/><circle cx="16.6" cy="9.6" r="2"/><path d="M3.4 18.8c.6-2.9 2.9-4.7 5.6-4.7s5 1.8 5.6 4.7"/><path d="M16.6 13.8c2.2 0 3.8 1.4 4.3 3.5"/></svg></span>
-          <h3>Comunidade</h3>
-          <p>Construção de laços fraternos no amor de Cristo.</p>
+        <div class="parte-card">
+          <span class="parte-num">VII</span>
+          <div class="parte-texto">
+            <h3>Os Sete Sacramentos</h3>
+          <p class="parte-papel">Parte II · a graça que capacita</p>
+          <p>Se a Lei Nova é graça, a pergunta seguinte é por onde essa graça chega — e a resposta são os sacramentos.</p>
+          </div>
         </div>
       </div>
+
+      <blockquote class="quote">
+        <p>"Não penseis que vim revogar a Lei ou os Profetas: não vim revogar, mas dar pleno cumprimento."</p>
+        <cite>— Mt 5, 17</cite>
+      </blockquote>
+
+      <!-- CRONOGRAMA EM PDF
+           O arquivo fica em src/assets/pdf/. Para publicar um novo,
+           substitua o arquivo e atualize o href e o PRECACHE do sw.js. -->
+      <a class="pdf-cta" href="/src/assets/pdf/cronograma-catequese-2026-2.pdf" target="_blank" rel="noopener">
+        <span class="pdf-cta-icone" aria-hidden="true">
+          <svg class="ic" width="26" height="26" viewBox="0 0 24 24"><path d="M13.9 3.6H7.6a2.1 2.1 0 0 0-2.1 2.1v12.6a2.1 2.1 0 0 0 2.1 2.1h8.8a2.1 2.1 0 0 0 2.1-2.1V8.1l-4.6-4.5Z"/><path d="M13.8 3.7v4.5h4.6"/></svg>
+        </span>
+        <span class="pdf-cta-texto">
+          <strong>Cronograma do semestre</strong>
+          <span>PDF · os 16 encontros, tema por tema</span>
+        </span>
+        <span class="pdf-cta-acao" aria-hidden="true">
+          <svg class="ic" width="18" height="18" viewBox="0 0 24 24"><path d="M12 4v12"/><path d="m7 11.5 5 5 5-5"/><path d="M4.5 20h15"/></svg>
+        </span>
+      </a>
     </div>
   </section>
 
@@ -471,15 +705,15 @@
 
         <div class="aviso-card info">
           <p class="aviso-tag"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 15.4V11a5.8 5.8 0 1 0-11.6 0v4.4L4.7 17.8h14.6l-1.5-2.4Z"/><path d="M10 20.4a2.2 2.2 0 0 0 4 0"/></svg> Aviso</p>
-          <h3>Boas-vindas à turma!</h3>
-          <p>Com grande alegria começamos a nossa catequese — um caminho lindo pelo qual podemos, por meio do intelecto e da vontade, nos aproximar da verdade revelada que é o próprio Senhor Jesus Cristo. Que alegria!</p>
+          <h3>Retomada · 12 de agosto</h3>
+          <p>Voltamos com um Kahoot de revisão do que estudamos no módulo anterior — Credo, Mariologia e os artigos da fé — e a apresentação do cronograma do semestre. Que alegria recomeçar!</p>
           <p class="aviso-date">Pedro</p>
         </div>
 
         <div class="aviso-card">
           <p class="aviso-tag"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> Lembrete</p>
           <h3>Quartas-feiras · 20h às 22h</h3>
-          <p>O cronograma completo será divulgado no decorrer dos encontros, junto ao conteúdo estudado.</p>
+          <p>São 16 encontros na Sala 204, de 12 de agosto a 25 de novembro. O cronograma completo já está disponível em PDF no início desta página.</p>
           <p class="aviso-date">Fiquem atentos!</p>
         </div>
 

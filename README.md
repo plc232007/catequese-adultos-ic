@@ -161,6 +161,14 @@ O `main.js` monta o iframe (via `youtube-nocookie`) no clique.
 
 > A pasta `src/assets/img/encontros/` **ainda não existe** no repositório, mas os encontros 1 e 2 já apontam para fotos dentro dela. Como o `main.js` remove automaticamente `.foto-thumb` que não carrega, essas fotos simplesmente não aparecem no site — nada quebra. Ao subir as fotos de verdade, elas passam a aparecer sozinhas.
 
+### Trocar o cronograma em PDF (`index.html`)
+
+O PDF do semestre fica em `src/assets/pdf/` e é oferecido no botão **Cronograma do semestre**, logo no começo da página. Para publicar um novo:
+
+1. Coloque o arquivo em `src/assets/pdf/` (nome em minúsculas, sem espaços)
+2. Atualize o `href` do `.pdf-cta` no `index.html`
+3. Troque o caminho antigo pelo novo no `PRECACHE` do `sw.js`, para o PDF continuar disponível offline
+
 ### Adicionar um novo santo semanal (`santos.html`)
 
 1. Duplique o **primeiro** `.saint-card` e coloque a cópia no topo da lista (a ordem é decrescente)

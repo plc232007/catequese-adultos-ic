@@ -16,6 +16,7 @@ const PRECACHE = [
   '/src/assets/css/app.css',
   '/src/assets/js/main.js',
   '/src/assets/js/pwa.js',
+  '/src/assets/pdf/cronograma-catequese-2026-2.pdf',
   '/src/assets/img/fundo.jpg',
   '/src/assets/img/sao-bento.jpg',
   '/src/assets/img/santos/santo-tomas-aquino.jpg',

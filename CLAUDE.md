@@ -69,7 +69,7 @@ Carregamento em todas as páginas: `<script src="src/assets/js/main.js" defer>` 
 
 Estratégia **stale-while-revalidate**: serve do cache imediatamente e revalida em background. Ignora requests de outra origem (YouTube, Google Fonts). Navegação sem rede e sem cache cai no `/index.html`.
 
-O array `PRECACHE` lista páginas e assets um a um — **ao adicionar uma página nova ou uma imagem de santo, inclua na lista**, senão ela não fica disponível offline.
+O array `PRECACHE` lista páginas e assets um a um — **ao adicionar uma página nova, uma imagem de santo ou um PDF, inclua na lista**, senão o arquivo não fica disponível offline. Os PDFs ficam em `src/assets/pdf/`.
 
 ### ⚠️ Versionamento de cache — ponto crítico
 
