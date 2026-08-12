@@ -19,8 +19,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="IC 2026">
   <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/svg+xml" href="/src/assets/img/icons/icon.svg">
-  <link rel="apple-touch-icon" href="/src/assets/img/icons/icon.svg">
+  <link rel="icon" type="image/svg+xml" href="/src/assets/img/icons/icon.svg?v=7">
+  <link rel="apple-touch-icon" href="/src/assets/img/icons/icon-192.png?v=7">
 
   <link rel="stylesheet" href="src/assets/css/styles.css">
   <link rel="stylesheet" href="/src/assets/css/app.css">
@@ -711,42 +711,42 @@
     <div class="modulos-menu" id="modulos-menu" role="group" aria-label="Escolha o que estudar">
 
       <button class="modulo" type="button" data-filtro="todos" aria-pressed="true">
-        <span class="modulo-icone" aria-hidden="true">📚</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.7" cy="6.6" r="1.1"/><circle cx="4.7" cy="12" r="1.1"/><circle cx="4.7" cy="17.4" r="1.1"/><path d="M8.6 6.6h11M8.6 12h11M8.6 17.4h7.4"/></svg></span>
         <span class="modulo-nome">Todos os encontros</span>
         <span class="modulo-desc">Na ordem em que aconteceram</span>
         <span class="modulo-contagem"></span>
       </button>
 
       <button class="modulo" type="button" data-filtro="credo" aria-pressed="false">
-        <span class="modulo-icone" aria-hidden="true">✝️</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.4v17.2"/><path d="M5.6 9.6h12.8"/></svg></span>
         <span class="modulo-nome">Credo</span>
         <span class="modulo-desc">O que professamos na fé</span>
         <span class="modulo-contagem"></span>
       </button>
 
       <button class="modulo" type="button" data-filtro="mandamentos" aria-pressed="false">
-        <span class="modulo-icone" aria-hidden="true">📜</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 20.4V8.6A4.4 4.4 0 0 1 8.6 4.2h2.5v16.2H4.2Z"/><path d="M12.9 20.4V4.2h2.5a4.4 4.4 0 0 1 4.4 4.4v11.8h-6.9Z"/></svg></span>
         <span class="modulo-nome">Os 10 Mandamentos</span>
         <span class="modulo-desc">A moral católica</span>
         <span class="modulo-contagem"></span>
       </button>
 
       <button class="modulo" type="button" data-filtro="sacramentos" aria-pressed="false">
-        <span class="modulo-icone" aria-hidden="true">🕯️</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c1.6 1.7 2.4 3 2.4 4a2.4 2.4 0 1 1-4.8 0c0-1 .8-2.3 2.4-4Z"/><rect x="8.6" y="11.4" width="6.8" height="9.2" rx="1.6"/></svg></span>
         <span class="modulo-nome">Os Sacramentos</span>
         <span class="modulo-desc">Os sinais da graça</span>
         <span class="modulo-contagem"></span>
       </button>
 
       <button class="modulo" type="button" data-filtro="pai-nosso" aria-pressed="false">
-        <span class="modulo-icone" aria-hidden="true">🙏</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.3" r="5.2" stroke-dasharray="1.5 2.7"/><path d="M12 14.5v2.3"/><path d="M12 16.8v3.8M10.2 18.3h3.6"/></svg></span>
         <span class="modulo-nome">O Pai Nosso</span>
         <span class="modulo-desc">Como rezar?</span>
         <span class="modulo-contagem"></span>
       </button>
 
       <button class="modulo" type="button" data-filtro="outros" aria-pressed="false">
-        <span class="modulo-icone" aria-hidden="true">✨</span>
+        <span class="modulo-icone"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.4 2.5 5.5 6 .6-4.5 4 1.3 5.9-5.3-3.1-5.3 3.1 1.3-5.9-4.5-4 6-.6L12 3.4Z"/></svg></span>
         <span class="modulo-nome">Outros</span>
         <span class="modulo-desc">Temas complementares</span>
         <span class="modulo-contagem"></span>
@@ -760,7 +760,7 @@
     </div>
 
     <div class="modulo-vazio" id="modulo-vazio" hidden>
-      <span class="modulo-vazio-icone" aria-hidden="true">🕊️</span>
+      <span class="modulo-vazio-icone"><svg class="ic" width="44" height="44" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c1.6 1.7 2.4 3 2.4 4a2.4 2.4 0 1 1-4.8 0c0-1 .8-2.3 2.4-4Z"/><rect x="8.6" y="11.4" width="6.8" height="9.2" rx="1.6"/></svg></span>
       <h3 id="modulo-vazio-titulo">Ainda não chegamos aqui</h3>
       <p>
         Este módulo ainda não foi estudado pela turma. Assim que os encontros
@@ -792,9 +792,9 @@
           <p class="encontro-modulo">Outros</p>
           <h3>Apresentação — Prólogo do Catecismo</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>04 Mar 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>04 Mar 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -819,7 +819,7 @@
           -->
           <a class="mat-item" href="https://drive.google.com/drive/folders/1LPyPBcImjLyPCMtuBtPnuCKGGg7VY-qs"
             target="_blank" rel="noopener">
-            <span class="mat-icon">📄</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.9 3.6H7.6a2.1 2.1 0 0 0-2.1 2.1v12.6a2.1 2.1 0 0 0 2.1 2.1h8.8a2.1 2.1 0 0 0 2.1-2.1V8.1l-4.6-4.5Z"/><path d="M13.8 3.7v4.5h4.6"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">PDF</p>
               <p class="mat-title">Drive com arquivos de estudo</p>
@@ -831,7 +831,7 @@
           <a class="mat-item"
             href="https://opusdei.org/pt-br/article/o-ceu-a-morte-o-purgatorio-o-que-sao-os-novissimos/" target="_blank"
             rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">Texto de referência</p>
@@ -875,9 +875,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>O que significa "crer"?</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>11 Mar 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>11 Mar 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -903,7 +903,7 @@
           -->
           <a class="mat-item" href="https://drive.google.com/drive/folders/1LPyPBcImjLyPCMtuBtPnuCKGGg7VY-qs"
             target="_blank" rel="noopener">
-            <span class="mat-icon">📄</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.9 3.6H7.6a2.1 2.1 0 0 0-2.1 2.1v12.6a2.1 2.1 0 0 0 2.1 2.1h8.8a2.1 2.1 0 0 0 2.1-2.1V8.1l-4.6-4.5Z"/><path d="M13.8 3.7v4.5h4.6"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">PDF</p>
               <p class="mat-title">2º encontro</p>
@@ -915,7 +915,7 @@
           <a class="mat-item"
             href="https://www.montfort.org.br/bra/cadernos/religiao/existencia/" target="_blank"
             rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">As 5 vias de Santo Tomás</p>
@@ -958,9 +958,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>Deus Pai, Criador Todo-Poderoso</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>18 Mar 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>18 Mar 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -973,7 +973,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://opusdei.org/pt-br/article/tema-6-a-criacao/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">A Criação</p>
@@ -1000,9 +1000,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>Jesus Cristo, Filho Único e Senhor</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>25 Mar 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>25 Mar 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1015,7 +1015,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://www.arautos.org/catecismo/e-em-jesus-cristo-seu-unico-filho-nosso-senhor-161976" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">E em Jesus Cristo, seu único Filho, nosso Senhor</p>
@@ -1042,9 +1042,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>A Semana Santa e a Encarnação</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>08 Abr 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>08 Abr 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1057,7 +1057,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://opusdei.org/pt-pt/article/tema-12-a-encarnacao/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">A Encarnação</p>
@@ -1084,9 +1084,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>O Nascimento: nascido da Virgem Maria</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>15 Abr 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>15 Abr 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1099,7 +1099,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://www.a12.com/academia/catequese/dogmas-marianos-a-maternidade-divina" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">A Maternidade Divina de Maria</p>
@@ -1126,9 +1126,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>A Paixão: sofrimento, cruz e morte</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>22 Abr 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>22 Abr 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1141,7 +1141,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://rumoasantidade.com.br/livro-paixao-nosso-senhor-jesus-cristo-santo-afonso/" target="_blank" rel="noopener">
-            <span class="mat-icon">📖</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.2C10 4.9 7.4 4.4 4 4.8v12.4c3.4-.4 6 .1 8 1.4 2-1.3 4.6-1.8 8-1.4V4.8c-3.4-.4-6 .1-8 1.4Z"/><path d="M12 6.2v12.4"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Livro</p>
               <p class="mat-title">A Paixão de Nosso Senhor Jesus Cristo</p>
@@ -1168,9 +1168,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>A Descida aos mortos</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>29 Abr 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>29 Abr 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1183,7 +1183,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://formacao.cancaonova.com/liturgia/tempo-liturgico/advento/jesus-desceu-mesmo-a-mansao-dos-mortos/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">Jesus desceu à mansão dos mortos?</p>
@@ -1210,9 +1210,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>A Ressurreição ao terceiro dia</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>06 Mai 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>06 Mai 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1225,7 +1225,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://padrepauloricardo.org/blog/o-santo-sudario-e-o-que-jesus-suportou-por-nos" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">O Santo Sudário e o que Jesus suportou por nós</p>
@@ -1252,9 +1252,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>A Ascensão e o Juízo Final</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>13 Mai 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>13 Mai 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1267,7 +1267,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://opusdei.org/pt-br/article/tema-11-ressurreicao-ascensao-e-segunda-vinda-de-cristo/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">Ascensão e Segunda vinda de Cristo</p>
@@ -1294,9 +1294,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>O Espírito Santo e a Igreja Católica</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>20 Mai 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>20 Mai 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1309,7 +1309,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://opusdei.org/pt-br/article/tema-14-o-espirito-santo-e-sua-acao-na-igreja/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">O Espírito Santo e sua ação na Igreja</p>
@@ -1336,9 +1336,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>Comunhão dos Santos e a Vida Eterna</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>27 Mai 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>27 Mai 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1351,7 +1351,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://templariodemaria.com/o-que-sao-os-novissimos-o-ceu-a-morte-o-purgatorio/" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
               <p class="mat-title">Os Novíssimos: o céu, a morte e o purgatório</p>
@@ -1378,9 +1378,9 @@
           <p class="encontro-modulo">Credo</p>
           <h3>Nossa Senhora na Doutrina (Mariologia)</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>03 Jun 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>03 Jun 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1393,7 +1393,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://padrepauloricardo.org/cursos/consagracao-total-a-nossa-senhora" target="_blank" rel="noopener">
-            <span class="mat-icon">🎓</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.6 8.7 12 13.4l9.4-4.7L12 4Z"/><path d="M6.6 10.8v4.6c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.6"/><path d="M21.4 9.2v4.4"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Curso</p>
               <p class="mat-title">Consagração Total a Nossa Senhora</p>
@@ -1420,9 +1420,9 @@
           <p class="encontro-modulo">Outros</p>
           <h3>A Encíclica <em>Magnifica Humanitas</em> — IA e Dignidade Humana</h3>
           <div class="encontro-meta">
-            <span>📅 <strong>10 Jun 2026</strong></span>
-            <span>🕗 <strong>20h – 22h</strong></span>
-            <span>📍 <strong>Sala 204</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2.4"/><path d="M3.6 10.1h16.8M8 3.4v4M16 3.4v4"/></svg> <strong>10 Jun 2026</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.1v5.2l3.2 1.9"/></svg> <strong>20h – 22h</strong></span>
+            <span><svg class="ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.9s6.8-5.5 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.4 12 20.9 12 20.9Z"/><circle cx="12" cy="10" r="2.5"/></svg> <strong>Sala 204</strong></span>
           </div>
         </div>
       </div>
@@ -1435,7 +1435,7 @@
         <div class="materiais-grid">
 
           <a class="mat-item" href="https://www.vaticannews.va/pt/papa/news/2026-05/papa-leao-xiv-enciclica-magnifica-humanitas-sintese.html" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 13.6a4.1 4.1 0 0 0 5.8 0l2.5-2.5a4.1 4.1 0 1 0-5.8-5.8l-1.3 1.3"/><path d="M13.6 10.4a4.1 4.1 0 0 0-5.8 0l-2.5 2.5a4.1 4.1 0 1 0 5.8 5.8l1.3-1.3"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Síntese</p>
               <p class="mat-title">A IA deve servir à humanidade</p>
@@ -1444,7 +1444,7 @@
           </a>
 
           <a class="mat-item" href="https://www.vatican.va/content/leo-xiv/pt/encyclicals/documents/20260515-magnifica-humanitas.html" target="_blank" rel="noopener">
-            <span class="mat-icon">📄</span>
+            <span class="mat-icon"><svg class="ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.9 3.6H7.6a2.1 2.1 0 0 0-2.1 2.1v12.6a2.1 2.1 0 0 0 2.1 2.1h8.8a2.1 2.1 0 0 0 2.1-2.1V8.1l-4.6-4.5Z"/><path d="M13.8 3.7v4.5h4.6"/></svg></span>
             <div class="mat-info">
               <p class="mat-type">Documento</p>
               <p class="mat-title">Magnifica Humanitas — texto integral</p>
@@ -1474,7 +1474,7 @@
   <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-icon">✝️</div>
+      <div class="footer-icon"><svg class="ic" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.4v17.2"/><path d="M5.6 9.6h12.8"/></svg></div>
       <h3>Catequese — Adultos IC</h3>
       <p>Paróquia São José<br>Iniciação Cristã de Adultos · 2026</p>
       <div class="footer-divider"></div>

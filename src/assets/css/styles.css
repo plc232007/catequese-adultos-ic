@@ -795,3 +795,230 @@ footer .credits {
     pointer-events: auto;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DETALHES — ícones de traço, ornamentos e microinterações
+   Camada aditiva: fica no fim do arquivo de propósito, para ajustar
+   o que vem acima sem disputar especificidade.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── ÍCONES DE TRAÇO DOURADO (substituem os emojis) ─── */
+.ic {
+  display: inline-block;
+  vertical-align: -.16em;
+  color: var(--gold);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* recipientes que só contêm o ícone: zera a caixa de texto herdada */
+.sobre-card .icon,
+.material-item .icon,
+.mat-icon,
+.modulo-icone,
+.modulo-vazio-icone,
+.footer-icon {
+  font-size: 0;
+  line-height: 0;
+}
+
+.sobre-card .icon .ic { stroke-width: 1.45; }
+.encontro-meta .ic    { color: var(--gold-soft); opacity: .85; }
+.bento-feast-badge .ic { color: var(--dark); opacity: .8; }
+.aviso-tag .ic        { vertical-align: -.22em; }
+.footer-icon .ic      { color: var(--gold); opacity: .9; }
+.modulo-vazio-icone .ic { color: var(--gold); opacity: .55; stroke-width: 1.3; }
+
+/* ─── DIVISOR DE SEÇÃO: losango + fio que se dissolve ─── */
+.section-divider,
+#material .section-divider {
+  position: relative;
+  width: 78px;
+  height: 10px;
+  background: none;
+  border-radius: 0;
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), rgba(198, 165, 90, .12));
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+/* ─── DIVISOR DO RODAPÉ: losango centrado entre dois fios ─── */
+.footer-divider {
+  position: relative;
+  width: 132px;
+  height: 10px;
+  background: none;
+  opacity: 1;
+}
+
+.footer-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, rgba(198, 165, 90, .5) 22%, rgba(198, 165, 90, .5) 78%, transparent);
+}
+
+.footer-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 1px;
+  background: var(--gold);
+  opacity: .85;
+}
+
+/* ─── CITAÇÃO: aspa tipográfica de abertura ─── */
+.quote {
+  position: relative;
+  padding-left: 48px;
+}
+
+.quote::before {
+  content: '\201C';
+  position: absolute;
+  left: 14px;
+  top: 6px;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.4rem;
+  line-height: .8;
+  color: var(--gold);
+  opacity: .32;
+  pointer-events: none;
+}
+
+/* ─── CARTÕES: filete dourado que nasce no hover ─── */
+.sobre-card,
+.material-item,
+.aviso-card {
+  position: relative;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.sobre-card::after,
+.material-item::after,
+.aviso-card::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 0;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+
+.sobre-card:hover::after,
+.material-item:hover::after,
+.aviso-card:hover::after {
+  transform: scaleX(1);
+}
+
+.sobre-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .09);
+}
+
+.sobre-card:hover .icon {
+  transform: translateY(-2px) scale(1.06);
+}
+
+/* ─── NAV: fio dourado sob o item em foco ─── */
+.nav-links a:not(.active) {
+  position: relative;
+}
+
+.nav-links a:not(.active)::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 1px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .24s ease;
+}
+
+.nav-links a:not(.active):hover::after {
+  transform: scaleX(1);
+}
+
+/* ─── SELEÇÃO DE TEXTO E FOCO ─── */
+::selection {
+  background: rgba(198, 165, 90, .3);
+  color: var(--dark);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
+/* ─── BARRA DE ROLAGEM ─── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) rgba(198, 165, 90, .14);
+}
+
+::-webkit-scrollbar { width: 12px; height: 12px; }
+
+::-webkit-scrollbar-track { background: rgba(198, 165, 90, .1); }
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+  border-radius: 999px;
+  border: 3px solid var(--cream-main);
+}
+
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sobre-card,
+  .sobre-card::after,
+  .material-item::after,
+  .aviso-card::after,
+  .nav-links a:not(.active)::after {
+    transition: none;
+  }
+}
