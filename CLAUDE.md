@@ -111,9 +111,21 @@ Existem aliases legados que ainda aparecem no código: `--cream`, `--gold-light`
 ## Adicionar conteúdo
 
 ### Novo encontro (`conteudos.html`)
-Duplicar o último `.encontro-card` e atualizar `data-encontro`, `.encontro-num`, `<h3>`, `.encontro-meta`, `.encontro-resumo` e a grade de materiais. O comentário-guia acima do Encontro 1 lista os tipos de material disponíveis. Todos os 14 encontros já estão preenchidos; a classe `.pendente`/`.pendente-msg` sobrevive só no CSS, para cards ainda não realizados.
+Duplicar o último `.encontro-card` e atualizar `data-encontro`, **`data-modulo`**, `.encontro-num`, `.encontro-modulo`, `<h3>`, `.encontro-meta`, `.encontro-resumo` e a grade de materiais. O comentário-guia acima do Encontro 1 lista os tipos de material disponíveis. Todos os 14 encontros já estão preenchidos; a classe `.pendente`/`.pendente-msg` sobrevive só no CSS, para cards ainda não realizados.
 
-Vídeo do YouTube: `<div class="video-wrapper" data-video-id="ID" data-video-title="...">` com um `<button class="video-load">` dentro — o `main.js` cria o iframe (`youtube-nocookie`) só no clique. Fotos: `.fotos-row` com `<img class="foto-thumb" onclick="abrirLightbox(...)">`.
+Vídeo do YouTube: `<div class="video-wrapper" data-video-id="ID" data-video-title="...">` com um `<button class="video-load">` dentro — o `main.js` cria o iframe (`youtube-nocookie`) só no clique. **A miniatura `<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">` e o `aria-label` do botão têm que usar o mesmo ID** — trocar só o `data-video-id` faz o card mostrar a imagem de um vídeo e abrir outro. Fotos: `.fotos-row` com `<img class="foto-thumb" onclick="abrirLightbox(...)">`.
+
+### Menu de módulos (`conteudos.html`)
+A página tem um menu que filtra os encontros por módulo do Catecismo. Cada card declara `data-modulo` e cada botão do menu declara `data-filtro`; os valores válidos são **`credo`, `mandamentos`, `sacramentos`, `pai-nosso` e `outros`**, mais o `todos` que mostra tudo na ordem sequencial (padrão).
+
+Pontos a saber ao mexer:
+- O selo `.encontro-modulo` no cabeçalho do card é texto fixo — mantenha-o coerente com o `data-modulo`
+- A contagem de cada botão é calculada em tempo de execução a partir do DOM, então não precisa ser atualizada na mão
+- Módulo sem nenhum encontro mostra o bloco `#modulo-vazio` ("ainda não chegamos aqui") em vez de uma lista em branco
+- O filtro aceita deep link: `conteudos.html#sacramentos` já abre filtrado; hash desconhecida cai em `todos`
+- CSS no `<style>` da página e JS no `<script>` do rodapé, junto do lightbox — **de propósito**, para não tocar em `main.js` e evitar bump de versão de cache
+
+Hoje: Credo tem 12 encontros (2–13), Outros tem 2 (1 e 14), e os outros três módulos ainda estão vazios.
 
 ### Novo santo semanal (`santos.html`)
 Duplicar o primeiro `.saint-card`, atualizar `data-semana`, `.saint-week-badge`, nome, textos e imagem, e inseri-lo **no topo** da lista — os cards ficam em ordem decrescente de semana. A imagem vai em `src/assets/img/santos/` e precisa entrar no `PRECACHE` do `sw.js`.

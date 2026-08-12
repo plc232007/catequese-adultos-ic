@@ -94,6 +94,197 @@
       margin: 0 auto 52px;
     }
 
+    /* ── MENU DE MÓDULOS: escolha o que estudar ── */
+    .modulos-menu {
+      max-width: 900px;
+      margin: 0 auto 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .modulo {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      padding: 18px 18px 15px;
+      background: #fff;
+      border: 1px solid rgba(198, 165, 90, .22);
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: background .18s, border-color .18s, box-shadow .18s, transform .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .modulo:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .09);
+    }
+
+    .modulo:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .modulo[aria-pressed="true"] {
+      background: linear-gradient(135deg, rgba(198, 165, 90, .16), rgba(198, 165, 90, .05));
+      border-color: var(--gold);
+      box-shadow: 0 6px 20px rgba(198, 165, 90, .22);
+    }
+
+    .modulo[aria-pressed="true"]::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 0;
+      height: 3px;
+      border-radius: 0 0 3px 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    }
+
+    .modulo-icone {
+      font-size: 1.5rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .modulo-nome {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.25;
+    }
+
+    .modulo-desc {
+      font-size: .76rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .modulo-contagem {
+      margin-top: 7px;
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .modulo.vazio .modulo-contagem {
+      color: var(--text-soft);
+      opacity: .75;
+    }
+
+    .modulo.vazio .modulo-icone,
+    .modulo.vazio .modulo-nome {
+      opacity: .68;
+    }
+
+    /* ── BARRA DE ESTADO DO FILTRO ── */
+    .filtro-info {
+      max-width: 900px;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      background: var(--cream);
+      border: 1px solid rgba(198, 165, 90, .22);
+      border-radius: 12px;
+    }
+
+    .filtro-info-texto {
+      font-size: .84rem;
+      color: var(--text-soft);
+    }
+
+    .filtro-info-texto strong {
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    .filtro-limpar {
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .18s, color .18s;
+    }
+
+    .filtro-limpar:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* ── ESTADO VAZIO: módulo ainda não iniciado ── */
+    .modulo-vazio {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 56px 32px;
+      text-align: center;
+      background: #fff;
+      border: 1px dashed rgba(198, 165, 90, .45);
+      border-radius: 16px;
+    }
+
+    .modulo-vazio-icone {
+      font-size: 2.6rem;
+      display: block;
+      margin-bottom: 14px;
+      opacity: .8;
+    }
+
+    .modulo-vazio h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .modulo-vazio p {
+      color: var(--text-soft);
+      font-size: .9rem;
+      line-height: 1.75;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD FILTRADO PARA FORA ── */
+    .encontro-card.oculto {
+      display: none;
+    }
+
+    /* ── SELO DO MÓDULO NO CABEÇALHO DO CARD ── */
+    .encontro-modulo {
+      display: inline-block;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(198, 165, 90, .45);
+      border-radius: 999px;
+      padding: 3px 10px;
+      margin-bottom: 8px;
+    }
+
     /* ── ENCOUNTER CARD ── */
     .encontro-card {
       max-width: 900px;
@@ -414,7 +605,42 @@
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .modulos-menu {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 600px) {
+      .modulos-menu {
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .modulo {
+        padding: 14px 14px 12px;
+        border-radius: 12px;
+      }
+
+      .modulo-icone { font-size: 1.3rem; margin-bottom: 4px; }
+      .modulo-nome  { font-size: .92rem; }
+      .modulo-desc  { font-size: .71rem; }
+
+      .modulo[aria-pressed="true"]::before {
+        left: 14px;
+        right: 14px;
+      }
+
+      .filtro-info {
+        justify-content: center;
+        text-align: center;
+        padding: 12px 14px;
+      }
+
+      .modulo-vazio {
+        padding: 44px 22px;
+      }
+
       .encontro-header {
         padding: 18px 20px;
         gap: 14px;
@@ -469,7 +695,76 @@
       <p style="color:var(--text-light); line-height:1.8; max-width:640px;">
         Aqui você encontra tudo o que foi partilhado em cada encontro:
         apostilas, vídeos, imagens e links de referência.
-        O conteúdo é publicado após cada aula.
+        Escolha abaixo o que deseja estudar, ou veja todos os encontros na ordem em que aconteceram.
+      </p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         MENU DE MÓDULOS
+         ════════════════════════════════════════════════════════════
+         Cada botão filtra os encontros pelo atributo data-modulo.
+         Para incluir um encontro num módulo, basta pôr no card:
+           <div class="encontro-card" data-encontro="15" data-modulo="sacramentos">
+         Módulos válidos: credo · mandamentos · sacramentos · pai-nosso · outros
+         A contagem de cada botão é calculada sozinha pelo JS no fim da página.
+    ═══════════════════════════════════════════════════════════════ -->
+    <div class="modulos-menu" id="modulos-menu" role="group" aria-label="Escolha o que estudar">
+
+      <button class="modulo" type="button" data-filtro="todos" aria-pressed="true">
+        <span class="modulo-icone" aria-hidden="true">📚</span>
+        <span class="modulo-nome">Todos os encontros</span>
+        <span class="modulo-desc">Na ordem em que aconteceram</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+      <button class="modulo" type="button" data-filtro="credo" aria-pressed="false">
+        <span class="modulo-icone" aria-hidden="true">✝️</span>
+        <span class="modulo-nome">Credo</span>
+        <span class="modulo-desc">O que professamos na fé</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+      <button class="modulo" type="button" data-filtro="mandamentos" aria-pressed="false">
+        <span class="modulo-icone" aria-hidden="true">📜</span>
+        <span class="modulo-nome">Os 10 Mandamentos</span>
+        <span class="modulo-desc">A moral católica</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+      <button class="modulo" type="button" data-filtro="sacramentos" aria-pressed="false">
+        <span class="modulo-icone" aria-hidden="true">🕯️</span>
+        <span class="modulo-nome">Os Sacramentos</span>
+        <span class="modulo-desc">Os sinais da graça</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+      <button class="modulo" type="button" data-filtro="pai-nosso" aria-pressed="false">
+        <span class="modulo-icone" aria-hidden="true">🙏</span>
+        <span class="modulo-nome">O Pai Nosso</span>
+        <span class="modulo-desc">Como rezar?</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+      <button class="modulo" type="button" data-filtro="outros" aria-pressed="false">
+        <span class="modulo-icone" aria-hidden="true">✨</span>
+        <span class="modulo-nome">Outros</span>
+        <span class="modulo-desc">Temas complementares</span>
+        <span class="modulo-contagem"></span>
+      </button>
+
+    </div>
+
+    <div class="filtro-info" id="filtro-info">
+      <p class="filtro-info-texto" id="filtro-info-texto" role="status" aria-live="polite"></p>
+      <button class="filtro-limpar" type="button" id="filtro-limpar" hidden>Ver todos</button>
+    </div>
+
+    <div class="modulo-vazio" id="modulo-vazio" hidden>
+      <span class="modulo-vazio-icone" aria-hidden="true">🕊️</span>
+      <h3 id="modulo-vazio-titulo">Ainda não chegamos aqui</h3>
+      <p>
+        Este módulo ainda não foi estudado pela turma. Assim que os encontros
+        acontecerem, o material aparecerá nesta página.
       </p>
     </div>
 
@@ -490,10 +785,11 @@
            · Link externo          (mat-item com link)
     ═══════════════════════════════════════════════════════════════ -->
 
-    <div class="encontro-card" data-encontro="1">
+    <div class="encontro-card" data-encontro="1" data-modulo="outros">
       <div class="encontro-header">
         <div class="encontro-num">1</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Outros</p>
           <h3>Apresentação — Prólogo do Catecismo</h3>
           <div class="encontro-meta">
             <span>📅 <strong>04 Mar 2026</strong></span>
@@ -559,7 +855,7 @@
                Coloque as imagens em: src/assets/img/encontros/encontro-01/
                Adicione ou remova <img> conforme o número de fotos
           -->
-          <!-- 
+          <!--
           <div class="fotos-row">
             <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-01.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
             <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-02.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
@@ -572,10 +868,11 @@
     </div>
     <!-- FIM ENCONTRO 1 -->
 
-    <div class="encontro-card" data-encontro="1">
+    <div class="encontro-card" data-encontro="2" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">2</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>O que significa "crer"?</h3>
           <div class="encontro-meta">
             <span>📅 <strong>11 Mar 2026</strong></span>
@@ -642,7 +939,7 @@
                Coloque as imagens em: src/assets/img/encontros/encontro-01/
                Adicione ou remova <img> conforme o número de fotos
           -->
-          <!-- 
+          <!--
           <div class="fotos-row">
             <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-01.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
             <img class="foto-thumb" src="src/assets/img/encontros/encontro-01/foto-02.jpg" alt="Foto do 1º encontro" onclick="abrirLightbox(this.src)">
@@ -654,10 +951,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="3">
+    <div class="encontro-card" data-encontro="3" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">3</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>Deus Pai, Criador Todo-Poderoso</h3>
           <div class="encontro-meta">
             <span>📅 <strong>18 Mar 2026</strong></span>
@@ -683,9 +981,9 @@
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="tv_3BGwcy9Q" data-video-title="Catequese — Creio em Deus Pai, o Criador">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Catequese — Creio em Deus Pai, o Criador">
-              <img src="https://i.ytimg.com/vi/tv_3BGwcy9Q/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="GSNlnnnrYc8" data-video-title="Credo: os artigos da Fé Católica — Padre Leonardo">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Credo: os artigos da Fé Católica — Padre Leonardo">
+              <img src="https://i.ytimg.com/vi/GSNlnnnrYc8/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -695,10 +993,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="4">
+    <div class="encontro-card" data-encontro="4" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">4</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>Jesus Cristo, Filho Único e Senhor</h3>
           <div class="encontro-meta">
             <span>📅 <strong>25 Mar 2026</strong></span>
@@ -715,18 +1014,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://catequizar.com.br/curso-02-aula-10-creio-em-jesus-cristo-filho-unico-de-deus/" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://www.arautos.org/catecismo/e-em-jesus-cristo-seu-unico-filho-nosso-senhor-161976" target="_blank" rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
-              <p class="mat-title">Creio em Jesus Cristo, Filho Único</p>
-              <p class="mat-desc">Texto de referência</p>
+              <p class="mat-title">E em Jesus Cristo, seu único Filho, nosso Senhor</p>
+              <p class="mat-desc">Arautos do Evangelho</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="95wrvN0muME" data-video-title="Catequese — Creio em Jesus Cristo, Filho único de Deus">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Catequese — Creio em Jesus Cristo, Filho único de Deus">
-              <img src="https://i.ytimg.com/vi/95wrvN0muME/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="0wtFsbw82bc" data-video-title="Quem é Jesus Cristo? — Padre Leonardo">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Quem é Jesus Cristo? — Padre Leonardo">
+              <img src="https://i.ytimg.com/vi/0wtFsbw82bc/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -736,10 +1035,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="5">
+    <div class="encontro-card" data-encontro="5" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">5</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>A Semana Santa e a Encarnação</h3>
           <div class="encontro-meta">
             <span>📅 <strong>08 Abr 2026</strong></span>
@@ -756,18 +1056,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://formacao.cancaonova.com/igreja/catequese/fe-na-encarnacao-filho-de-deus-segundo-igreja/" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://opusdei.org/pt-pt/article/tema-12-a-encarnacao/" target="_blank" rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
-              <p class="mat-title">A fé na Encarnação</p>
-              <p class="mat-desc">Canção Nova</p>
+              <p class="mat-title">A Encarnação</p>
+              <p class="mat-desc">Opus Dei</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="EdGQeU3Qjnw" data-video-title="Catequese — A Encarnação, concebido pelo Espírito Santo">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Catequese — A Encarnação, concebido pelo Espírito Santo">
-              <img src="https://i.ytimg.com/vi/EdGQeU3Qjnw/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="bwi2Qx9C6o0" data-video-title="Dom Henrique Soares fala sobre a Semana Santa">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Dom Henrique Soares fala sobre a Semana Santa">
+              <img src="https://i.ytimg.com/vi/bwi2Qx9C6o0/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -777,10 +1077,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="6">
+    <div class="encontro-card" data-encontro="6" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">6</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>O Nascimento: nascido da Virgem Maria</h3>
           <div class="encontro-meta">
             <span>📅 <strong>15 Abr 2026</strong></span>
@@ -806,9 +1107,9 @@
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="JaslVJ2Mzyo" data-video-title="Jesus nasceu da Virgem Maria">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Jesus nasceu da Virgem Maria">
-              <img src="https://i.ytimg.com/vi/JaslVJ2Mzyo/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="MzX9oF6rUAE" data-video-title="A verdadeira história da Virgem Maria — Biblioteca Católica">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: A verdadeira história da Virgem Maria — Biblioteca Católica">
+              <img src="https://i.ytimg.com/vi/MzX9oF6rUAE/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -818,10 +1119,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="7">
+    <div class="encontro-card" data-encontro="7" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">7</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>A Paixão: sofrimento, cruz e morte</h3>
           <div class="encontro-meta">
             <span>📅 <strong>22 Abr 2026</strong></span>
@@ -838,18 +1140,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://www.vaticannews.va/pt/igreja/news/2024-03/crucificado-morto-sepultado.html" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+          <a class="mat-item" href="https://rumoasantidade.com.br/livro-paixao-nosso-senhor-jesus-cristo-santo-afonso/" target="_blank" rel="noopener">
+            <span class="mat-icon">📖</span>
             <div class="mat-info">
-              <p class="mat-type">Link</p>
-              <p class="mat-title">Crucificado, morto e sepultado</p>
-              <p class="mat-desc">Vatican News</p>
+              <p class="mat-type">Livro</p>
+              <p class="mat-title">A Paixão de Nosso Senhor Jesus Cristo</p>
+              <p class="mat-desc">Santo Afonso de Ligório</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="ivmy9r25T5Q" data-video-title="Padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado">
-              <img src="https://i.ytimg.com/vi/ivmy9r25T5Q/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="bMgulO2vMZo" data-video-title="A Paixão de Cristo — filme completo dublado">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: A Paixão de Cristo — filme completo dublado">
+              <img src="https://i.ytimg.com/vi/bMgulO2vMZo/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -859,10 +1161,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="8">
+    <div class="encontro-card" data-encontro="8" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">8</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>A Descida aos mortos</h3>
           <div class="encontro-meta">
             <span>📅 <strong>29 Abr 2026</strong></span>
@@ -900,10 +1203,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="9">
+    <div class="encontro-card" data-encontro="9" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">9</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>A Ressurreição ao terceiro dia</h3>
           <div class="encontro-meta">
             <span>📅 <strong>06 Mai 2026</strong></span>
@@ -920,18 +1224,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://catecismo.net/indice-geral/parte=1/secao=2/capitulo=2/artigo=5/paragrafo=2/topico=0/titulo=0/numero=0" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://padrepauloricardo.org/blog/o-santo-sudario-e-o-que-jesus-suportou-por-nos" target="_blank" rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
-              <p class="mat-title">Ressuscitou ao terceiro dia</p>
-              <p class="mat-desc">Catecismo da Igreja Católica</p>
+              <p class="mat-title">O Santo Sudário e o que Jesus suportou por nós</p>
+              <p class="mat-desc">Padre Paulo Ricardo</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="9aRhkJ8_7_I" data-video-title="Estudo do Catecismo — Ressuscitou ao terceiro dia">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Estudo do Catecismo — Ressuscitou ao terceiro dia">
-              <img src="https://i.ytimg.com/vi/9aRhkJ8_7_I/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="pztHl8YujXk" data-video-title="Ao terceiro dia, Jesus ressuscitou dos mortos?">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Ao terceiro dia, Jesus ressuscitou dos mortos?">
+              <img src="https://i.ytimg.com/vi/pztHl8YujXk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -941,10 +1245,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="10">
+    <div class="encontro-card" data-encontro="10" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">10</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>A Ascensão e o Juízo Final</h3>
           <div class="encontro-meta">
             <span>📅 <strong>13 Mai 2026</strong></span>
@@ -982,10 +1287,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="11">
+    <div class="encontro-card" data-encontro="11" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">11</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>O Espírito Santo e a Igreja Católica</h3>
           <div class="encontro-meta">
             <span>📅 <strong>20 Mai 2026</strong></span>
@@ -1002,18 +1308,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://catecismo.net/indice-geral/parte=1/secao=2/capitulo=3/artigo=9/paragrafo=3/topico=0/titulo=0/numero=0" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://opusdei.org/pt-br/article/tema-14-o-espirito-santo-e-sua-acao-na-igreja/" target="_blank" rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
-              <p class="mat-title">Igreja una, santa, católica e apostólica</p>
-              <p class="mat-desc">Catecismo da Igreja Católica</p>
+              <p class="mat-title">O Espírito Santo e sua ação na Igreja</p>
+              <p class="mat-desc">Opus Dei</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="9Obt5GPOEuE" data-video-title="Creio no Espírito Santo — Catecismo da Igreja Católica">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Creio no Espírito Santo — Catecismo da Igreja Católica">
-              <img src="https://i.ytimg.com/vi/9Obt5GPOEuE/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="j5-9ZauB8nk" data-video-title="O Espírito Santo e o mistério da Igreja — Padre Paulo Ricardo">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: O Espírito Santo e o mistério da Igreja — Padre Paulo Ricardo">
+              <img src="https://i.ytimg.com/vi/j5-9ZauB8nk/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -1023,10 +1329,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="12">
+    <div class="encontro-card" data-encontro="12" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">12</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>Comunhão dos Santos e a Vida Eterna</h3>
           <div class="encontro-meta">
             <span>📅 <strong>27 Mai 2026</strong></span>
@@ -1043,18 +1350,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://opusdei.org/pt-br/article/tema-16-creio-na-ressurreicao-da-carne-e-na-vida-eterna/" target="_blank" rel="noopener">
+          <a class="mat-item" href="https://templariodemaria.com/o-que-sao-os-novissimos-o-ceu-a-morte-o-purgatorio/" target="_blank" rel="noopener">
             <span class="mat-icon">🔗</span>
             <div class="mat-info">
               <p class="mat-type">Link</p>
-              <p class="mat-title">Ressurreição da carne e vida eterna</p>
-              <p class="mat-desc">Opus Dei</p>
+              <p class="mat-title">Os Novíssimos: o céu, a morte e o purgatório</p>
+              <p class="mat-desc">Templário de Maria</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="JBi26qKAlr8" data-video-title="Comunhão dos Santos — Padre Paulo Ricardo">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Comunhão dos Santos — Padre Paulo Ricardo">
-              <img src="https://i.ytimg.com/vi/JBi26qKAlr8/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="rETyW283zOw" data-video-title="Catecismo de Adultos, aula 15 — da comunhão dos santos à vida eterna">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: Catecismo de Adultos, aula 15 — da comunhão dos santos à vida eterna">
+              <img src="https://i.ytimg.com/vi/rETyW283zOw/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -1064,10 +1371,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="13">
+    <div class="encontro-card" data-encontro="13" data-modulo="credo">
       <div class="encontro-header">
         <div class="encontro-num">13</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Credo</p>
           <h3>Nossa Senhora na Doutrina (Mariologia)</h3>
           <div class="encontro-meta">
             <span>📅 <strong>03 Jun 2026</strong></span>
@@ -1084,18 +1392,18 @@
 
         <div class="materiais-grid">
 
-          <a class="mat-item" href="https://www.a12.com/academia/catequese/os-dogmas-marianos" target="_blank" rel="noopener">
-            <span class="mat-icon">🔗</span>
+          <a class="mat-item" href="https://padrepauloricardo.org/cursos/consagracao-total-a-nossa-senhora" target="_blank" rel="noopener">
+            <span class="mat-icon">🎓</span>
             <div class="mat-info">
-              <p class="mat-type">Link</p>
-              <p class="mat-title">Os quatro dogmas marianos</p>
-              <p class="mat-desc">Mariologia</p>
+              <p class="mat-type">Curso</p>
+              <p class="mat-title">Consagração Total a Nossa Senhora</p>
+              <p class="mat-desc">Curso grátis do Padre Paulo Ricardo — muito bom!!!!!!</p>
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="giEfR-SYTTY" data-video-title="Dogmas Marianos: Maria, Mãe de Deus">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Dogmas Marianos: Maria, Mãe de Deus">
-              <img src="https://i.ytimg.com/vi/giEfR-SYTTY/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="JtjRway9lP8" data-video-title="A História da Devoção a Nossa Senhora — A Memória Católica, ep. 3">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: A História da Devoção a Nossa Senhora — A Memória Católica, ep. 3">
+              <img src="https://i.ytimg.com/vi/JtjRway9lP8/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -1105,10 +1413,11 @@
       </div>
     </div>
 
-    <div class="encontro-card" data-encontro="14">
+    <div class="encontro-card" data-encontro="14" data-modulo="outros">
       <div class="encontro-header">
         <div class="encontro-num">14</div>
         <div class="encontro-header-info">
+          <p class="encontro-modulo">Outros</p>
           <h3>A Encíclica <em>Magnifica Humanitas</em> — IA e Dignidade Humana</h3>
           <div class="encontro-meta">
             <span>📅 <strong>10 Jun 2026</strong></span>
@@ -1143,9 +1452,9 @@
             </div>
           </a>
 
-          <div class="video-wrapper" data-video-id="56M6Ltxt6YQ" data-video-title="Padre Paulo Ricardo comenta a Encíclica Magnifica Humanitas">
-            <button class="video-load" type="button" aria-label="Carregar vídeo: Padre Paulo Ricardo comenta a Encíclica Magnifica Humanitas">
-              <img src="https://i.ytimg.com/vi/56M6Ltxt6YQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+          <div class="video-wrapper" data-video-id="MFYeMPGIK7A" data-video-title="O Papa declarou guerra à Inteligência Artificial? — Padre Paulo Ricardo">
+            <button class="video-load" type="button" aria-label="Carregar vídeo: O Papa declarou guerra à Inteligência Artificial? — Padre Paulo Ricardo">
+              <img src="https://i.ytimg.com/vi/MFYeMPGIK7A/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
               <span class="video-play" aria-hidden="true">▶</span>
               <span class="video-caption">Clique para carregar o vídeo</span>
             </button>
@@ -1255,6 +1564,85 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') fecharLightbox();
     });
+
+    /* ─── MENU DE MÓDULOS: filtra os encontros ─── */
+    (function () {
+      const menu = document.getElementById('modulos-menu');
+      if (!menu) return;
+
+      const botoes   = Array.from(menu.querySelectorAll('.modulo'));
+      const cards    = Array.from(document.querySelectorAll('.encontro-card[data-modulo]'));
+      const vazio    = document.getElementById('modulo-vazio');
+      const vazioTit = document.getElementById('modulo-vazio-titulo');
+      const info     = document.getElementById('filtro-info-texto');
+      const limpar   = document.getElementById('filtro-limpar');
+
+      /* Conta quantos encontros cada módulo tem e escreve no botão */
+      const contagem = { todos: cards.length };
+      botoes.forEach(b => { if (b.dataset.filtro !== 'todos') contagem[b.dataset.filtro] = 0; });
+      cards.forEach(c => {
+        const m = c.dataset.modulo;
+        if (m in contagem) contagem[m]++;
+      });
+
+      function plural(n) {
+        return n === 1 ? '1 encontro' : n + ' encontros';
+      }
+
+      botoes.forEach(b => {
+        const n = contagem[b.dataset.filtro] || 0;
+        b.querySelector('.modulo-contagem').textContent = n === 0 ? 'Em breve' : plural(n);
+        b.classList.toggle('vazio', n === 0);
+      });
+
+      function aplicar(filtro, rolar) {
+        const botao = botoes.find(b => b.dataset.filtro === filtro) || botoes[0];
+        filtro = botao.dataset.filtro;
+
+        botoes.forEach(b => b.setAttribute('aria-pressed', String(b === botao)));
+
+        const total = filtro === 'todos'
+          ? cards.length
+          : cards.filter(c => c.dataset.modulo === filtro).length;
+
+        cards.forEach(c => {
+          c.classList.toggle('oculto', filtro !== 'todos' && c.dataset.modulo !== filtro);
+        });
+
+        const nome = botao.querySelector('.modulo-nome').textContent.trim();
+
+        if (filtro === 'todos') {
+          info.innerHTML = 'Mostrando <strong>todos os ' + cards.length + ' encontros</strong>, na ordem em que aconteceram.';
+          limpar.hidden = true;
+        } else {
+          info.innerHTML = 'Mostrando <strong>' + nome + '</strong> · ' +
+            (total === 0 ? 'nenhum encontro ainda' : plural(total));
+          limpar.hidden = false;
+        }
+
+        vazio.hidden = total > 0;
+        if (total === 0) vazioTit.textContent = nome + ': ainda não chegamos aqui';
+
+        /* Mantém o endereço compartilhável, sem provocar salto de rolagem */
+        try {
+          history.replaceState(null, '', filtro === 'todos' ? location.pathname : '#' + filtro);
+        } catch (e) { /* file:// não permite — o filtro continua funcionando */ }
+
+        /* No celular o menu ocupa a tela toda: leva o aluno até os resultados */
+        if (rolar && window.innerWidth <= 640) {
+          document.getElementById('filtro-info').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      botoes.forEach(b => {
+        b.addEventListener('click', () => aplicar(b.dataset.filtro, true));
+      });
+
+      limpar.addEventListener('click', () => aplicar('todos', true));
+
+      /* Abre já filtrado se a página vier com #credo, #sacramentos etc. */
+      aplicar((location.hash || '').replace('#', '') || 'todos', false);
+    })();
   </script>
 </body>
 

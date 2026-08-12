@@ -87,13 +87,14 @@ Cards expansíveis, cada oração com versão em **português e latim** alterná
 
 ### Adicionar um novo encontro (`conteudos.html`)
 
-Duplique o último `.encontro-card` e atualize:
+Duplique o último `.encontro-card` e atualize — repare no **`data-modulo`**, que é o que faz o encontro aparecer no módulo certo do menu:
 
 ```html
-<div class="encontro-card" data-encontro="15">
+<div class="encontro-card" data-encontro="15" data-modulo="sacramentos">
   <div class="encontro-header">
     <div class="encontro-num">15</div>
     <div class="encontro-header-info">
+      <p class="encontro-modulo">Sacramentos</p>
       <h3>Título do encontro</h3>
       <div class="encontro-meta">
         <span>📅 <strong>17 Jun 2026</strong></span>
@@ -109,6 +110,23 @@ Duplique o último `.encontro-card` e atualize:
 ```
 
 Existe também a variação `.encontro-card.pendente` (card esmaecido com `.pendente-msg`) para um encontro que ainda não aconteceu — hoje ela só existe no CSS, sem nenhum card usando.
+
+### O menu de módulos
+
+No topo da página há um menu para escolher o que estudar, seguindo os pilares do Catecismo:
+
+| Módulo | `data-modulo` | Situação |
+|---|---|---|
+| Todos os encontros | — | Mostra tudo na ordem, é o padrão |
+| Credo | `credo` | 12 encontros (2 ao 13) |
+| Os 10 Mandamentos | `mandamentos` | Ainda sem encontros |
+| Os Sacramentos | `sacramentos` | Ainda sem encontros |
+| O Pai Nosso | `pai-nosso` | Ainda sem encontros |
+| Outros | `outros` | 2 encontros (1 e 14) |
+
+Para pôr um encontro num módulo basta o `data-modulo` no card e o selo `.encontro-modulo` no cabeçalho. **A contagem de cada botão se atualiza sozinha** — não precisa mexer em número nenhum.
+
+Módulo que ainda não tem encontro nenhum mostra um aviso de "ainda não chegamos aqui" em vez de uma página vazia. E dá para mandar o link já filtrado: `conteudos.html#credo`, `#sacramentos`, `#pai-nosso` e assim por diante.
 
 ### Adicionar PDF de um encontro
 
