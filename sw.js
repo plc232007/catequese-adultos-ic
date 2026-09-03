@@ -3,7 +3,7 @@
    Estratégia: Cache-first com atualização em background (SWR)
    ================================================================ */
 
-const CACHE = 'ic-2026-v9';
+const CACHE = 'ic-2026-v10';
 
 const PRECACHE = [
   '/',
@@ -14,8 +14,10 @@ const PRECACHE = [
   '/manifest.json',
   '/src/assets/css/styles.css',
   '/src/assets/css/app.css',
+  '/src/assets/css/aquino.css',
   '/src/assets/js/main.js',
   '/src/assets/js/pwa.js',
+  '/src/assets/js/aquino.js',
   '/src/assets/pdf/cronograma-catequese-2026-2.pdf',
   '/src/assets/img/fundo.jpg',
   '/src/assets/img/sao-bento.jpg',
@@ -61,6 +63,10 @@ self.addEventListener('fetch', event => {
 
   /* Ignorar requests externos (YouTube, Google Fonts etc.) */
   if (url.origin !== self.location.origin) return;
+
+  /* A conversa com o Aquino nunca passa pelo cache — hoje ela é POST e já
+     cairia fora daqui, mas a guarda vale para qualquer rota /api/ futura */
+  if (url.pathname.startsWith('/api/')) return;
 
   event.respondWith(
     caches.open(CACHE).then(async cache => {
