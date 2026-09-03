@@ -36,10 +36,10 @@ Não há testes automatizados, linter nem script de build. A verificação é ma
 ```
 index.html  santos.html  conteudos.html  oracoes.html
 sw.js  manifest.json  vercel.json
-.env.local                                 ← GROQ_API_KEY (fora do git)
+.env.local                                 ← GEMINI_API_KEY (fora do git)
 cronograma-credo.md  cronograma-santos.md   ← planejamento do conteúdo (não vão pro site)
 api/
-  aquino.mjs           ← função da Vercel que conversa com a Groq
+  aquino.mjs           ← função da Vercel que conversa com o Gemini
   aquino-contexto.mjs  ← o que o Aquino sabe sobre a turma
 src/assets/
   css/styles.css  css/app.css  css/aquino.css
@@ -84,8 +84,8 @@ Ao fazer deploy com mudanças significativas, **duas constantes devem ser increm
 
 | Arquivo | Constante | Valor atual |
 |---|---|---|
-| `sw.js` | `const CACHE` | `'ic-2026-v10'` |
-| `src/assets/js/pwa.js` | `const APP_VERSION` | `'10'` |
+| `sw.js` | `const CACHE` | `'ic-2026-v11'` |
+| `src/assets/js/pwa.js` | `const APP_VERSION` | `'11'` |
 
 Trocar só uma causa inconsistência: o SW antigo pode continuar ativo enquanto o JS espera outra versão. O `pwa.js` compara `APP_VERSION` com o `localStorage` do usuário e, se diferirem, apaga todos os caches, desregistra os SWs e recarrega a página.
 
@@ -94,33 +94,61 @@ Isso é ainda mais importante porque o `vercel.json` marca CSS/JS/imagens como `
 ## O Aquino (assistente de dúvidas)
 
 Bonequinho de Santo Tomás de Aquino no canto inferior esquerdo das quatro páginas.
-Clicou, abre uma janela de conversa; a resposta vem de um modelo hospedado na **Groq**.
+Clicou, abre uma janela de conversa; a resposta vem do **Gemini**, pela chave gratuita
+do Google AI Studio.
 
 ```
-navegador → POST /api/aquino → api/aquino.mjs → api.groq.com → stream de volta
+navegador → POST /api/aquino → api/aquino.mjs → generativelanguage.googleapis.com
+                                              → stream de volta
 ```
 
-A `GROQ_API_KEY` só existe dentro da função. O navegador nunca a vê, e o front não
+A `GEMINI_API_KEY` só existe dentro da função. O navegador nunca a vê, e o front não
 sabe nem qual modelo está sendo usado.
 
-**Onde fica a chave:** `.env.local` na raiz (ignorado pelo git) para rodar local, e
-Vercel → Settings → Environment Variables → `GROQ_API_KEY` (marcada como *Sensitive*)
-para produção. Sem a variável, a função devolve 503 e o Aquino avisa que não foi
-configurado — o resto do site continua funcionando normalmente.
+Usa o endpoint clássico `:streamGenerateContent`, que é **sem estado**: cada pergunta
+manda o histórico inteiro e o Google não guarda a conversa. Existe também a Interactions
+API, mais nova, que por padrão guarda a conversa no servidor deles (`store=true`) — não
+é o que queremos para um site de catequese.
 
-**Trocar de modelo:** a constante `MODELO` no topo de `api/aquino.mjs`. A lista do que a
-conta tem sai em `GET https://api.groq.com/openai/v1/models`. Hoje: `openai/gpt-oss-120b`.
+**Onde fica a chave:** gere em https://aistudio.google.com/apikey. Depois, `.env.local`
+na raiz (ignorado pelo git) para rodar local, e Vercel → Settings → Environment
+Variables → `GEMINI_API_KEY` (marcada como *Sensitive*) para produção. Sem a variável, a
+função devolve 503 e o Aquino avisa que não foi configurado — o resto do site continua
+funcionando normalmente.
 
-### ⚠️ O teto de tokens por minuto
-O plano gratuito da Groq dá **8.000 tokens por minuto para a conta inteira** — ou seja,
-para a turma toda junta. O texto de sistema é reenviado a cada pergunta, então ele
-precisa ser curto. Por isso `api/aquino-contexto.mjs` é partido em dois:
+**Trocar de modelo:** a constante `MODELO` no topo de `api/aquino.mjs`. A lista que a sua
+chave enxerga sai em `GET https://generativelanguage.googleapis.com/v1beta/models`.
+Hoje: `gemini-3.5-flash` — e **não** o 3.8, que é mais novo: no plano gratuito os modelos
+da moda têm pouca prioridade, e em seis chamadas seguidas o 3.8-flash devolveu 503
+"high demand" cinco vezes, enquanto o 3.5-flash respondeu inteiro em quatro. Vale
+retestar de vez em quando.
+
+**`thinkingLevel: 'low'`** é obrigatório na prática. O padrão do Gemini 3.x é `medium`:
+sem baixar, a primeira palavra demora quase 40 segundos e o raciocínio consome o
+`maxOutputTokens`, cortando a resposta no meio. Com `low`, a resposta começa em 3 a 5
+segundos. O campo é aninhado — `generationConfig.thinkingConfig.thinkingLevel` —, e o
+raciocínio conta no `maxOutputTokens`, por isso ele está em 1400 para 2 a 3 parágrafos.
+
+**Quando o plano gratuito falha:** 503 "high demand" acontece bastante. A função tenta
+até três vezes com uma pausa curta e, se ainda assim não vier, devolve 429 com a mesma
+mensagem amigável. Se a conexão cair no meio da resposta (stream que acaba sem
+`finishReason`), a função manda um `\u0000` no fim e o front avisa que foi interrompida
+em vez de guardar meia frase como se fosse a resposta.
+
+**Formato:** no Gemini as regras vão em `systemInstruction`, separado das mensagens, e o
+papel do assistente chama-se `model` — não `assistant`. O texto de cada pedaço do stream
+está em `candidates[0].content.parts[].text`, e um pedaço pode trazer mais de um `part`.
+
+### ⚠️ Por que o contexto é partido em dois
+O texto de sistema é reenviado a cada pergunta. Mandar tudo sempre deixa a resposta
+lenta e faz o modelo divagar sobre assunto que ninguém perguntou. Por isso
+`api/aquino-contexto.mjs` tem duas partes:
 
 - `INDICE` (~690 tokens) — vai em toda pergunta: turma, lista dos encontros, santos, orações
 - `ENCONTROS` — o resumo detalhado de cada encontro, e `detalhesRelevantes()` junta no
   máximo dois, só quando a pergunta cita o número ou uma palavra-chave do tema
 
-Engordar o `INDICE` sem pensar derruba a conta em 429 com três perguntas seguidas.
+O teto do plano gratuito é por conta e aparece em https://aistudio.google.com/rate-limit.
 `hoje()` injeta a data corrente em São Paulo — sem isso o Aquino chuta qual foi o
 último encontro e inventa datas.
 
