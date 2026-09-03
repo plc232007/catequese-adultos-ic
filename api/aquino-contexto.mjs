@@ -6,11 +6,14 @@
    entra na lista do índice. Se esquecer, o Aquino continua
    respondendo, mas dirá que ainda não chegamos naquele tema.
 
-   POR QUE ESTÁ PARTIDO EM DOIS: o plano gratuito da Groq dá 8.000
-   tokens por minuto para a turma inteira, e o texto do sistema é
-   reenviado a cada pergunta. Então mandamos sempre o índice curto e,
-   só quando a pergunta fala de um encontro específico, juntamos o
-   resumo daquele encontro. Ver detalhesRelevantes() no fim do arquivo.
+   POR QUE ESTÁ PARTIDO EM DOIS: o texto do sistema é reenviado a cada
+   pergunta, e mandar tudo sempre deixa a resposta lenta, cara em tokens
+   e mais sujeita a o modelo divagar sobre assunto que ninguém perguntou.
+   Então vai sempre o índice curto (~690 tokens) e, só quando a pergunta
+   fala de um encontro específico, junta-se o resumo daquele encontro.
+   Ver detalhesRelevantes() no fim do arquivo.
+   O teto do plano gratuito do Google AI Studio é por conta e aparece em
+   https://aistudio.google.com/rate-limit — vale conferir lá.
 
    Fontes: conteudos.html, index.html (cronograma), santos.html,
    oracoes.html, cronograma-credo.md e cronograma-santos.md.

@@ -6,7 +6,7 @@
    do aquino.css e do <script> daqui — não há markup para replicar.
 
    A conversa vai para /api/aquino (api/aquino.mjs), que é quem fala
-   com a Groq. A chave da API nunca chega até este arquivo.
+   com o Gemini. A chave da API nunca chega até este arquivo.
 
    O histórico vive no sessionStorage: some quando a aba fecha.
    ═══════════════════════════════════════════════════════════════ */
@@ -214,9 +214,15 @@
 
       resposta.classList.remove('is-escrevendo');
 
+      /* NUL no fim = a função avisou que o stream caiu no meio */
+      const cortada = acumulado.endsWith('\u0000');
+      if (cortada) acumulado = acumulado.slice(0, -1);
+
       if (acumulado.trim()) {
+        resposta.innerHTML = paraHtml(acumulado);
         historico.push({ role: 'assistant', content: acumulado.trim() });
         salvarHistorico();
+        if (cortada) bolhaErro('A resposta foi interrompida no meio. Pergunte de novo?');
       } else {
         resposta.remove();
         bolhaErro('O Aquino não conseguiu responder dessa vez. Pergunte de novo?');
