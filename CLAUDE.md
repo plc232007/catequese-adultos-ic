@@ -36,26 +36,31 @@ Não há testes automatizados, linter nem script de build. A verificação é ma
 ```
 index.html  santos.html  conteudos.html  oracoes.html
 sw.js  manifest.json  vercel.json
+.env.local                                 ← GROQ_API_KEY (fora do git)
 cronograma-credo.md  cronograma-santos.md   ← planejamento do conteúdo (não vão pro site)
+api/
+  aquino.mjs           ← função da Vercel que conversa com a Groq
+  aquino-contexto.mjs  ← o que o Aquino sabe sobre a turma
 src/assets/
-  css/styles.css  css/app.css
-  js/main.js      js/pwa.js
-  img/  img/santos/  img/icons/
+  css/styles.css  css/app.css  css/aquino.css
+  js/main.js      js/pwa.js    js/aquino.js
+  img/  img/santos/  img/icons/  pdf/
 ```
 
 ### Páginas
 - `index.html` — Hero, faixa do santo da turma, Sobre, Cronograma dinâmico, Material, Avisos, São Bento
 - `santos.html` — Cards dos santos, um por semana (13 hoje), empilhados do mais recente ao mais antigo
-- `conteudos.html` — Material dos encontros (14 hoje): PDFs no Google Drive, YouTube sob demanda, fotos com lightbox
+- `conteudos.html` — Material dos encontros (18 hoje): PDFs no Google Drive, YouTube sob demanda, fotos com lightbox
 - `oracoes.html` — Orações em cards expansíveis, cada uma com versão PT/LA e abas de acesso rápido
 
-Todas as 4 páginas carregam o mesmo nav, bottom nav, pílula e modal de instalação — ao mexer em qualquer um desses blocos, replique nas quatro.
+Todas as 4 páginas carregam o mesmo nav, bottom nav, pílula e modal de instalação — ao mexer em qualquer um desses blocos, replique nas quatro. O Aquino é a exceção: o `aquino.js` cria o próprio markup, então as páginas só têm o `<link>` do CSS e o `<script>`.
 
 ## Camadas de CSS (a ordem importa)
 
 1. `src/assets/css/styles.css` (~800 linhas) — variáveis, reset, nav, hero, cards, footer, componentes globais
-2. `src/assets/css/app.css` (~500 linhas) — camada PWA/mobile: bottom nav (≤640px), pílula/modal de instalação, toast offline, abas de orações (`.oracao-tabs`). **Contém `opacity: 1 !important` em `.js-reveal`** como rede de segurança: sem isso, um SW com JS velho em cache deixaria os cards invisíveis para sempre.
-3. **`<style>` inline em cada página** — cada HTML tem um bloco `<style>` grande no `<head>` com os estilos exclusivos daquela página (santos ~480 linhas, conteudos ~435, oracoes ~424, index ~169). Estilos de `.saint-card`, `.encontro-card`, `.prayer-card`, `.lightbox` etc. moram lá, **não** em `styles.css`. Antes de criar um estilo novo, procure no `<style>` da própria página.
+2. `src/assets/css/aquino.css` (~380 linhas) — o bonequinho do Aquino e a janela de conversa. Camada isolada: nada aqui é usado por outra parte do site
+3. `src/assets/css/app.css` (~500 linhas) — camada PWA/mobile: bottom nav (≤640px), pílula/modal de instalação, toast offline, abas de orações (`.oracao-tabs`). **Contém `opacity: 1 !important` em `.js-reveal`** como rede de segurança: sem isso, um SW com JS velho em cache deixaria os cards invisíveis para sempre.
+4. **`<style>` inline em cada página** — cada HTML tem um bloco `<style>` grande no `<head>` com os estilos exclusivos daquela página (santos ~480 linhas, conteudos ~435, oracoes ~424, index ~169). Estilos de `.saint-card`, `.encontro-card`, `.prayer-card`, `.lightbox` etc. moram lá, **não** em `styles.css`. Antes de criar um estilo novo, procure no `<style>` da própria página.
 
 ## JavaScript
 
@@ -63,7 +68,9 @@ Todas as 4 páginas carregam o mesmo nav, bottom nav, pílula e modal de instala
 - `src/assets/js/pwa.js` — registro do SW, reset de cache por versão, bottom nav ativo, pílula/modal de instalação (prompt nativo no Android, instruções no iOS), toast offline.
 - **Scripts inline no fim de duas páginas:** `conteudos.html` (lightbox — `abrirLightbox`/`fecharLightbox`) e `oracoes.html` (`togglePrayer`, `setLang` PT/LA, abas `.oracao-tab`). São chamados por `onclick` no HTML.
 
-Carregamento em todas as páginas: `<script src="src/assets/js/main.js" defer>` e `<script src="/src/assets/js/pwa.js" defer>`.
+- `src/assets/js/aquino.js` — o assistente de dúvidas. Cria sozinho o bonequinho e a janela de conversa e pendura no `<body>`; nenhum markup dele mora nos HTML. Fala só com `/api/aquino`.
+
+Carregamento em todas as páginas: `<script src="src/assets/js/main.js" defer>`, `<script src="/src/assets/js/pwa.js" defer>` e `<script src="/src/assets/js/aquino.js" defer>`.
 
 ## Service Worker (`sw.js`)
 
@@ -77,12 +84,56 @@ Ao fazer deploy com mudanças significativas, **duas constantes devem ser increm
 
 | Arquivo | Constante | Valor atual |
 |---|---|---|
-| `sw.js` | `const CACHE` | `'ic-2026-v6'` |
-| `src/assets/js/pwa.js` | `const APP_VERSION` | `'6'` |
+| `sw.js` | `const CACHE` | `'ic-2026-v10'` |
+| `src/assets/js/pwa.js` | `const APP_VERSION` | `'10'` |
 
 Trocar só uma causa inconsistência: o SW antigo pode continuar ativo enquanto o JS espera outra versão. O `pwa.js` compara `APP_VERSION` com o `localStorage` do usuário e, se diferirem, apaga todos os caches, desregistra os SWs e recarrega a página.
 
 Isso é ainda mais importante porque o `vercel.json` marca CSS/JS/imagens como `immutable, max-age=31536000` — só os HTML revalidam. Sem bumpar a versão, o usuário fica com o CSS/JS velho.
+
+## O Aquino (assistente de dúvidas)
+
+Bonequinho de Santo Tomás de Aquino no canto inferior esquerdo das quatro páginas.
+Clicou, abre uma janela de conversa; a resposta vem de um modelo hospedado na **Groq**.
+
+```
+navegador → POST /api/aquino → api/aquino.mjs → api.groq.com → stream de volta
+```
+
+A `GROQ_API_KEY` só existe dentro da função. O navegador nunca a vê, e o front não
+sabe nem qual modelo está sendo usado.
+
+**Onde fica a chave:** `.env.local` na raiz (ignorado pelo git) para rodar local, e
+Vercel → Settings → Environment Variables → `GROQ_API_KEY` (marcada como *Sensitive*)
+para produção. Sem a variável, a função devolve 503 e o Aquino avisa que não foi
+configurado — o resto do site continua funcionando normalmente.
+
+**Trocar de modelo:** a constante `MODELO` no topo de `api/aquino.mjs`. A lista do que a
+conta tem sai em `GET https://api.groq.com/openai/v1/models`. Hoje: `openai/gpt-oss-120b`.
+
+### ⚠️ O teto de tokens por minuto
+O plano gratuito da Groq dá **8.000 tokens por minuto para a conta inteira** — ou seja,
+para a turma toda junta. O texto de sistema é reenviado a cada pergunta, então ele
+precisa ser curto. Por isso `api/aquino-contexto.mjs` é partido em dois:
+
+- `INDICE` (~690 tokens) — vai em toda pergunta: turma, lista dos encontros, santos, orações
+- `ENCONTROS` — o resumo detalhado de cada encontro, e `detalhesRelevantes()` junta no
+  máximo dois, só quando a pergunta cita o número ou uma palavra-chave do tema
+
+Engordar o `INDICE` sem pensar derruba a conta em 429 com três perguntas seguidas.
+`hoje()` injeta a data corrente em São Paulo — sem isso o Aquino chuta qual foi o
+último encontro e inventa datas.
+
+### Rodar local
+`python3 -m http.server` **não** executa a função. Use `vercel dev` na raiz, que sobe o
+site e a `/api` juntos e lê o `.env.local`. Sem a CLI da Vercel, o site estático continua
+abrindo normalmente — só o Aquino não responde.
+
+### Ao mexer
+- Encontro novo em `conteudos.html` → linha nova no `INDICE` **e** item novo em `ENCONTROS`
+- O bonequinho é SVG inline dentro do `aquino.js` (função `figura()`), não é imagem
+- No mobile ele sobe para cima da pílula de instalação via `body:has(.install-pill:not([hidden]))`
+- `aquino.css` e `aquino.js` estão no `PRECACHE`; mudou qualquer um deles, bumpe a versão de cache
 
 ## Identidade visual (variáveis em `styles.css`)
 
@@ -111,7 +162,7 @@ Existem aliases legados que ainda aparecem no código: `--cream`, `--gold-light`
 ## Adicionar conteúdo
 
 ### Novo encontro (`conteudos.html`)
-Duplicar o último `.encontro-card` e atualizar `data-encontro`, **`data-modulo`**, `.encontro-num`, `.encontro-modulo`, `<h3>`, `.encontro-meta`, `.encontro-resumo` e a grade de materiais. O comentário-guia acima do Encontro 1 lista os tipos de material disponíveis. Todos os 14 encontros já estão preenchidos; a classe `.pendente`/`.pendente-msg` sobrevive só no CSS, para cards ainda não realizados.
+Duplicar o último `.encontro-card` e atualizar `data-encontro`, **`data-modulo`**, `.encontro-num`, `.encontro-modulo`, `<h3>`, `.encontro-meta`, `.encontro-resumo` e a grade de materiais. O comentário-guia acima do Encontro 1 lista os tipos de material disponíveis. Todos os 18 encontros já estão preenchidos; a classe `.pendente`/`.pendente-msg` sobrevive só no CSS, para cards ainda não realizados. **Ao criar um encontro novo, acrescente-o também em `api/aquino-contexto.mjs`** — o Aquino não lê o HTML.
 
 Vídeo do YouTube: `<div class="video-wrapper" data-video-id="ID" data-video-title="...">` com um `<button class="video-load">` dentro — o `main.js` cria o iframe (`youtube-nocookie`) só no clique. **A miniatura `<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg">` e o `aria-label` do botão têm que usar o mesmo ID** — trocar só o `data-video-id` faz o card mostrar a imagem de um vídeo e abrir outro. Fotos: `.fotos-row` com `<img class="foto-thumb" onclick="abrirLightbox(...)">`.
 
@@ -125,12 +176,12 @@ Pontos a saber ao mexer:
 - O filtro aceita deep link: `conteudos.html#sacramentos` já abre filtrado; hash desconhecida cai em `todos`
 - CSS no `<style>` da página e JS no `<script>` do rodapé, junto do lightbox — **de propósito**, para não tocar em `main.js` e evitar bump de versão de cache
 
-Hoje: Credo tem 12 encontros (2–13), Outros tem 2 (1 e 14), e os outros três módulos ainda estão vazios.
+Hoje: Credo tem 12 encontros (2–13), Mandamentos tem 3 (16–18), Outros tem 3 (1, 14 e 15), e Sacramentos e Pai Nosso ainda estão vazios.
 
 ### Novo santo semanal (`santos.html`)
 Duplicar o primeiro `.saint-card`, atualizar `data-semana`, `.saint-week-badge`, nome, textos e imagem, e inseri-lo **no topo** da lista — os cards ficam em ordem decrescente de semana. A imagem vai em `src/assets/img/santos/` e precisa entrar no `PRECACHE` do `sw.js`.
 
-Duas ressalvas sobre o estado atual: o comentário-guia dentro do arquivo fala em mover o card antigo para `.upcoming-grid`, mas esse padrão foi abandonado — `.upcoming-grid`/`.upcoming-card` existem só no CSS, sem markup. E há dois cards com `data-semana="1"` (Santo Tomás e São Bento); o segundo deveria ser `2`.
+Duas ressalvas sobre o estado atual: o comentário-guia dentro do arquivo fala em mover o card antigo para `.upcoming-grid`, mas esse padrão foi abandonado — `.upcoming-grid`/`.upcoming-card` existem só no CSS, sem markup. (A duplicidade antiga de `data-semana="1"` já foi corrigida: hoje as semanas vão de 1 a 13, sem repetição.)
 
 ### Cronograma (`index.html`)
 Cada `.timeline-item` usa `data-date` em ISO completo com fuso (`data-date="2026-08-12T20:00:00-03:00"`) e `data-semestre` (`"1"` ou `"2"`). O `main.js` usa isso para marcar `.is-past`/`.is-next`/`.is-oculto` e para preencher elementos que **precisam existir na página**: `#next-meeting-title`, `#next-meeting-detail`, `#agenda-progress-text`, `#agenda-progress-bar` e o cartão do hero (`#hero-proximo` + `#hero-proximo-quando` + `#hero-proximo-titulo`). O local ("Sala 204") está hardcoded no `main.js`.
