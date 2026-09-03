@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "api/aquino.mjs": { "maxDuration": 30 }
+  },
   "headers": [
     {
       "source": "/sw.js",

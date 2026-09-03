@@ -1,2 +1,6 @@
 ﻿.vscode/
 
+# chaves de API — nunca versionar
+.env
+.env*.local
+.vercel
