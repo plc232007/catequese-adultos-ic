@@ -1,9 +1,9 @@
 /* ================================================================
    Service Worker — IC 2026 · Paróquia São José
-   Estratégia: Cache-first com atualização em background (SWR)
+   HTML: rede primeiro. Recursos: cache com atualização em background.
    ================================================================ */
 
-const CACHE = 'ic-2026-v12';
+const CACHE = 'ic-2026-v13';
 
 const PRECACHE = [
   '/',
@@ -12,12 +12,12 @@ const PRECACHE = [
   '/conteudos.html',
   '/oracoes.html',
   '/manifest.json',
-  '/src/assets/css/styles.css',
-  '/src/assets/css/app.css',
-  '/src/assets/css/aquino.css',
-  '/src/assets/js/main.js',
-  '/src/assets/js/pwa.js',
-  '/src/assets/js/aquino.js',
+  '/src/assets/css/styles.css?v=13',
+  '/src/assets/css/app.css?v=13',
+  '/src/assets/css/aquino.css?v=13',
+  '/src/assets/js/main.js?v=13',
+  '/src/assets/js/pwa.js?v=13',
+  '/src/assets/js/aquino.js?v=13',
   '/src/assets/pdf/cronograma-catequese-2026-2.pdf',
   '/src/assets/img/fundo.jpg',
   '/src/assets/img/sao-bento.jpg',
@@ -36,7 +36,7 @@ const PRECACHE = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE)
-      .then(cache => cache.addAll(PRECACHE))
+      .then(cache => cache.addAll(PRECACHE.map(url => new Request(url, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
       .catch(err => console.warn('[SW] Pré-cache parcial:', err))
   );
@@ -53,7 +53,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-/* ── FETCH: stale-while-revalidate para tudo ── */
+/* ── FETCH: páginas atuais online e conteúdo salvo offline ── */
 self.addEventListener('fetch', event => {
   const { request } = event;
 
@@ -67,6 +67,30 @@ self.addEventListener('fetch', event => {
   /* A conversa com o Aquino nunca passa pelo cache — hoje ela é POST e já
      cairia fora daqui, mas a guarda vale para qualquer rota /api/ futura */
   if (url.pathname.startsWith('/api/')) return;
+
+  // O HTML aponta para CSS/JS versionados; busque a página atual quando online.
+  if (request.mode === 'navigate') {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE);
+      try {
+        const response = await fetch(new Request(request, { cache: 'no-cache' }));
+        if (response.ok) {
+          await cache.put(request, response.clone());
+          return response;
+        }
+        const saved = await cache.match(request);
+        return saved || response;
+      } catch {
+        return await cache.match(request)
+          || await cache.match('/index.html')
+          || new Response('Sem conexão e sem conteúdo salvo.', {
+            status: 503,
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+          });
+      }
+    })());
+    return;
+  }
 
   event.respondWith(
     caches.open(CACHE).then(async cache => {
@@ -91,12 +115,6 @@ self.addEventListener('fetch', event => {
       /* Sem cache: aguarda a rede */
       const fresh = await networkFetch;
       if (fresh) return fresh;
-
-      /* Fallback offline: serve index.html para navegações */
-      if (request.mode === 'navigate') {
-        const fallback = await cache.match('/index.html');
-        if (fallback) return fallback;
-      }
 
       return new Response('Sem conexão e sem conteúdo salvo.', {
         status: 503,
