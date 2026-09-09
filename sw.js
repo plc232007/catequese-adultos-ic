@@ -3,7 +3,7 @@
    HTML: rede primeiro. Recursos: cache com atualização em background.
    ================================================================ */
 
-const CACHE = 'ic-2026-v13';
+const CACHE = 'ic-2026-v14';
 
 const PRECACHE = [
   '/',

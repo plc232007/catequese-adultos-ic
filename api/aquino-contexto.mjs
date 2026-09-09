@@ -49,8 +49,10 @@ Encontro 16 · 19/08/2026 · O homem, a liberdade e a lei
 Encontro 17 · 26/08/2026 · A Deus somente adorarás (1º Mandamento)
 Encontro 18 · 02/09/2026 · O Santo Nome de Deus e o Dia do Senhor (2º e 3º Mandamentos)
 
+Encontro 19 · 09/09/2026 · Honrar a família e cuidar da vida (4º e 5º Mandamentos)
+
 AINDA POR VIR (planejado, o tema pode mudar)
-09/09 Não matarás (5º) · 16/09 Castidade e matrimônio (6º e 9º) ·
+16/09 Castidade e matrimônio (6º e 9º) ·
 23/09 Não furtarás (7º) · 30/09 A verdade e o desapego (8º e 10º) ·
 07/10 Do Decálogo às Bem-aventuranças · 14/10 O que é um sacramento ·
 21/10 Batismo · 28/10 Confirmação · 04/11 Eucaristia ·
@@ -146,6 +148,9 @@ export const ENCONTROS = [
   { n: 18, data: '02/09/2026', titulo: 'O Santo Nome de Deus e o Dia do Senhor (2º e 3º Mandamentos)',
     chaves: ['nome de deus', 'segundo mandamento', '2o mandamento', 'terceiro mandamento', '3o mandamento', 'domingo', 'dia do senhor', 'missa', 'sabado', 'marcos 2', 'juramento', 'praga'],
     resumo: 'O segundo pede respeito pelo Nome de Deus, invocado com reverência na oração e na bênção, e não como praga, piada ou juramento leviano. O terceiro nos dá o domingo — a Páscoa de cada semana, o dia da Ressurreição —, com a Missa no centro e o descanso que devolve tempo a Deus, à família e a quem precisa de nós. Lemos o segundo capítulo de São Marcos, onde Jesus perdoa o paralítico e ensina que "o sábado foi feito para o homem, e não o homem para o sábado".' },
+  { n: 19, data: '09/09/2026', titulo: 'Honrar a família e cuidar da vida (4º e 5º Mandamentos)',
+    chaves: ['quarto mandamento', '4o mandamento', 'quinto mandamento', '5o mandamento', 'honrar pai e mae', 'nao mataras', 'aborto', 'gestantes', 'defesa da vida'],
+    resumo: 'O quarto mandamento, “honrar pai e mãe”, nos convida a viver o amor em família com respeito, gratidão e cuidado, especialmente quando nossos pais envelhecem ou precisam de ajuda. Também lembra aos pais a responsabilidade de educar os filhos com carinho e pelo exemplo. O quinto, “não matarás”, nos ensina que cada vida humana é um dom de Deus e deve ser respeitada desde a concepção até a morte natural. Neste encontro, vamos refletir sobre a defesa da vida, a posição da Igreja sobre o aborto e a importância de acolher e apoiar as gestantes e suas famílias. São convites a atitudes concretas: vencer a violência, buscar a paz e cuidar de quem está mais vulnerável. Materiais: vídeo https://youtu.be/9tP9yifsOCA, artigo https://bibliotecacatolica.com.br/blog/formacao/igreja-catolica-aborto/ e pasta de estudo https://drive.google.com/drive/folders/1LPyPBcImjLyPCMtuBtPnuCKGGg7VY-qs.' },
 ];
 
 /* Tira acentos e pontuação, para comparar "consciência" com "consciencia" */
