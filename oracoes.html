@@ -428,7 +428,7 @@
 <body>
 
   <!-- ═══ NAV ═══ -->
-  <nav>
+  <nav class="site-nav" aria-label="Navegação principal">
     <a href="index.html" class="nav-brand">✝ Paróquia São José</a>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Início</a></li>
@@ -988,7 +988,8 @@
         if (aba) aba.classList.add('active');
 
         /* Scroll suave com offset para não ficar atrás da aba sticky */
-        const headerOffset = 90;
+        const headerOffset = document.querySelector('.site-nav').offsetHeight
+          + document.querySelector('.oracao-tabs').offsetHeight + 16;
         const top = card.getBoundingClientRect().top + window.pageYOffset - headerOffset;
         window.scrollTo({ top, behavior: 'smooth' });
       }

@@ -1,3 +1,12 @@
+// Mantém as âncoras e as abas abaixo da altura real do cabeçalho.
+(function () {
+  const nav = document.querySelector('.site-nav');
+  if (!nav) return;
+  const updateHeight = () => document.documentElement.style.setProperty('--site-nav-height', `${nav.offsetHeight}px`);
+  updateHeight();
+  new ResizeObserver(updateHeight).observe(nav);
+})();
+
 // ─── NAV ATIVO ───
 (function () {
   const page = window.location.pathname.split('/').pop() || 'index.html';
@@ -64,12 +73,13 @@
 
 // ─── SCROLL SUAVE para âncoras ───
 document.addEventListener('click', (e) => {
+  if (e.defaultPrevented) return;
   const link = e.target.closest('a[href^="#"]');
   if (!link) return;
   const target = document.querySelector(link.getAttribute('href'));
   if (!target) return;
   e.preventDefault();
-  const nav = document.querySelector('nav');
+  const nav = document.querySelector('.site-nav');
   const top = target.getBoundingClientRect().top + window.pageYOffset - (nav?.offsetHeight ?? 0) - 12;
   window.scrollTo({ top, behavior: 'smooth' });
 });

@@ -50,7 +50,7 @@ body {
 }
 
 /* ─── NAV ─── */
-nav {
+.site-nav {
   position: fixed;
   top: 0;
   width: 100%;
@@ -709,7 +709,7 @@ footer .credits {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 640px) {
-  nav { padding: 12px 20px; }
+  .site-nav { padding: 12px 20px; }
 
   .agenda-panel { grid-template-columns: 1fr; }
   .agenda-progress > span { text-align: left; }
