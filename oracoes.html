@@ -1782,12 +1782,13 @@
     /* ── ABAS DE ACESSO RÁPIDO ── */
     (function () {
       const tabs = document.querySelectorAll('.oracao-tab');
+      let navigationId = 0;
 
-      function abrirEAtivar(num) {
+      async function abrirEAtivar(num) {
         const card = document.querySelector('.prayer-card[data-prayer="' + num + '"]');
         if (!card) return;
+        const currentNavigation = ++navigationId;
         card.classList.add('open');
-        card.classList.add('is-visible');
         card.querySelector('.prayer-header').setAttribute('aria-expanded', 'true');
 
         /* Marca aba ativa */
@@ -1795,11 +1796,18 @@
         const aba = document.querySelector('.oracao-tab[data-target="' + num + '"]');
         if (aba) aba.classList.add('active');
 
+        // A versão em latim pode carregar uma fonte nova e mudar a altura
+        // das orações anteriores. Aguarde o layout antes de medir o destino.
+        card.getBoundingClientRect();
+        await document.fonts.ready;
+        if (currentNavigation !== navigationId) return;
+
         /* Scroll suave com offset para não ficar atrás da aba sticky */
         const headerOffset = document.querySelector('.site-nav').offsetHeight
           + document.querySelector('.oracao-tabs').offsetHeight + 16;
         const top = card.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-        window.scrollTo({ top, behavior: 'smooth' });
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
+        window.scrollTo({ top, behavior });
       }
 
       tabs.forEach(tab => {

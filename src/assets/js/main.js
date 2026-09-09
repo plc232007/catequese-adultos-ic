@@ -112,7 +112,9 @@ document.addEventListener('click', (e) => {
 
 // ─── REVELAÇÃO LEVE DOS BLOCOS ───
 (function () {
-  const selectors = '.sobre-card, .timeline-item, .material-item, .aviso-card, .saint-card, .encontro-card, .prayer-card, .mat-item';
+  // Os cartões de oração são destinos de âncoras; animações de entrada alteram
+  // sua posição durante o cálculo da rolagem e podem ocultar o título sob as abas.
+  const selectors = '.sobre-card, .timeline-item, .material-item, .aviso-card, .saint-card, .encontro-card, .mat-item';
   const elements = document.querySelectorAll(selectors);
   if (!elements.length) return;
 
