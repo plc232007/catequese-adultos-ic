@@ -179,6 +179,10 @@
 
     /* ── CARD HEADER ── */
     .prayer-header {
+      width: 100%;
+      border: 0;
+      text-align: left;
+      font: inherit;
       display: flex;
       align-items: center;
       gap: 20px;
@@ -189,6 +193,11 @@
       user-select: none;
       position: relative;
       transition: background .2s;
+    }
+
+    .prayer-header:focus-visible, .lang-btn:focus-visible, .oracao-tab:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: -3px;
     }
 
     .prayer-header:hover {
@@ -214,14 +223,16 @@
       flex: 1;
     }
 
-    .prayer-header-info h3 {
+    .prayer-title {
+      display: block;
       font-family: 'Playfair Display', serif;
       color: #fff;
       font-size: 1.18rem;
       margin-bottom: 3px;
     }
 
-    .prayer-header-info p {
+    .prayer-subtitle {
+      display: block;
       font-size: .72rem;
       color: rgba(255, 255, 255, .4);
       letter-spacing: 1.5px;
@@ -460,10 +471,10 @@
       <p class="section-label">Orações</p>
       <div class="section-divider"></div>
       <p style="color:var(--text-light); line-height:1.85; max-width:620px;">
-        Estas são as orações que rezaremos ao longo dos nossos encontros.
+        Reunimos aqui as principais orações da vida católica, para nossos encontros e para a oração de cada dia.
         Cada uma pode ser rezada em <strong>português</strong> ou em <strong>latim</strong>,
         língua milenar da Igreja.
-        Toque em uma das abas abaixo para abrir a oração desejada.
+        Deslize os atalhos para os lados e toque na oração desejada. Você também pode abrir os cartões abaixo.
       </p>
     </div>
 
@@ -485,22 +496,70 @@
         <span class="oracao-tab__num">IV</span>
         <span class="oracao-tab__label">Inspirai,<br>Senhor</span>
       </a>
+      <a href="#prayer-5" class="oracao-tab" data-target="5">
+        <span class="oracao-tab__num">V</span>
+        <span class="oracao-tab__label">Salve<br>Rainha</span>
+      </a>
+      <a href="#prayer-6" class="oracao-tab" data-target="6">
+        <span class="oracao-tab__num">VI</span>
+        <span class="oracao-tab__label">Credo</span>
+      </a>
+      <a href="#prayer-7" class="oracao-tab" data-target="7">
+        <span class="oracao-tab__num">VII</span>
+        <span class="oracao-tab__label">Santo<br>Anjo</span>
+      </a>
+      <a href="#prayer-8" class="oracao-tab" data-target="8">
+        <span class="oracao-tab__num">VIII</span>
+        <span class="oracao-tab__label">Sinal da<br>Cruz</span>
+      </a>
+      <a href="#prayer-9" class="oracao-tab" data-target="9">
+        <span class="oracao-tab__num">IX</span>
+        <span class="oracao-tab__label">Glória<br>ao Pai</span>
+      </a>
+      <a href="#prayer-10" class="oracao-tab" data-target="10">
+        <span class="oracao-tab__num">X</span>
+        <span class="oracao-tab__label">Ato de<br>Contrição</span>
+      </a>
+      <a href="#prayer-11" class="oracao-tab" data-target="11">
+        <span class="oracao-tab__num">XI</span>
+        <span class="oracao-tab__label">Angelus</span>
+      </a>
+      <a href="#prayer-12" class="oracao-tab" data-target="12">
+        <span class="oracao-tab__num">XII</span>
+        <span class="oracao-tab__label">Rainha<br>do Céu</span>
+      </a>
+      <a href="#prayer-13" class="oracao-tab" data-target="13">
+        <span class="oracao-tab__num">XIII</span>
+        <span class="oracao-tab__label">Lembrai-<br>vos</span>
+      </a>
+      <a href="#prayer-14" class="oracao-tab" data-target="14">
+        <span class="oracao-tab__num">XIV</span>
+        <span class="oracao-tab__label">São Miguel<br>Arcanjo</span>
+      </a>
+      <a href="#prayer-15" class="oracao-tab" data-target="15">
+        <span class="oracao-tab__num">XV</span>
+        <span class="oracao-tab__label">Alma de<br>Cristo</span>
+      </a>
+      <a href="#prayer-16" class="oracao-tab" data-target="16">
+        <span class="oracao-tab__num">XVI</span>
+        <span class="oracao-tab__label">Eterno<br>Descanso</span>
+      </a>
     </nav>
 
     <!-- ════════════════════════════════════════
          1. VINDE ESPÍRITO SANTO
     ═══════════════════════════════════════════ -->
     <div class="prayer-card" data-prayer="1" id="prayer-1">
-      <div class="prayer-header" onclick="togglePrayer(this)">
-        <div class="prayer-num">I</div>
-        <div class="prayer-header-info">
-          <h3>Vinde, Espírito Santo</h3>
-          <p>Sequência de Pentecostes · Veni Sancte Spiritus</p>
-        </div>
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-1-body">
+        <span class="prayer-num">I</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Vinde, Espírito Santo</span>
+          <span class="prayer-subtitle">Sequência de Pentecostes · Veni Sancte Spiritus</span>
+        </span>
         <span class="prayer-chevron">▾</span>
-      </div>
+      </button>
 
-      <div class="prayer-body">
+      <div class="prayer-body" id="prayer-1-body">
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 1)">Português</button>
@@ -554,7 +613,7 @@
           </div>
 
           <!-- LATIM -->
-          <div class="prayer-version la" id="prayer-1-la">
+          <div class="prayer-version la" id="prayer-1-la" lang="la">
             <span class="latin-badge">✦ Lingua Latina ✦</span>
             <div class="strophe">
               <p>Veni, Sancte Spiritus,</p>
@@ -635,16 +694,16 @@
          2. PAI NOSSO
     ═══════════════════════════════════════════ -->
     <div class="prayer-card" data-prayer="2" id="prayer-2">
-      <div class="prayer-header" onclick="togglePrayer(this)">
-        <div class="prayer-num">II</div>
-        <div class="prayer-header-info">
-          <h3>Pai Nosso</h3>
-          <p>Oração dominical · Pater Noster</p>
-        </div>
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-2-body">
+        <span class="prayer-num">II</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Pai Nosso</span>
+          <span class="prayer-subtitle">Oração dominical · Pater Noster</span>
+        </span>
         <span class="prayer-chevron">▾</span>
-      </div>
+      </button>
 
-      <div class="prayer-body">
+      <div class="prayer-body" id="prayer-2-body">
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 2)">Português</button>
@@ -679,7 +738,7 @@
           </div>
 
           <!-- LATIM -->
-          <div class="prayer-version la" id="prayer-2-la">
+          <div class="prayer-version la" id="prayer-2-la" lang="la">
             <span class="latin-badge">✦ Lingua Latina ✦</span>
             <div class="strophe">
               <p>Pater noster, qui es in caelis,</p>
@@ -723,16 +782,16 @@
          3. AVE MARIA
     ═══════════════════════════════════════════ -->
     <div class="prayer-card" data-prayer="3" id="prayer-3">
-      <div class="prayer-header" onclick="togglePrayer(this)">
-        <div class="prayer-num">III</div>
-        <div class="prayer-header-info">
-          <h3>Ave Maria</h3>
-          <p>Saudação angelical · Ave Maria</p>
-        </div>
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-3-body">
+        <span class="prayer-num">III</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Ave Maria</span>
+          <span class="prayer-subtitle">Saudação angelical · Ave Maria</span>
+        </span>
         <span class="prayer-chevron">▾</span>
-      </div>
+      </button>
 
-      <div class="prayer-body">
+      <div class="prayer-body" id="prayer-3-body">
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 3)">Português</button>
@@ -763,7 +822,7 @@
           </div>
 
           <!-- LATIM -->
-          <div class="prayer-version la" id="prayer-3-la">
+          <div class="prayer-version la" id="prayer-3-la" lang="la">
             <span class="latin-badge">✦ Lingua Latina ✦</span>
             <div class="strophe">
               <p>Ave Maria, gratia plena,</p>
@@ -800,16 +859,16 @@
          4. INSPIRAI SENHOR AS NOSSAS AÇÕES
     ═══════════════════════════════════════════ -->
     <div class="prayer-card" data-prayer="4" id="prayer-4">
-      <div class="prayer-header" onclick="togglePrayer(this)">
-        <div class="prayer-num">IV</div>
-        <div class="prayer-header-info">
-          <h3>Inspirai, Senhor, as nossas ações</h3>
-          <p>Oração de abertura · Actiones nostras</p>
-        </div>
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-4-body">
+        <span class="prayer-num">IV</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Inspirai, Senhor, as nossas ações</span>
+          <span class="prayer-subtitle">Oração de abertura · Actiones nostras</span>
+        </span>
         <span class="prayer-chevron">▾</span>
-      </div>
+      </button>
 
-      <div class="prayer-body">
+      <div class="prayer-body" id="prayer-4-body">
 
         <div class="lang-toggle">
           <button class="lang-btn active" onclick="setLang(this, 'pt', 4)">Português</button>
@@ -836,7 +895,7 @@
           </div>
 
           <!-- LATIM -->
-          <div class="prayer-version la" id="prayer-4-la">
+          <div class="prayer-version la" id="prayer-4-la" lang="la">
             <span class="latin-badge">✦ Lingua Latina ✦</span>
             <div class="strophe">
               <p>Actiones nostras, quaesumus Domine,</p>
@@ -864,6 +923,744 @@
       </div>
     </div>
     <!-- FIM 4 -->
+
+    <!-- 5. SALVE RAINHA -->
+    <div class="prayer-card" data-prayer="5" id="prayer-5">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-5-body">
+        <span class="prayer-num">V</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Salve Rainha</span>
+          <span class="prayer-subtitle">Antífona mariana · Salve Regina</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-5-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 5)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 5)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-5-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Salve, Rainha, Mãe de misericórdia,</p>
+              <p>vida, doçura e esperança nossa, salve!</p>
+              <p>A vós bradamos, os degredados filhos de Eva.</p>
+              <p>A vós suspiramos, gemendo e chorando</p>
+              <p>neste vale de lágrimas.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Eia, pois, advogada nossa,</p>
+              <p>esses vossos olhos misericordiosos a nós volvei.</p>
+              <p>E, depois deste desterro, mostrai-nos Jesus,</p>
+              <p>bendito fruto do vosso ventre.</p>
+              <p>Ó clemente, ó piedosa, ó doce sempre Virgem Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Rogai por nós, Santa Mãe de Deus.</p>
+              <p class="response">R. Para que sejamos dignos das promessas de Cristo.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-5-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Salve, Regina, Mater misericordiae,</p>
+              <p>vita, dulcedo et spes nostra, salve.</p>
+              <p>Ad te clamamus, exsules filii Evae.</p>
+              <p>Ad te suspiramus, gementes et flentes</p>
+              <p>in hac lacrimarum valle.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Eia ergo, advocata nostra,</p>
+              <p>illos tuos misericordes oculos ad nos converte.</p>
+              <p>Et Iesum, benedictum fructum ventris tui,</p>
+              <p>nobis post hoc exsilium ostende.</p>
+              <p>O clemens, o pia, o dulcis Virgo Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Ora pro nobis, sancta Dei Genetrix.</p>
+              <p class="response">R. Ut digni efficiamur promissionibus Christi.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Oração de confiança na intercessão de Nossa Senhora, tradicionalmente rezada ao final do terço.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. CREDO -->
+    <div class="prayer-card" data-prayer="6" id="prayer-6">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-6-body">
+        <span class="prayer-num">VI</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Credo</span>
+          <span class="prayer-subtitle">Símbolo dos Apóstolos · Credo in Deum</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-6-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 6)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 6)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-6-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Creio em Deus Pai todo-poderoso,</p>
+              <p>criador do céu e da terra;</p>
+              <p>e em Jesus Cristo, seu único Filho, nosso Senhor;</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>que foi concebido pelo poder do Espírito Santo;</p>
+              <p>nasceu da Virgem Maria;</p>
+              <p>padeceu sob Pôncio Pilatos,</p>
+              <p>foi crucificado, morto e sepultado;</p>
+              <p>desceu à mansão dos mortos;</p>
+              <p>ressuscitou ao terceiro dia;</p>
+              <p>subiu aos céus;</p>
+              <p>está sentado à direita de Deus Pai todo-poderoso,</p>
+              <p>donde há de vir a julgar os vivos e os mortos;</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>creio no Espírito Santo;</p>
+              <p>na santa Igreja Católica;</p>
+              <p>na comunhão dos santos;</p>
+              <p>na remissão dos pecados;</p>
+              <p>na ressurreição da carne;</p>
+              <p>na vida eterna.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-6-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Credo in Deum Patrem omnipotentem,</p>
+              <p>Creatorem caeli et terrae,</p>
+              <p>et in Iesum Christum, Filium eius unicum, Dominum nostrum,</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>qui conceptus est de Spiritu Sancto,</p>
+              <p>natus ex Maria Virgine,</p>
+              <p>passus sub Pontio Pilato,</p>
+              <p>crucifixus, mortuus, et sepultus,</p>
+              <p>descendit ad inferos,</p>
+              <p>tertia die resurrexit a mortuis,</p>
+              <p>ascendit ad caelos,</p>
+              <p>sedet ad dexteram Dei Patris omnipotentis,</p>
+              <p>inde venturus est iudicare vivos et mortuos.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Credo in Spiritum Sanctum,</p>
+              <p>sanctam Ecclesiam catholicam,</p>
+              <p>sanctorum communionem,</p>
+              <p>remissionem peccatorum,</p>
+              <p>carnis resurrectionem,</p>
+              <p>vitam aeternam.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Esta é a forma do Credo chamada Símbolo dos Apóstolos: uma profissão dos principais artigos da fé cristã, também rezada no início do terço.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. SANTO ANJO -->
+    <div class="prayer-card" data-prayer="7" id="prayer-7">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-7-body">
+        <span class="prayer-num">VII</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Santo Anjo</span>
+          <span class="prayer-subtitle">Anjo da Guarda · Angele Dei</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-7-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 7)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 7)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-7-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Santo Anjo do Senhor,</p>
+              <p>meu zeloso guardador,</p>
+              <p>se a ti me confiou a piedade divina,</p>
+              <p>sempre me rege, me guarda,</p>
+              <p>me governa, me ilumina.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-7-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Angele Dei,</p>
+              <p>qui custos es mei,</p>
+              <p>me, tibi commissum pietate superna,</p>
+              <p>illumina, custodi,</p>
+              <p>rege et guberna.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Oração ao Anjo da Guarda, que pode acompanhar o início e o fim do dia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. SINAL DA CRUZ -->
+    <div class="prayer-card" data-prayer="8" id="prayer-8">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-8-body">
+        <span class="prayer-num">VIII</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Sinal da Cruz</span>
+          <span class="prayer-subtitle">Em nome da Santíssima Trindade · Signum Crucis</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-8-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 8)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 8)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-8-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Em nome do Pai e do Filho</p>
+              <p>e do Espírito Santo.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-8-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>In nomine Patris et Filii</p>
+              <p>et Spiritus Sancti.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Ao traçar a cruz sobre o corpo, professamos a fé na Santíssima Trindade. É o gesto com que iniciamos e concluímos nossas orações.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. GLÓRIA AO PAI -->
+    <div class="prayer-card" data-prayer="9" id="prayer-9">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-9-body">
+        <span class="prayer-num">IX</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Glória ao Pai</span>
+          <span class="prayer-subtitle">Louvor à Santíssima Trindade · Gloria Patri</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-9-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 9)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 9)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-9-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Glória ao Pai e ao Filho</p>
+              <p>e ao Espírito Santo.</p>
+              <p>Como era no princípio,</p>
+              <p>agora e sempre.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-9-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Gloria Patri et Filio</p>
+              <p>et Spiritui Sancto.</p>
+              <p>Sicut erat in principio,</p>
+              <p>et nunc et semper,</p>
+              <p>et in saecula saeculorum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Breve oração de louvor à Santíssima Trindade, rezada ao final dos salmos e de cada dezena do terço.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. ATO DE CONTRIÇÃO -->
+    <div class="prayer-card" data-prayer="10" id="prayer-10">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-10-body">
+        <span class="prayer-num">X</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Ato de Contrição</span>
+          <span class="prayer-subtitle">Arrependimento e propósito de conversão · Actus contritionis</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-10-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 10)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 10)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-10-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Meu Deus, eu me arrependo de todo o coração de vos ter ofendido,</p>
+              <p>porque sois tão bom e amável.</p>
+              <p>Prometo, com a vossa graça, esforçar-me para ser bom.</p>
+              <p>Meu Jesus, misericórdia!</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-10-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Deus meus, ex toto corde paenitet me omnium meorum peccatorum,</p>
+              <p>eaque detestor, quia peccando, non solum poenas a te iuste statutas promeritus sum,</p>
+              <p>sed praesertim quia offendi te, summum bonum,</p>
+              <p>ac dignum qui super omnia diligaris.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Ideo firmiter propono, adiuvante gratia tua,</p>
+              <p>de cetero me non peccaturum peccandique occasiones proximas fugiturum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Expressa o arrependimento dos pecados e o propósito de mudar de vida. Aqui estão duas fórmulas tradicionais, uma breve em português e outra em latim; não são traduções literais entre si.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. ANGELUS -->
+    <div class="prayer-card" data-prayer="11" id="prayer-11">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-11-body">
+        <span class="prayer-num">XI</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Angelus</span>
+          <span class="prayer-subtitle">Memória da Encarnação · Angelus Domini</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-11-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 11)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 11)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-11-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>V. O Anjo do Senhor anunciou a Maria.</p>
+              <p class="response">R. E ela concebeu do Espírito Santo.</p>
+              <p>Reza-se uma Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Eis aqui a serva do Senhor.</p>
+              <p class="response">R. Faça-se em mim segundo a vossa palavra.</p>
+              <p>Reza-se uma Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. E o Verbo se fez carne.</p>
+              <p class="response">R. E habitou entre nós.</p>
+              <p>Reza-se uma Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Rogai por nós, Santa Mãe de Deus.</p>
+              <p class="response">R. Para que sejamos dignos das promessas de Cristo.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Oremos: Infundi, Senhor, em nossas almas a vossa graça,</p>
+              <p>para que nós, que conhecemos pela anunciação do Anjo</p>
+              <p>a encarnação de Jesus Cristo, vosso Filho,</p>
+              <p>cheguemos, por sua paixão e cruz, à glória da ressurreição.</p>
+              <p>Pelo mesmo Cristo, Senhor nosso.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-11-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>V. Angelus Domini nuntiavit Mariae.</p>
+              <p class="response">R. Et concepit de Spiritu Sancto.</p>
+              <p>Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Ecce ancilla Domini.</p>
+              <p class="response">R. Fiat mihi secundum verbum tuum.</p>
+              <p>Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Et Verbum caro factum est.</p>
+              <p class="response">R. Et habitavit in nobis.</p>
+              <p>Ave Maria.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Ora pro nobis, sancta Dei Genetrix.</p>
+              <p class="response">R. Ut digni efficiamur promissionibus Christi.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Oremus: Gratiam tuam, quaesumus, Domine, mentibus nostris infunde;</p>
+              <p>ut qui, Angelo nuntiante, Christi Filii tui incarnationem cognovimus,</p>
+              <p>per passionem eius et crucem, ad resurrectionis gloriam perducamur.</p>
+              <p>Per eundem Christum Dominum nostrum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Tradicionalmente rezado pela manhã, ao meio-dia e ao entardecer. Reze a Ave Maria completa após cada um dos três primeiros versículos. V. indica o versículo e R. a resposta.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. RAINHA DO CÉU -->
+    <div class="prayer-card" data-prayer="12" id="prayer-12">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-12-body">
+        <span class="prayer-num">XII</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Rainha do Céu</span>
+          <span class="prayer-subtitle">Oração do Tempo Pascal · Regina Caeli</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-12-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 12)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 12)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-12-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>V. Rainha do Céu, alegrai-vos, aleluia!</p>
+              <p class="response">R. Porque aquele que merecestes trazer em vosso seio, aleluia!</p>
+              <p>V. Ressuscitou como disse, aleluia!</p>
+              <p class="response">R. Rogai por nós a Deus, aleluia!</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Alegrai-vos e exultai, ó Virgem Maria, aleluia!</p>
+              <p class="response">R. Porque o Senhor ressuscitou verdadeiramente, aleluia!</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Oremos: Ó Deus, que alegrastes o mundo</p>
+              <p>com a ressurreição do vosso Filho, nosso Senhor Jesus Cristo,</p>
+              <p>concedei-nos, pela intercessão da Virgem Maria, sua Mãe,</p>
+              <p>alcançar as alegrias da vida eterna.</p>
+              <p>Por Cristo, Senhor nosso.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-12-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>V. Regina caeli, laetare, alleluia.</p>
+              <p class="response">R. Quia quem meruisti portare, alleluia.</p>
+              <p>V. Resurrexit, sicut dixit, alleluia.</p>
+              <p class="response">R. Ora pro nobis Deum, alleluia.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>V. Gaude et laetare, Virgo Maria, alleluia.</p>
+              <p class="response">R. Quia surrexit Dominus vere, alleluia.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Oremus: Deus, qui per resurrectionem Filii tui Domini nostri Iesu Christi</p>
+              <p>mundum laetificare dignatus es, praesta, quaesumus,</p>
+              <p>ut per eius Genetricem Virginem Mariam perpetuae capiamus gaudia vitae.</p>
+              <p>Per Christum Dominum nostrum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> No Tempo Pascal, esta oração substitui o Angelus e celebra com Maria a ressurreição de Jesus.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13. LEMBRAI-VOS -->
+    <div class="prayer-card" data-prayer="13" id="prayer-13">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-13-body">
+        <span class="prayer-num">XIII</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Lembrai-vos</span>
+          <span class="prayer-subtitle">Confiança em Nossa Senhora · Memorare</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-13-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 13)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 13)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-13-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Lembrai-vos, ó piíssima Virgem Maria,</p>
+              <p>que nunca se ouviu dizer que algum daqueles</p>
+              <p>que tenha recorrido à vossa proteção,</p>
+              <p>implorado a vossa assistência e reclamado o vosso socorro</p>
+              <p>fosse por vós desamparado.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Animado eu, pois, com igual confiança,</p>
+              <p>a vós, Virgem entre todas singular, como a Mãe recorro,</p>
+              <p>de vós me valho e, gemendo sob o peso dos meus pecados,</p>
+              <p>me prostro a vossos pés.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Não desprezeis as minhas súplicas, ó Mãe do Verbo de Deus humanado,</p>
+              <p>mas dignai-vos de as ouvir propícia e de me alcançar o que vos rogo.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-13-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Memorare, o piissima Virgo Maria,</p>
+              <p>non esse auditum a saeculo, quemquam ad tua currentem praesidia,</p>
+              <p>tua implorantem auxilia, tua petentem suffragia, esse derelictum.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Ego tali animatus confidentia,</p>
+              <p>ad te, Virgo Virginum, Mater, curro,</p>
+              <p>ad te venio, coram te gemens peccator assisto.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Noli, Mater Verbi, verba mea despicere;</p>
+              <p>sed audi propitia et exaudi.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Súplica tradicional que expressa a confiança filial na intercessão da Virgem Maria.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. SÃO MIGUEL ARCANJO -->
+    <div class="prayer-card" data-prayer="14" id="prayer-14">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-14-body">
+        <span class="prayer-num">XIV</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">São Miguel Arcanjo</span>
+          <span class="prayer-subtitle">Pedido de proteção · Sancte Michael Archangele</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-14-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 14)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 14)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-14-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>São Miguel Arcanjo, defendei-nos no combate,</p>
+              <p>sede o nosso refúgio contra as maldades e ciladas do demônio.</p>
+              <p>Ordene-lhe Deus, instantemente o pedimos;</p>
+              <p>e vós, príncipe da milícia celeste,</p>
+              <p>pela virtude divina, precipitai no inferno a Satanás</p>
+              <p>e aos outros espíritos malignos</p>
+              <p>que andam pelo mundo para perder as almas.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-14-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Sancte Michael Archangele, defende nos in proelio;</p>
+              <p>contra nequitiam et insidias diaboli esto praesidium.</p>
+              <p>Imperet illi Deus, supplices deprecamur:</p>
+              <p>tuque, Princeps militiae caelestis,</p>
+              <p>Satanam aliosque spiritus malignos,</p>
+              <p>qui ad perditionem animarum pervagantur in mundo,</p>
+              <p>divina virtute in infernum detrude.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Oração tradicional a São Miguel Arcanjo, pedindo proteção e auxílio no combate espiritual.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15. ALMA DE CRISTO -->
+    <div class="prayer-card" data-prayer="15" id="prayer-15">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-15-body">
+        <span class="prayer-num">XV</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Alma de Cristo</span>
+          <span class="prayer-subtitle">Oração de comunhão com Jesus · Anima Christi</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-15-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 15)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 15)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-15-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>Alma de Cristo, santificai-me.</p>
+              <p>Corpo de Cristo, salvai-me.</p>
+              <p>Sangue de Cristo, inebriai-me.</p>
+              <p>Água do lado de Cristo, lavai-me.</p>
+              <p>Paixão de Cristo, confortai-me.</p>
+              <p>Ó bom Jesus, ouvi-me.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Dentro de vossas chagas, escondei-me.</p>
+              <p>Não permitais que me separe de vós.</p>
+              <p>Do espírito maligno, defendei-me.</p>
+              <p>Na hora da minha morte, chamai-me.</p>
+              <p>E mandai-me ir para vós,</p>
+              <p>para que com os vossos santos vos louve</p>
+              <p>por todos os séculos dos séculos.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-15-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>Anima Christi, sanctifica me.</p>
+              <p>Corpus Christi, salva me.</p>
+              <p>Sanguis Christi, inebria me.</p>
+              <p>Aqua lateris Christi, lava me.</p>
+              <p>Passio Christi, conforta me.</p>
+              <p>O bone Iesu, exaudi me.</p>
+            </div>
+            <div class="strophe-divider"></div>
+            <div class="strophe">
+              <p>Intra tua vulnera absconde me.</p>
+              <p>Ne permittas me separari a te.</p>
+              <p>Ab hoste maligno defende me.</p>
+              <p>In hora mortis meae voca me.</p>
+              <p>Et iube me venire ad te,</p>
+              <p>ut cum Sanctis tuis laudem te</p>
+              <p>in saecula saeculorum.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Oração de união com Jesus, especialmente apropriada para a ação de graças após a Comunhão.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16. ETERNO DESCANSO -->
+    <div class="prayer-card" data-prayer="16" id="prayer-16">
+      <button type="button" class="prayer-header" onclick="togglePrayer(this)" aria-expanded="false" aria-controls="prayer-16-body">
+        <span class="prayer-num">XVI</span>
+        <span class="prayer-header-info">
+          <span class="prayer-title" role="heading" aria-level="3">Eterno Descanso</span>
+          <span class="prayer-subtitle">Oração pelos fiéis falecidos · Requiem aeternam</span>
+        </span>
+        <span class="prayer-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="prayer-body" id="prayer-16-body">
+        <div class="lang-toggle">
+          <button class="lang-btn active" onclick="setLang(this, 'pt', 16)" aria-pressed="true">Português</button>
+          <button class="lang-btn" onclick="setLang(this, 'la', 16)" aria-pressed="false">Latim</button>
+        </div>
+        <div class="prayer-text">
+          <div class="prayer-version pt visible" id="prayer-16-pt" lang="pt-BR">
+            <p class="prayer-incipit">Em Português</p>
+            <div class="strophe">
+              <p>V. Dai-lhes, Senhor, o descanso eterno.</p>
+              <p class="response">R. E brilhe para eles a vossa luz.</p>
+              <p>Descansem em paz.</p>
+              <p>Amém.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+          <div class="prayer-version la" id="prayer-16-la" lang="la">
+            <span class="latin-badge">✦ Lingua Latina ✦</span>
+            <div class="strophe">
+              <p>V. Requiem aeternam dona eis, Domine.</p>
+              <p class="response">R. Et lux perpetua luceat eis.</p>
+              <p>Requiescant in pace.</p>
+              <p>Amen.</p>
+            </div>
+            <div class="ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
+          </div>
+        </div>
+        <div class="prayer-note">
+          <p><strong>Nota:</strong> Breve oração pelos falecidos, confiando-os à misericórdia de Deus e à esperança da ressurreição.</p>
+        </div>
+      </div>
+    </div>
 
   </section>
 
@@ -953,15 +1750,20 @@
     /* ── Abrir/fechar card ── */
     function togglePrayer(header) {
       const card = header.closest('.prayer-card');
-      card.classList.toggle('open');
+      const open = card.classList.toggle('open');
+      header.setAttribute('aria-expanded', String(open));
     }
 
     /* ── Trocar idioma ── */
     function setLang(btn, lang, num) {
       // Atualiza botões
       const toggle = btn.closest('.lang-toggle');
-      toggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      toggle.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
 
       // Mostra versão correta
       const ptEl = document.getElementById('prayer-' + num + '-pt');
@@ -970,8 +1772,12 @@
       laEl.classList.toggle('visible', lang === 'la');
     }
 
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
+    });
+
     /* Abre o primeiro card por padrão */
-    document.querySelector('.prayer-card[data-prayer="1"]').classList.add('open');
+    togglePrayer(document.querySelector('#prayer-1 .prayer-header'));
 
     /* ── ABAS DE ACESSO RÁPIDO ── */
     (function () {
@@ -981,6 +1787,8 @@
         const card = document.querySelector('.prayer-card[data-prayer="' + num + '"]');
         if (!card) return;
         card.classList.add('open');
+        card.classList.add('is-visible');
+        card.querySelector('.prayer-header').setAttribute('aria-expanded', 'true');
 
         /* Marca aba ativa */
         tabs.forEach(t => t.classList.remove('active'));

@@ -388,6 +388,10 @@
   top: var(--site-nav-height, 56px);
   z-index: 60;
   display: flex;
+  align-items: stretch;
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
   gap: 6px;
   padding: 12px;
   margin: 0 auto 30px;
@@ -401,8 +405,8 @@
 }
 
 .oracao-tab {
-  flex: 1;
-  min-width: 0;
+  flex: 1 0 100px;
+  min-width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -450,12 +454,15 @@
 
 @media (max-width: 640px) {
   .oracao-tabs {
+    width: calc(100% + 40px);
     margin: 0 -20px 22px;
     border-radius: 0;
     border-left: none;
     border-right: none;
     padding: 10px 8px;
   }
+
+  .oracao-tab { flex-basis: 76px; min-width: 76px; }
 
   .oracao-tab__num   { font-size: .9rem; }
   .oracao-tab__label { font-size: .58rem; letter-spacing: .3px; }
